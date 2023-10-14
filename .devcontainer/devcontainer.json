@@ -38,7 +38,9 @@
 			"installRMarkdown": true
 		},
 		// To install the latest Python
-		"ghcr.io/devcontainers/features/python:1": {},
+		"ghcr.io/devcontainers/features/python:1": {
+			"version": "latest"
+		},
 		// To install the latest Quarto v1.*.
 		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {}
 	},
