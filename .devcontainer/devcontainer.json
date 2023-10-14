@@ -42,7 +42,11 @@
 			"version": "latest"
 		},
 		// To install the latest Quarto v1.*.
-		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {}
+		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
+			"version": "prerelease",
+			"installTinyTex": "false",
+			"installChromium": "false"
+		}
 	},
 
 	// Configure tool-specific properties.
