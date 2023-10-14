@@ -5,7 +5,10 @@
 	// "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
 	"build": {
 		"dockerfile": "./Dockerfile",
-		"context": "."
+		"context": ".",
+		"args": {
+			"VARIANT": "jammy"
+		}
 	},
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
@@ -34,6 +37,8 @@
 			"installREnv": "true",
 			"installRMarkdown": true
 		},
+		// To install the latest Python
+		"ghcr.io/devcontainers/features/python:1": {},
 		// To install the latest Quarto v1.*.
 		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {}
 	},
