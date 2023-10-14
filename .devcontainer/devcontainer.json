@@ -35,7 +35,7 @@
 			"vscodeRSupport": "full",
 			"installDevTools": "true",
 			"installREnv": "true",
-			"installRMarkdown": true
+			"installRMarkdown": "true"
 		},
 		// To install the latest Python
 		"ghcr.io/devcontainers/features/python:1": {
