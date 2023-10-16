@@ -62,7 +62,8 @@
 					"--no-save",
 					"--no-restore-data",
 					"--quiet"
-				]
+				],
+				"r.useRenvLibPath": "true"
 			}
 		}
 	},
