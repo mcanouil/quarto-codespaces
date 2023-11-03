@@ -33,9 +33,9 @@
 		"ghcr.io/rocker-org/devcontainer-features/r-rig:1": {
 			"version": "release", // To install the latest R version (default) and other.
 			"vscodeRSupport": "full",
-			"installDevTools": "true",
+			"installDevTools": "false",
 			"installREnv": "true",
-			"installRMarkdown": "true"
+			"installRMarkdown": "false"
 		},
 		// To install the latest Python
 		"ghcr.io/devcontainers/features/python:1": {
