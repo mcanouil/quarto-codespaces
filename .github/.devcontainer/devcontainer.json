@@ -1,0 +1,40 @@
+{
+	"name": "Quarto",
+	// "image": "buildpack-deps:jammy-curl",
+	"build": {
+		"dockerfile": "./Dockerfile",
+		"context": ".",
+		"args": {
+			"VARIANT": "jammy"
+		}
+	},
+	"remoteUser": "vscode",
+	"features": {
+		"ghcr.io/devcontainers/features/common-utils:2": {
+			"installZsh": "true",
+			"username": "vscode",
+			"userUid": "1000",
+			"userGid": "1000",
+			"upgradePackages": "true"
+		},
+		"ghcr.io/devcontainers/features/git:1": {
+			"version": "latest",
+			"ppa": "false"
+		},
+		"ghcr.io/rocker-org/devcontainer-features/r-rig:1": {
+			"version": "release", // To install the latest R version (default) and other.
+			"vscodeRSupport": "full",
+			"installDevTools": "false",
+			"installREnv": "true",
+			"installRMarkdown": "false"
+		},
+		"ghcr.io/devcontainers/features/python:1": {
+			"version": "latest"
+		},
+		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
+			"version": "prerelease",
+			"installTinyTex": "false",
+			"installChromium": "false"
+		}
+	}
+}

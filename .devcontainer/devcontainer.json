@@ -1,61 +1,19 @@
-// For format details, see https://aka.ms/devcontainer.json.
-// Base image from https://github.com/devcontainers/images/tree/main/src/base-ubuntu.
 {
-	"name": "Quarto",
-	// "image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
-	"build": {
-		"dockerfile": "./Dockerfile",
-		"context": ".",
-		"args": {
-			"VARIANT": "jammy"
-		}
-	},
-
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	"name": "Quarto Codespaces",
+	"image": "ghcr.io/mcanouil/quarto-codespaces:latest",
 	"remoteUser": "vscode",
-
-	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
-		// Setup a non-root user. Note that UID and GID will be updated with local user values.
-		"ghcr.io/devcontainers/features/common-utils:2": {
-			"installZsh": "true",
-			"username": "vscode",
-			"userUid": "1000",
-			"userGid": "1000",
-			"upgradePackages": "true"
-		},
-		// To latest the latest build of Git.
-		"ghcr.io/devcontainers/features/git:1": {
-			"version": "latest",
-			"ppa": "false"
-		},
-		// To install the latest RIG v1.*.
-		"ghcr.io/rocker-org/devcontainer-features/r-rig:1": {
-			"version": "release", // To install the latest R version (default) and other.
-			"vscodeRSupport": "full",
-			"installDevTools": "false",
-			"installREnv": "true",
-			"installRMarkdown": "false"
-		},
-		// To install the latest Python
-		"ghcr.io/devcontainers/features/python:1": {
-			"version": "latest"
-		},
-		// To install the latest Quarto v1.*.
 		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
 			"version": "prerelease",
 			"installTinyTex": "false",
 			"installChromium": "false"
 		}
 	},
-
-	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
 			"extensions": [
 				"quarto.quarto",
-				"REditorSupport.r",
-				"usernamehw.errorlens"
+				"REditorSupport.r"
 			],
 			"settings": {
 				"r.rterm.option": [
@@ -63,8 +21,8 @@
 					"--no-restore-data",
 					"--quiet"
 				],
-				"r.useRenvLibPath": "true"
+				"r.useRenvLibPath": true
 			}
 		}
-	},
+	}
 }
