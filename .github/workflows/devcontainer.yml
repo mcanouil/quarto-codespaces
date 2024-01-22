@@ -44,7 +44,7 @@ jobs:
     continue-on-error: true
     steps:
       - name: Delete obsolete/untagged versions
-        uses: actions/delete-package-versions@v4.1.1
+        uses: actions/delete-package-versions@v5.0.0
         with:
           package-name: ghcr.io/${{ github.repository }}
           package-type: "container"
