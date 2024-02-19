@@ -46,7 +46,7 @@ jobs:
       - name: Delete obsolete/untagged versions
         uses: actions/delete-package-versions@v5
         with:
-          package-name: ghcr.io/${{ github.repository }}
+          package-name: ${{ github.repository }}
           package-type: "container"
           token: ${{ secrets.GITHUB_TOKEN }}
           delete-only-untagged-versions: "true"
