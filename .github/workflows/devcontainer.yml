@@ -3,7 +3,7 @@ name: Build Devcontainer Docker Image
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 6 * * sun'
+    - cron: "0 6 * * sun"
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}
@@ -30,7 +30,6 @@ jobs:
 
       - name: Build and run Dev Container on release
         uses: devcontainers/ci@v0.3
-        if: 
         with:
           subFolder: .github
           imageName: ghcr.io/${{ github.repository }}
@@ -39,7 +38,7 @@ jobs:
           push: always
 
   clean:
-    needs: 'build'
+    needs: "build"
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
@@ -50,4 +49,3 @@ jobs:
           package-type: "container"
           token: ${{ secrets.GITHUB_TOKEN }}
           delete-only-untagged-versions: "true"
-      
