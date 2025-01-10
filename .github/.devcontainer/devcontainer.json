@@ -31,7 +31,7 @@
 		"ghcr.io/devcontainers/features/python:1": {
 			"version": "latest",
 			"installTools": "true",
-			"toolsToInstall": "flake8,autopep8,black,yapf,mypy,pydocstyle,pycodestyle,bandit,pipenv,virtualenv,pytest,pylint,jupyter,jupyter-cache,papermill",
+			"toolsToInstall": "flake8,autopep8,black,yapf,mypy,pydocstyle,pycodestyle,bandit,pipenv,virtualenv,pytest,pylint,notebook,jupyterlab,ipython,ipykernel,jupyter-console,nbconvert,ipywidgets,jupyter-cache,papermill",
 			"enableShared": "true"
 		},
 		"ghcr.io/julialang/devcontainer-features/julia:1": {
