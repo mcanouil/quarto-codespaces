@@ -23,15 +23,13 @@
 		},
 		"ghcr.io/rocker-org/devcontainer-features/r-rig:1": {
 			"version": "release", // To install the latest R version (default) and other.
-			"vscodeRSupport": "full",
+			"vscodeRSupport": "none",
 			"installDevTools": "false",
 			"installREnv": "true",
-			"installRMarkdown": "true"
+			"installRMarkdown": "false"
 		},
 		"ghcr.io/devcontainers/features/python:1": {
 			"version": "latest",
-			"installTools": "true",
-			"toolsToInstall": "flake8,autopep8,black,yapf,mypy,pydocstyle,pycodestyle,bandit,pipenv,virtualenv,pytest,pylint,notebook,jupyterlab,ipython,jupyter-console,nbconvert,jupyter-cache,papermill",
 			"enableShared": "true"
 		},
 		"ghcr.io/julialang/devcontainer-features/julia:1": {
