@@ -7,4 +7,5 @@ python3 -m venv .venv
 source .venv/bin/activate
 python3 -m pip install jupyter
 
-julia -e 'using Pkg; Pkg.add("IJulia")'
+julia -e 'using Pkg; Pkg.activate("."); Pkg.instantiate()'
+julia --project=. -e 'using Pkg; Pkg.add("IJulia")'
