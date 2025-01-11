@@ -1,22 +1,16 @@
 {
-  "id": "init-env",
+  "id": "install-quarto-dependencies",
   "version": "1.0.0",
-  "name": "Initialise Computing Environments",
-  "description": "Initialises R, Python, and Julia environments.",
+  "name": "Install Computing Dependencies for Quarto",
+  "description": "Install R, Python, and Julia dependencies for Quarto.",
   "options": {
-    "what": {
+    "dependencies": {
       "type": "string",
       "enum": ["all", "r", "python", "julia"],
       "default": "all",
-      "description": "Specify what to initialise."
-    },
-    "force": {
-      "type": "boolean",
-      "default": false,
-      "description": "Force initialisation regardless of existing files."
+      "description": "Specify what dependencies to install."
     }
   },
-  "postCreateCommand": "/usr/local/share/init-env.sh",
   "dependsOn": {
     "ghcr.io/devcontainers/features/common-utils": {},
     "ghcr.io/rocker-org/devcontainer-features/r-rig": {},

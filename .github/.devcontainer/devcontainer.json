@@ -35,7 +35,9 @@
 		"ghcr.io/julialang/devcontainer-features/julia:1": {
 			"channel": "release"
 		},
-		"./init-env": {},
+		"./install-quarto-dependencies": {
+			"dependencies": "all"
+		},
 		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
 			"version": "prerelease",
 			"installTinyTex": "true",
