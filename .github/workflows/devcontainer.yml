@@ -21,13 +21,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Remove comments from devcontainer.json
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y jq
-          JSONFILE=".github/.devcontainer/devcontainer.json"
-          sed 's|//.*$||' "${JSONFILE}" > temp.json && mv temp.json "${JSONFILE}"
-
       - name: Build and run Dev Container on release
         uses: devcontainers/ci@v0.3
         with:
