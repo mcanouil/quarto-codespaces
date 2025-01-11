@@ -37,9 +37,9 @@ This file defines the development container settings, including the base image, 
 - **Installed Features**:
   - Common utilities with Zsh shell.
   - Latest Git version.
-  - R environment with `renv` support.
-  - Latest Python version with shared libraries.
-  - Julia environment with the latest release channel.
+  - R environment with `renv` support and `rmarkdown`.
+  - Latest Python version with shared libraries and `jupyter`.
+  - Julia environment with the latest release channel and `IJulia`.
   - Quarto CLI with TinyTeX installed.
 
 ### Docker Image
