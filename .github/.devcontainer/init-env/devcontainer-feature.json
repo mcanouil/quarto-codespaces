@@ -1,0 +1,32 @@
+{
+  "id": "init-env",
+  "version": "1.0.0",
+  "name": "Initialise Computing Environments",
+  "description": "Initialises R, Python, and Julia environments.",
+  "options": {
+    "what": {
+      "type": "string",
+      "enum": ["all", "r", "python", "julia"],
+      "default": "all",
+      "description": "Specify what to initialise."
+    },
+    "force": {
+      "type": "boolean",
+      "default": false,
+      "description": "Force initialisation regardless of existing files."
+    }
+  },
+  "postCreateCommand": "/usr/local/share/init-env.sh",
+  "dependsOn": {
+    "ghcr.io/devcontainers/features/common-utils": {},
+    "ghcr.io/rocker-org/devcontainer-features/r-rig": {},
+    "ghcr.io/devcontainers/features/python": {},
+    "ghcr.io/julialang/devcontainer-features/julia": {}
+  },
+  "installsAfter": [
+		"ghcr.io/devcontainers/features/common-utils",
+    "ghcr.io/rocker-org/devcontainer-features/r-rig",
+    "ghcr.io/devcontainers/features/python",
+    "ghcr.io/julialang/devcontainer-features/julia"
+	]
+}

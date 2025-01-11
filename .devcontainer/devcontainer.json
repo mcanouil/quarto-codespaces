@@ -9,7 +9,6 @@
 		// 	"installChromium": "false"
 		// }
 	},
-	"postStartCommand": ["bash", "init.sh"],
 	"customizations": {
 		"vscode": {
 			"extensions": [
