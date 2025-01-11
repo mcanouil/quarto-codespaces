@@ -35,7 +35,7 @@
 		"ghcr.io/julialang/devcontainer-features/julia:1": {
 			"channel": "release"
 		},
-		"./install-quarto-dependencies": {
+		"./quarto-computing-dependencies": {
 			"dependencies": "all"
 		},
 		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {

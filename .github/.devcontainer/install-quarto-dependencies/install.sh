@@ -14,23 +14,23 @@ quarto_python_deps() {
   su "${USERNAME}" -c "python3 -m pip install jupyter"
 }
 
-initialise_julia() {
+quarto_julia_deps() {
   su "${USERNAME}" -c "julia -e 'using Pkg; Pkg.add("IJulia")'"
 }
 
 case ${DEPENDENCIES} in
   all)
-    initialise_r
-    initialise_python
-    initialise_julia
+    quarto_r_deps
+    quarto_python_deps
+    quarto_julia_deps
     ;;
   r)
-    initialise_r
+    quarto_r_deps
     ;;
   python)
-    initialise_python
+    quarto_python_deps
     ;;
   julia)
-    initialise_julia
+    quarto_julia_deps
     ;;
 esac

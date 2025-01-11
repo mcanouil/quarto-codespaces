@@ -1,5 +1,5 @@
 {
-  "id": "install-quarto-dependencies",
+  "id": "quarto-computing-dependencies",
   "version": "1.0.0",
   "name": "Install Computing Dependencies for Quarto",
   "description": "Install R, Python, and Julia dependencies for Quarto.",
