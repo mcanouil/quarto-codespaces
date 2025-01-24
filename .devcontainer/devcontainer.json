@@ -13,6 +13,7 @@
 		"vscode": {
 			"extensions": [
 				"quarto.quarto",
+				"mcanouil.quarto-wizard",
 				"REditorSupport.r",
 				"ms-python.python",
 				"julialang.language-julia",
