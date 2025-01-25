@@ -2,11 +2,11 @@
 
 [![Build](https://github.com/mcanouil/quarto-codespaces/actions/workflows/devcontainer.yml/badge.svg)](https://github.com/mcanouil/quarto-codespaces/actions/workflows/devcontainer.yml)
 
-Setup to deploy Codespaces or Devcontainers with Quarto.
+Setup to deploy Codespaces or Dev Containers with Quarto.
 
 ## Overview
 
-This repository provides a setup to deploy Codespaces or Devcontainers with Quarto, supporting R, Python, and Julia environments.
+This repository provides a setup to deploy Codespaces or Dev Containers with Quarto, supporting R, Python, and Julia environments.
 It includes configuration files and scripts to initialise and manage these environments.
 
 ## Using as a Template
@@ -25,7 +25,7 @@ To use it, follow these steps:
 3. If you don't have a Codespace already, create a new one.
 4. The Codespace will be set up automatically using the configuration provided in this repository.
 
-## Devcontainer Configuration
+## Dev Container Configuration
 
 The Dev Container configuration is located in [`.github/.devcontainer/devcontainer.json`](.github/.devcontainer/devcontainer.json).
 This file defines the development container settings, including the base image, user settings, and features to be installed.
