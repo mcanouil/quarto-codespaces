@@ -3,6 +3,23 @@
   "version": "1.0.0",
   "name": "Install Computing Dependencies for Quarto",
   "description": "Install R, Python, and Julia dependencies for Quarto.",
+  "options": {
+    "rDeps": {
+      "type": "string",
+      "default": "rmarkdown",
+      "description": "Specify what R dependencies to install."
+    },
+		"pythonDeps": {
+			"type": "string",
+			"default": "jupyter,papermill",
+			"description": "Specify what Python dependencies to install."
+		},
+		"juliaDeps": {
+			"type": "string",
+			"default": "IJulia",
+			"description": "Specify what Julia dependencies to install."
+		}
+  },
   "dependsOn": {
     "ghcr.io/devcontainers/features/common-utils:2": {
 			"installZsh": "true",
