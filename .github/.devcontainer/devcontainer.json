@@ -11,7 +11,7 @@
 	"remoteUser": "vscode",
 	"features": {
 		"./quarto-computing-dependencies": {
-			"rDeps": "rmarkdown",
+			"rDeps": "rmarkdown,httpgd",
 			"pythonDeps": "jupyter,papermill",
 			"juliaDeps": "IJulia"
 		}//,

@@ -6,9 +6,9 @@ export DEBIAN_FRONTEND=noninteractive
 
 USERNAME=${USERNAME:-${_REMOTE_USER:-"automatic"}}
 
-R_DEPS=${R_DEPS:-"rmarkdown"}
-PYTHON_DEPS=${PYTHON_DEPS:-"jupyter,papermill"}
-JULIA_DEPS=${JULIA_DEPS:-"IJulia"}
+R_DEPS=${RDEPS:-"rmarkdown"}
+PYTHON_DEPS=${PYTHONDEPS:-"jupyter,papermill"}
+JULIA_DEPS=${JULIADEPS:-"IJulia"}
 
 set -e
 
