@@ -10,9 +10,7 @@
 	},
 	"remoteUser": "vscode",
 	"features": {
-		"./quarto-computing-dependencies": {
-			"dependencies": "all"
-		}//,
+		"./quarto-computing-dependencies": {}//,
 		// "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
 		// 	"version": "prerelease",
 		// 	"installTinyTex": "true",
