@@ -4,8 +4,6 @@ set -e
 
 export DEBIAN_FRONTEND=noninteractive
 
-DEPENDENCIES=${DEPENDENCIES:-"all"}
-
 USERNAME=${USERNAME:-${_REMOTE_USER:-"automatic"}}
 
 set -e
@@ -44,19 +42,6 @@ quarto_julia_deps() {
   su "${USERNAME}" -c "~/.juliaup/bin/julia -e 'using Pkg; Pkg.add(\"IJulia\")'"
 }
 
-case ${DEPENDENCIES} in
-  all)
-    quarto_r_deps
-    quarto_python_deps
-    quarto_julia_deps
-    ;;
-  r)
-    quarto_r_deps
-    ;;
-  python)
-    quarto_python_deps
-    ;;
-  julia)
-    quarto_julia_deps
-    ;;
-esac
+quarto_r_deps
+quarto_python_deps
+quarto_julia_deps
