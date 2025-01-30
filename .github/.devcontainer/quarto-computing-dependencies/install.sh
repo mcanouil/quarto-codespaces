@@ -37,7 +37,7 @@ quarto_r_deps() {
 }
 
 quarto_python_deps() {
-  su "${USERNAME}" -c "python3 -m pip install jupyter papermill"
+  python3 -m pip install jupyter papermill
 }
 
 quarto_julia_deps() {
