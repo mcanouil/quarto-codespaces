@@ -11,7 +11,7 @@ show_help() {
   echo "  --help/-h: Show this help message."
 }
 
-initialize_r() {
+initialise_r() {
   if [ "$FORCE" = true ] || [ ! -f "renv.lock" ]; then
     Rscript -e 'renv::init(bare = FALSE)'
     Rscript -e 'renv::install("rmarkdown")'
@@ -19,16 +19,16 @@ initialize_r() {
   fi
 }
 
-initialize_python() {
+initialise_python() {
   if [ "$FORCE" = true ] || [ ! -f "requirements.txt" ]; then
     python3 -m venv .venv
     source .venv/bin/activate
-    python3 -m pip install jupyter
+    python3 -m pip install jupyter papermill
     python3 -m pip freeze > requirements.txt
   fi
 }
 
-initialize_julia() {
+initialise_julia() {
   if [ "$FORCE" = true ] || [ ! -f "Project.toml" ]; then
     julia -e 'using Pkg; Pkg.activate("."); Pkg.instantiate()'
     julia --project=. -e 'using Pkg; Pkg.add("IJulia")'
@@ -62,18 +62,18 @@ done
 
 case $WHAT in
   all)
-    initialize_r
-    initialize_python
-    initialize_julia
+    initialise_r
+    initialise_python
+    initialise_julia
     ;;
   r)
-    initialize_r
+    initialise_r
     ;;
   python)
-    initialize_python
+    initialise_python
     ;;
   julia)
-    initialize_julia
+    initialise_julia
     ;;
   *)
     echo "Unknown option for --what: $WHAT"
