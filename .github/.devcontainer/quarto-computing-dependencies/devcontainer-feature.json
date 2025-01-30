@@ -4,21 +4,52 @@
   "name": "Install Computing Dependencies for Quarto",
   "description": "Install R, Python, and Julia dependencies for Quarto.",
   "options": {
-    "dependencies": {
+    "rDeps": {
       "type": "string",
-      "enum": ["all", "r", "python", "julia"],
-      "default": "all",
-      "description": "Specify what dependencies to install."
-    }
+      "default": "rmarkdown",
+      "description": "Specify what R dependencies to install."
+    },
+		"pythonDeps": {
+			"type": "string",
+			"default": "jupyter,papermill",
+			"description": "Specify what Python dependencies to install."
+		},
+		"juliaDeps": {
+			"type": "string",
+			"default": "IJulia",
+			"description": "Specify what Julia dependencies to install."
+		}
   },
   "dependsOn": {
-    "ghcr.io/devcontainers/features/common-utils": {},
-    "ghcr.io/rocker-org/devcontainer-features/r-rig": {},
-    "ghcr.io/devcontainers/features/python": {},
-    "ghcr.io/julialang/devcontainer-features/julia": {}
+    "ghcr.io/devcontainers/features/common-utils:2": {
+			"installZsh": "true",
+			"username": "vscode",
+			"userUid": "1000",
+			"userGid": "1000",
+			"upgradePackages": "true"
+		},
+		"ghcr.io/devcontainers/features/git:1": {
+			"version": "latest",
+			"ppa": "false"
+		},
+		"ghcr.io/rocker-org/devcontainer-features/r-rig:1": {
+			"version": "release",
+			"vscodeRSupport": "none",
+			"installDevTools": "false",
+			"installREnv": "true",
+			"installRMarkdown": "false"
+		},
+		"ghcr.io/devcontainers/features/python:1": {
+			"version": "latest",
+			"enableShared": "true"
+		},
+		"ghcr.io/julialang/devcontainer-features/julia:1": {
+			"channel": "release"
+		}
   },
   "installsAfter": [
 		"ghcr.io/devcontainers/features/common-utils",
+		"ghcr.io/devcontainers/features/git",
     "ghcr.io/rocker-org/devcontainer-features/r-rig",
     "ghcr.io/devcontainers/features/python",
     "ghcr.io/julialang/devcontainer-features/julia"

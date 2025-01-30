@@ -4,9 +4,11 @@ set -e
 
 export DEBIAN_FRONTEND=noninteractive
 
-DEPENDENCIES=${DEPENDENCIES:-"all"}
-
 USERNAME=${USERNAME:-${_REMOTE_USER:-"automatic"}}
+
+R_DEPS=${RDEPS:-"rmarkdown"}
+PYTHON_DEPS=${PYTHONDEPS:-"jupyter,papermill"}
+JULIA_DEPS=${JULIADEPS:-"IJulia"}
 
 set -e
 
@@ -33,30 +35,23 @@ elif [ "${USERNAME}" = "none" ] || ! id -u "${USERNAME}" >/dev/null 2>&1; then
 fi
 
 quarto_r_deps() {
-  su "${USERNAME}" -c "Rscript -e 'pak::pkg_install(\"rmarkdown\")'"
+  local deps=$1
+  deps=$(echo "${deps}" | sed 's/,/","/g')
+  su "${USERNAME}" -c "Rscript -e 'pak::pkg_install(c(\"${deps}\"))'"
 }
 
 quarto_python_deps() {
-  su "${USERNAME}" -c "python3 -m pip install jupyter papermill"
+  local deps=$1
+  deps=$(echo "${deps}" | sed 's/,/ /g')
+  python3 -m pip install ${deps}
 }
 
 quarto_julia_deps() {
-  su "${USERNAME}" -c "~/.juliaup/bin/julia -e 'using Pkg; Pkg.add(\"IJulia\")'"
+  local deps=$1
+  deps=$(echo "${deps}" | sed 's/,/","/g')
+  su "${USERNAME}" -c "~/.juliaup/bin/julia -e 'using Pkg; Pkg.add.([\"${deps}\"])'"
 }
 
-case ${DEPENDENCIES} in
-  all)
-    quarto_r_deps
-    quarto_python_deps
-    quarto_julia_deps
-    ;;
-  r)
-    quarto_r_deps
-    ;;
-  python)
-    quarto_python_deps
-    ;;
-  julia)
-    quarto_julia_deps
-    ;;
-esac
+quarto_r_deps ${R_DEPS}
+quarto_python_deps ${PYTHON_DEPS}
+quarto_julia_deps ${JULIA_DEPS}
