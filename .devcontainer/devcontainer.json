@@ -41,7 +41,8 @@
 				"ms-python.flake8",
 				"ms-python.vscode-pylance",
 				"ms-python.pylint",
-				"ms-python.isort"
+				"ms-python.isort",
+				"ms-toolsai.jupyter"
 			],
 			"settings": {
 				"r.rterm.option": [
