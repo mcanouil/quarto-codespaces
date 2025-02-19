@@ -1,5 +1,5 @@
 {
-	"name": "Public - Quarto Codespaces",
+	"name": "Mickaël CANOUIL - Quarto Codespaces",
 	"image": "ghcr.io/mcanouil/quarto-codespaces:latest",
 	"remoteUser": "vscode",
 	"features": {
@@ -10,6 +10,26 @@
 		}
 	},
 	"customizations": {
+		"codespaces": {
+      "repositories": {
+        "mcanouil/quarto-codespaces": {
+          "permissions": {
+            "contents": "write",
+						"pull_requests": "write"
+          }
+        },
+        "mcanouil/quarto-issues-experiments": {
+          "permissions": {
+            "contents": "write"
+          }
+        },
+				"mcanouil/*": {
+          "permissions": {
+            "contents": "read"
+          }
+        }
+      }
+    },
 		"vscode": {
 			"extensions": [
 				"quarto.quarto",
