@@ -10,6 +10,8 @@ Setup to deploy [GitHub Codespaces](https://github.com/features/codespaces) (Cod
 This repository provides a setup to deploy Codespaces or Dev Containers with Quarto, supporting R, Python, and Julia environments.
 It includes configuration files and scripts to initialise and manage these environments.
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/mcanouil/quarto-codespaces?quickstart=1&devcontainer_path=.devcontainer%2Fdevcontainer.json)
+
 ## Using as a Template
 
 You can use this repository as a template for your own projects.
