@@ -1,5 +1,5 @@
 {
-	"name": "Quarto Codespaces",
+	"name": "Public - Quarto Codespaces",
 	"image": "ghcr.io/mcanouil/quarto-codespaces:latest",
 	"remoteUser": "vscode",
 	"features": {
