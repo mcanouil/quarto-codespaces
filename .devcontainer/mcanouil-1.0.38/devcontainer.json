@@ -1,5 +1,5 @@
 {
-	"name": "Mickaël CANOUIL - Quarto Codespaces",
+	"name": "1.0.38 - Mickaël CANOUIL - Quarto Codespaces",
 	"image": "ghcr.io/mcanouil/quarto-codespaces:latest",
 	"remoteUser": "vscode",
 	"features": {
