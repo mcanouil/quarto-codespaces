@@ -1,2 +1,2 @@
 ARG VARIANT="jammy"
-FROM buildpack-deps:${VARIANT}-curl
+FROM --platform=linux/amd64 buildpack-deps:${VARIANT}-curl

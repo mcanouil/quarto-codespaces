@@ -49,12 +49,11 @@ install_uv() {
   local version=$1
   local url="https://github.com/astral-sh/uv/releases/${version}/download/uv-installer.sh"
   check_packages curl ca-certificates
-  su "${USERNAME}" -c "curl --proto '=https' --tlsv1.2 -LsSf ${url} | sh"
+  curl --proto '=https' --tlsv1.2 -LsSf ${url} | env UV_INSTALL_DIR="/usr/local/bin" sh
 }
 
 enable_autocompletion() {
-  su "${USERNAME}" -c "echo 'eval \"\$(uv generate-shell-completion zsh)\"' >> \"\$HOME/.zshrc\""
-  su "${USERNAME}" -c "echo 'eval \"\$(uvx --generate-shell-completion zsh)\"' >> \"\$HOME/.zshrc\""
+  echo 'eval "$(uv generate-shell-completion zsh)"' >> /usr/share/zsh/vendor-completions/_uv
 }
 
 install_uv ${VERSION}
