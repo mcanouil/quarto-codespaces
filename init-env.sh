@@ -5,7 +5,7 @@ show_help() {
   echo "  --what/-w: Specify what to initialise (default: all)."
   echo "    all: Initialise R (renv), Python (virtualenv), and Julia (project)."
   echo "    r: Initialise R (renv)."
-  echo "    python: Initialise Python (virtualenv)."
+  echo "    python: Initialise Python (uv)."
   echo "    julia: Initialise Julia (project)."
   echo "  --force/-f: Force initialisation regardless of existing files."
   echo "  --help/-h: Show this help message."
@@ -13,8 +13,11 @@ show_help() {
 
 initialise_r() {
   if [ "$FORCE" = true ] || [ ! -f "renv.lock" ]; then
+    if grep -q 'source("renv/activate.R")' .Rprofile; then
+      sed -i '' '/source("renv\/activate.R")/d' .Rprofile
+    fi
     Rscript -e 'renv::init(bare = FALSE)'
-    Rscript -e 'renv::install("rmarkdown")'
+    Rscript -e 'renv::install(c("rmarkdown", "prompt", "languageserver", "lintr", "styler", "cli"))'
     Rscript -e 'renv::snapshot(type = "all")'
   fi
 }
@@ -25,6 +28,16 @@ initialise_python() {
     source .venv/bin/activate
     python3 -m pip install jupyter papermill
     python3 -m pip freeze > requirements.txt
+  fi
+}
+
+initialise_uv() {
+  if [ "$FORCE" = true ] || [ ! -f "uv.lock" ]; then
+    uv init --no-package --vcs none --bare --no-readme --author-from none
+    uv venv
+    source .venv/bin/activate
+    uv add jupyter papermill
+    uv sync
   fi
 }
 
@@ -63,14 +76,14 @@ done
 case $WHAT in
   all)
     initialise_r
-    initialise_python
+    initialise_uv
     initialise_julia
     ;;
   r)
     initialise_r
     ;;
   python)
-    initialise_python
+    initialise_uv
     ;;
   julia)
     initialise_julia

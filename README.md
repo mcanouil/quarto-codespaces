@@ -68,12 +68,12 @@ It supports initialising all environments or specific ones based on the provided
 ### Script Details
 
 - **Options**:
-  - `--what/-w`: Specify which environment(s) to initialise (`all`, `r`, `python`, `julia`).
+  - `--what/-w`: Specify which environment(s) to initialise (`all`, `r`, `python (uv)`, `julia`).
   - `--force/-f`: Force reinstallation of the specified environment(s).
   - `--help/-h`: Display help message and exit.
 - **Functionality**: The script installs necessary dependencies for R, Python, and Julia, inside environments.
   - For R, it sets up `renv` and installs required packages.
-  - For Python, it sets up a virtual environment and installs required libraries.
+  - For Python, it sets up uv and installs required libraries.
   - For Julia, it sets up an environment and installs required packages.
 
 ## Contributing
