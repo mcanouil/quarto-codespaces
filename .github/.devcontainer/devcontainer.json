@@ -15,6 +15,9 @@
 			"pythonDeps": "jupyter,papermill",
 			"juliaDeps": "IJulia"
 		},
+		"./uv": {
+			"version": "latest"
+		},
 		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
 			"version": "prerelease",
 			"installTinyTex": "true",
