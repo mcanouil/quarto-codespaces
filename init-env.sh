@@ -3,7 +3,7 @@
 show_help() {
   echo "Usage: $0 [--what/-w all|r|python|julia] [--force/-f] [--help/-h]"
   echo "  --what/-w: Specify what to initialise (default: all)."
-  echo "    all: Initialise R (renv), Python (virtualenv), and Julia (project)."
+  echo "    all: Initialise R (renv), Python (uv), and Julia (project)."
   echo "    r: Initialise R (renv)."
   echo "    python: Initialise Python (uv)."
   echo "    julia: Initialise Julia (project)."
