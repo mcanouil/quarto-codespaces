@@ -4,9 +4,13 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    labels:
+      - "Type: Dependencies :arrow_up:"
   - package-ecosystem: "devcontainers"
     directories:
       - "/"
       - ".github/"
     schedule:
       interval: "weekly"
+    labels:
+      - "Type: Dependencies :arrow_up:"
