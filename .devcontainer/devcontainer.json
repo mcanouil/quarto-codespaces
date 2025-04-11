@@ -22,7 +22,8 @@
 				"ms-python.vscode-pylance",
 				"ms-python.pylint",
 				"ms-python.isort",
-				"ms-toolsai.jupyter"
+				"ms-toolsai.jupyter",
+				"Posit.air-vscode"
 			],
 			"settings": {
 				"r.rterm.option": [
@@ -30,7 +31,11 @@
 					"--no-restore-data",
 					"--quiet"
 				],
-				"r.useRenvLibPath": true
+				"r.useRenvLibPath": true,
+				"[r]": {
+					"editor.defaultFormatter": "Posit.air-vscode",
+					"editor.formatOnSave": true
+				}
 			}
 		}
 	}
