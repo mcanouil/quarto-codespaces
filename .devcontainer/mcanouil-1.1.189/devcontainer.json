@@ -2,7 +2,7 @@
 	"name": "1.1.189 - Mickaël CANOUIL - Quarto Codespaces",
 	"image": "ghcr.io/mcanouil/quarto-codespaces:latest",
 	"remoteUser": "vscode",
-	"postStartCommand": "git show main:init-env.sh > init-env.sh && chmod +x init-env.sh",
+	"postStartCommand": "git switch gh-codespaces && git show main:init-env.sh > init-env.sh && chmod +x init-env.sh",
 	"features": {
 		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
 			"version": "1.1.189",
