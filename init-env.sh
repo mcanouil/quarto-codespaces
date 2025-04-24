@@ -13,7 +13,7 @@ show_help() {
 
 initialise_r() {
   if [ "${FORCE}" = true ] || [ ! -f "renv.lock" ]; then
-    if grep -q 'source("renv/activate.R")' .Rprofile; then
+    if [ -f ".Rprofile" ] && grep -q 'source("renv/activate.R")' .Rprofile; then
       sed -i '' '/source("renv\/activate.R")/d' .Rprofile
     fi
     Rscript -e 'renv::init(bare = FALSE)'
