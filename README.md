@@ -62,13 +62,13 @@ It supports initialising all environments or specific ones based on the provided
 ### Usage
 
 ```sh
-./init.sh [--what/-w all|r|python|julia] [--force/-f] [--help/-h]
+./init-env.sh [--what/-w all|r|python|julia] [--force/-f] [--help/-h]
 ```
 
 ### Script Details
 
 - **Options**:
-  - `--what/-w`: Specify which environment(s) to initialise (`all`, `r`, `python (uv)`, `julia`).
+  - `--what/-w`: Specify which environment(s) to initialise (`all`, `r`, `python` (uv), `julia`).
   - `--force/-f`: Force reinstallation of the specified environment(s).
   - `--help/-h`: Display help message and exit.
 - **Functionality**: The script installs necessary dependencies for R, Python, and Julia, inside environments.
