@@ -56,13 +56,14 @@ docker pull ghcr.io/mcanouil/quarto-codespaces:latest
 
 ## Initialisation Script
 
-The initialisation script [init.sh](init.sh) is used to set up the R, Python, and Julia environments.
+The initialisation script [init-env.sh](init-env.sh) is used to set up the R, Python, and Julia environments.
 It supports initialising all environments or specific ones based on the provided options.
 
 ### Usage
 
 ```sh
-./init.sh [--what/-w all|r|python|julia] [--force/-f] [--help/-h]
+chmod +x ./init-env.sh # make script executable
+./init-env.sh [--what/-w all|r|python|julia] [--force/-f] [--help/-h]
 ```
 
 ### Script Details
