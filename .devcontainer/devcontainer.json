@@ -5,7 +5,7 @@
 	"postStartCommand": "git switch gh-codespaces && git switch gh-codespaces && git show main:init-env.sh > init-env.sh && chmod +x init-env.sh",
 	"features": {
 		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
-			"version": "prerelease",
+			"version": "release",
 			"installTinyTex": "false",
 			"installChromium": "false"
 		}
