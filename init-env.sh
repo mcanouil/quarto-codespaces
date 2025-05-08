@@ -17,7 +17,7 @@ initialise_r() {
       sed -i '' '/source("renv\/activate.R")/d' .Rprofile
     fi
     Rscript -e 'renv::init(bare = FALSE)'
-    Rscript -e 'renv::install(c("rmarkdown", "prompt", "languageserver", "lintr", "styler", "cli"))'
+    Rscript -e 'renv::install(c("rmarkdown", "languageserver", "nx10/httpgd@v2.0.3", "prompt", "lintr", "cli"))'
     Rscript -e 'renv::snapshot(type = "all")'
   fi
 }
