@@ -4,7 +4,7 @@
 	"remoteUser": "vscode",
 	"features": {
 		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
-			"version": "1.5.57",
+			"version": "1.5",
 			"installTinyTex": "false",
 			"installChromium": "false"
 		}
