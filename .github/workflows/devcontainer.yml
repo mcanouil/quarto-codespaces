@@ -23,8 +23,6 @@ jobs:
         include:
           - IMAGE: buildpack-deps:jammy-curl
             imageTag: buildpack,latest
-          - IMAGE: mcr.microsoft.com/devcontainers/universal:latest
-            imageTag: universal
     steps:
       - uses: actions/checkout@v4
 
