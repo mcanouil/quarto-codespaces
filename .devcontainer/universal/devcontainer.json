@@ -1,5 +1,5 @@
 {
-	"name": "Quarto",
+	"name": "Universal - Quarto Codespaces",
 	"build": {
 		"dockerfile": "../../.github/.devcontainer/Dockerfile",
 		"context": "../../.github/.devcontainer/",
