@@ -4,7 +4,6 @@
 		"dockerfile": "Dockerfile",
 		"context": ".",
 		"args": {
-			"PLATFORM": "linux/amd64",
 			"IMAGE": "mcr.microsoft.com/devcontainers/universal:latest"
 		},
 		"options": [

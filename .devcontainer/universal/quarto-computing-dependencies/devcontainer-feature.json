@@ -24,8 +24,8 @@
     "ghcr.io/devcontainers/features/common-utils:2": {
 			"installZsh": "true",
 			"username": "vscode",
-			"userUid": "1000",
-			"userGid": "1000",
+			"userUid": "1111",
+			"userGid": "1111",
 			"upgradePackages": "true"
 		},
 		"ghcr.io/devcontainers/features/git:1": {
