@@ -10,7 +10,11 @@ Setup to deploy [GitHub Codespaces](https://github.com/features/codespaces) (Cod
 This repository provides a setup to deploy Codespaces or Dev Containers with Quarto, supporting R, Python, and Julia environments.
 It includes configuration files and scripts to initialise and manage these environments.
 
+Using `ghcr.io/mcanouil/quarto-codespaces:latest` as a base image for a quick deployment (Ubuntu 22.04 - Jammy Jellyfish):  
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/mcanouil/quarto-codespaces?quickstart=1&devcontainer_path=.devcontainer%2Fdevcontainer.json)
+
+Using Codespaces default base image to mitigate storage usage (Ubuntu 20.04 - Focal Fossa):  
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/mcanouil/quarto-codespaces?quickstart=1&devcontainer_path=.devcontainer%2Funiversal%2Fdevcontainer.json)
 
 ## Using as a Template
 
