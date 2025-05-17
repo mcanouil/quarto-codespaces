@@ -1,8 +1,8 @@
 {
 	"name": "Universal - Quarto Codespaces",
 	"build": {
-		"dockerfile": "../../.github/.devcontainer/Dockerfile",
-		"context": "../../.github/.devcontainer/",
+		"dockerfile": "Dockerfile",
+		"context": ".",
 		"args": {
 			"PLATFORM": "linux/amd64",
 			"IMAGE": "mcr.microsoft.com/devcontainers/universal:latest"
@@ -20,12 +20,12 @@
 	},
 	"remoteUser": "vscode",
 	"features": {
-		"../../.github/.devcontainer/quarto-computing-dependencies": {
+		"./quarto-computing-dependencies": {
 			"rDeps": "rmarkdown,languageserver,nx10/httpgd@v2.0.3,prompt,lintr",
 			"pythonDeps": "jupyter,papermill",
 			"juliaDeps": "IJulia"
 		},
-		"../../.github/.devcontainer/uv": {
+		"./uv": {
 			"version": "latest"
 		},
 		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
