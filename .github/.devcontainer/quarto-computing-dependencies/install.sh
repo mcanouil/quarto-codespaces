@@ -53,3 +53,5 @@ quarto_julia_deps() {
 quarto_r_deps ${R_DEPS}
 quarto_python_deps ${PYTHON_DEPS}
 quarto_julia_deps ${JULIA_DEPS}
+
+apt-get clean && rm -rf /var/lib/apt/lists/*

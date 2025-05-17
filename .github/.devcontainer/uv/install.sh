@@ -58,3 +58,4 @@ enable_autocompletion() {
 
 install_uv ${VERSION}
 enable_autocompletion
+apt-get clean && rm -rf /var/lib/apt/lists/*
