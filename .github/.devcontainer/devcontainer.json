@@ -6,7 +6,17 @@
 		"context": ".",
 		"args": {
 			"VARIANT": "jammy"
-		}
+		},
+		"options": [
+			"--label", "org.opencontainers.image.title='Quarto Codespaces'",
+			"--label", "org.opencontainers.image.description='Quarto Codespaces / Dev Containers setup for quick online testing'",
+			"--label", "org.opencontainers.image.authors='Mickaël CANOUIL <https://mickael.canouil.fr>'",
+			"--label", "org.opencontainers.image.url=https://github.com/mcanouil/quarto-codespaces",
+			"--label", "org.opencontainers.image.source=https://github.com/mcanouil/quarto-codespaces",
+			// "--label", "org.opencontainers.image.ref.name=",
+			// "--label", "org.opencontainers.image.version=",
+			"--label", "org.opencontainers.image.licenses='MIT'"
+		]
 	},
 	"remoteUser": "vscode",
 	"features": {
