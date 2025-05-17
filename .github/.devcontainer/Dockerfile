@@ -1,2 +1,3 @@
-ARG VARIANT="jammy"
-FROM --platform=linux/amd64 buildpack-deps:${VARIANT}-curl
+ARG IMAGE="jammy"
+ARG PLATFORM="linux/amd64"
+FROM --platform=${PLATFORM} ${IMAGE}
