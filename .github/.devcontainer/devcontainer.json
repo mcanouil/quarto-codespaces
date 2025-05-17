@@ -5,7 +5,8 @@
 		"context": ".",
 		"args": {
 			"PLATFORM": "linux/amd64",
-			"IMAGE": "buildpack-deps:jammy-curl"
+			"IMAGE": "${localEnv:IMAGE}"
+			// "IMAGE": "buildpack-deps:jammy-curl"
 			// "IMAGE": "mcr.microsoft.com/devcontainers/universal:latest"
 		},
 		"options": [

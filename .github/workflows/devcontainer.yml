@@ -18,6 +18,13 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - IMAGE: buildpack-deps:jammy-curl
+            imageTag: buildpack,latest
+          - IMAGE: mcr.microsoft.com/devcontainers/universal:latest
+            imageTag: universal
     steps:
       - uses: actions/checkout@v4
 
@@ -34,8 +41,10 @@ jobs:
           imageName: ghcr.io/${{ github.repository }}
           cacheFrom: ghcr.io/${{ github.repository }}
           noCache: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
-          imageTag: latest
+          imageTag: ${{ matrix.imageTag }}
           push: always
+        env:
+          IMAGE: ${{ matrix.IMAGE }}
 
   clean:
     needs: "build"
