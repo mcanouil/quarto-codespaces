@@ -33,6 +33,7 @@
 			"version": "release",
 			"installTinyTex": "true",
 			"installChromium": "false"
-		}
+		},
+		"ghcr.io/devcontainers/features/github-cli:1": {}
 	}
 }
