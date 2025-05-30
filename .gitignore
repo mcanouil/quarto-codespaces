@@ -1,0 +1,50 @@
+# Morning Briefing - Git Ignore
+
+# Umgebungsvariablen (lokale Konfiguration)
+.env
+.env.local
+.env.*.local
+
+# R spezifisch
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+*.Rproj
+
+# Generierte Dateien
+morning_briefing.pdf
+morning_briefing.tex
+morning_briefing.typ
+*_files/
+
+# E-Mail-Test-Dateien
+email_body.html
+.msmtp.log
+
+# msmtp Konfiguration (enthält Passwörter)
+.msmtprc
+
+# Temporäre Dateien
+*.tmp
+*.temp
+*.log
+
+# System-Dateien
+.DS_Store
+Thumbs.db
+
+# Editor-Dateien
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+
+# Backup-Dateien
+*.bak
+*.backup
+
+# Cache-Verzeichnisse
+.cache/
+__pycache__/

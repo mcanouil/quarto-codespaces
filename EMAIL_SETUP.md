@@ -4,6 +4,28 @@
 
 Das Morning Briefing wird täglich um 7:30 Uhr Berliner Zeit automatisch per E-Mail versendet.
 
+## Lokale Entwicklung
+
+### Option 1: .env Datei (Empfohlen)
+Für die lokale Entwicklung können Sie eine `.env` Datei verwenden:
+
+1. **Automatisches Setup:**
+   ```bash
+   ./setup-env.sh
+   ```
+
+2. **Manuelles Setup:**
+   - Kopieren Sie die `.env` Vorlage und tragen Sie Ihre Daten ein
+   - Die `.env` Datei wird automatisch von den Test-Skripten geladen
+   - **Wichtig:** Die `.env` Datei wird nicht committet (siehe `.gitignore`)
+
+### Option 2: Umgebungsvariablen
+```bash
+export EMAIL_USERNAME="ihre-email@gmail.com"
+export EMAIL_PASSWORD="ihr-app-passwort"
+export EMAIL_RECIPIENTS="empfaenger@beispiel.com"
+```
+
 ## Repository Secrets Setup
 
 Für den E-Mail-Versand müssen folgende Secrets in den GitHub Repository Settings konfiguriert werden:
@@ -71,7 +93,6 @@ server_port: 587  # oder 465 für SSL
 Die E-Mail enthält:
 
 - **Betreff**: "📊 Morning Briefing - [Datum]"
-- **HTML-Body** mit Übersicht der Inhalte
 - **PDF-Anhang** mit dem vollständigen Morning Briefing
 - **Automatische Zeitstempel**
 

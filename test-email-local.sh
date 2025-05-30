@@ -7,14 +7,24 @@ set -e
 
 echo "📧 Testing Morning Briefing Email Functionality..."
 
+# Load environment variables from .env file if it exists
+if [ -f ".env" ]; then
+    echo "📁 Loading environment variables from .env file..."
+    export $(cat .env | grep -v '#' | grep -v '^$' | xargs)
+fi
+
 # Check if required environment variables are set
 if [ -z "$EMAIL_USERNAME" ] || [ -z "$EMAIL_PASSWORD" ] || [ -z "$EMAIL_RECIPIENTS" ]; then
     echo "❌ Error: Email environment variables not set"
     echo ""
-    echo "Please set the following environment variables:"
-    echo "  export EMAIL_USERNAME='your-email@gmail.com'"
-    echo "  export EMAIL_PASSWORD='your-app-password'"
-    echo "  export EMAIL_RECIPIENTS='recipient1@example.com,recipient2@example.com'"
+    echo "Please either:"
+    echo "1. Set environment variables manually:"
+    echo "   export EMAIL_USERNAME='your-email@gmail.com'"
+    echo "   export EMAIL_PASSWORD='your-app-password'"
+    echo "   export EMAIL_RECIPIENTS='recipient1@example.com,recipient2@example.com'"
+    echo ""
+    echo "2. Or configure the .env file with your credentials"
+    echo "   (See .env template in the project root)"
     echo ""
     echo "For Gmail setup instructions, see EMAIL_SETUP.md"
     exit 1
