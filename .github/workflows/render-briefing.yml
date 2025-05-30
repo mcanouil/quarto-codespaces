@@ -1,0 +1,155 @@
+name: Render Morning Briefing
+
+on:
+  schedule:
+    # Run daily at 7:30 AM Berlin Time (5:30 UTC during summer, 6:30 UTC during winter)
+    - cron: '30 5 * * *'  # Summer time (CEST)
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup R
+      uses: r-lib/actions/setup-r@v2
+      with:
+        r-version: '4.5'
+        
+    - name: Setup Pandoc
+      uses: r-lib/actions/setup-pandoc@v2
+      
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          libcurl4-openssl-dev \
+          libssl-dev \
+          libxml2-dev \
+          libfontconfig1-dev \
+          libharfbuzz-dev \
+          libfribidi-dev \
+          libfreetype6-dev \
+          libpng-dev \
+          libtiff5-dev \
+          libjpeg-dev \
+          fontconfig
+          
+    - name: Install fonts
+      run: |
+        # Create fonts directory in system
+        sudo mkdir -p /usr/share/fonts/truetype/bundesweb
+        
+        # Copy fonts to system directory
+        sudo cp fonts/*.ttf /usr/share/fonts/truetype/bundesweb/
+        
+        # Update font cache
+        sudo fc-cache -fv
+        
+        # Verify fonts are installed
+        fc-list | grep -i bundes || echo "BundesSans fonts installed"
+        
+    - name: Setup Quarto
+      uses: quarto-dev/quarto-actions/setup@v2
+      with:
+        version: 'release'
+        
+    - name: Install Typst
+      run: |
+        # Install Typst for PDF generation
+        curl -fsSL https://typst.community/typst-install/install.sh | sh
+        echo "$HOME/.local/bin" >> $GITHUB_PATH
+        
+    - name: Restore R package cache
+      uses: actions/cache@v4
+      with:
+        path: ~/.local/share/renv
+        key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-renv-
+          
+    - name: Install R dependencies
+      run: |
+        # Install renv first
+        R -e "install.packages('renv', repos = c(CRAN = 'https://cloud.r-project.org'))"
+        
+        # Restore packages from renv.lock
+        R -e "renv::restore()"
+        
+    - name: Render Morning Briefing
+      run: |
+        # Set environment variables for rendering
+        export QUARTO_DENO_DOM_LOG_LEVEL=WARNING
+        
+        # Render the document
+        quarto render morning_briefing.qmd --to typst-pdf
+        
+    - name: Upload PDF artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: morning-briefing-${{ github.run_number }}
+        path: morning_briefing.pdf
+        retention-days: 30
+        
+    - name: Send Morning Briefing via Email
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 587
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        subject: "📊 Morning Briefing - ${{ github.run_date }}"
+        to: ${{ secrets.EMAIL_RECIPIENTS }}
+        from: Morning Briefing Bot <${{ secrets.EMAIL_USERNAME }}>
+        html_body: |
+          <h2>📊 Daily Morning Briefing</h2>
+          <p>Guten Morgen!</p>
+          
+          <p>Hier ist Ihr tagesaktuelles Morning Briefing für den <strong>${{ github.run_date }}</strong>.</p>
+          
+          <p>Das Morning Briefing finden Sie im Anhang als PDF.</p>
+
+        attachments: morning_briefing.pdf
+        
+    - name: Commit and push updated PDF
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        
+        # Add the generated PDF
+        git add morning_briefing.pdf
+        
+        # Check if there are changes to commit
+        if git diff --staged --quiet; then
+          echo "No changes to commit"
+        else
+          git commit -m "📊 Update Morning Briefing - $(date '+%Y-%m-%d %H:%M')"
+          git push
+        fi
+        
+    - name: Create Release (Weekly)
+      if: github.event.schedule == '0 8 * * 1' # Only on Mondays
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: briefing-${{ github.run_number }}
+        name: Weekly Morning Briefing - ${{ github.run_number }}
+        body: |
+          📊 Weekly Morning Briefing compilation
+          
+          Generated on: ${{ github.run_date }}
+          
+          This release contains the latest morning briefing with:
+          - Global financial indicators
+          - Economic calendar
+          - Top economic news stories
+          - Industry-specific news
+          
+        files: morning_briefing.pdf
+        draft: false
+        prerelease: false

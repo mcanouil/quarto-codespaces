@@ -1,0 +1,69 @@
+---
+format:
+    typst:
+        toc: false
+        margin:
+            x: 1in
+            y: 1in
+        font-size: 11pt
+        font-paths: ["fonts/"]
+        mainfont: "BundesSans Web"
+        template-partials:
+          - "typst-show.typ"
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r setup}
+# Install packages if not already installed
+required_packages <- c("xml2", "httr2", "yahoofinancer", "ggplot2", "gt", "dplyr", "scales")
+
+for (pkg in required_packages) {
+  if (!require(pkg, character.only = TRUE)) {
+    install.packages(pkg)
+    library(pkg, character.only = TRUE)
+  }
+}
+
+# Load custom functions
+source("functions.R")
+```
+
+# Morning Briefing - `r format(Sys.Date(), "%d.%m.%Y")`
+
+## Globale Indikatoren und Preise
+
+```{r financial-indicators}
+#| results: asis
+
+create_financial_table()
+```
+
+## Tagesaktuelle Indikatoren
+
+```{r economic-calendar}
+#| results: asis
+
+get_economic_calendar()
+```
+
+
+## Top 5 stories
+
+```{r top-stories}
+#| results: asis
+
+# Fetch top 5 economic stories
+wirtschaft_feed <- fetch_rss_feed("https://www.handelsblatt.com/contentexport/feed/wirtschaft")
+print_news(wirtschaft_feed$headlines, wirtschaft_feed$links, 5)
+```
+
+## News Industrie
+
+```{r industry-news}
+#| results: asis
+
+get_industry_news(5)
+```
