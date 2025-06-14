@@ -1,13 +1,13 @@
 {
 	"name": "Quarto",
 	"build": {
-		"dockerfile": "./Dockerfile",
-		"context": ".",
-		"args": {
-			"PLATFORM": "linux/amd64",
-			"IMAGE": "${localEnv:IMAGE}"
-			// "IMAGE": "buildpack-deps:jammy-curl"
-		},
+		// "dockerfile": "./Dockerfile",
+		// "context": ".",
+		// "args": {
+		// 	"IMAGE": "${localEnv:IMAGE}"
+		// 	// "IMAGE": "buildpack-deps:jammy-curl"
+		// },
+		"image": "${localEnv:IMAGE}",
 		"options": [
 			"--label", "org.opencontainers.image.title=Quarto Codespaces",
 			"--label", "org.opencontainers.image.description=Quarto Codespaces / Dev Containers setup for quick online testing.",
@@ -15,7 +15,7 @@
 			"--label", "org.opencontainers.image.url=https://github.com/mcanouil/quarto-codespaces",
 			"--label", "org.opencontainers.image.source=https://github.com/mcanouil/quarto-codespaces",
 			// "--label", "org.opencontainers.image.ref.name=",
-			// "--label", "org.opencontainers.image.version=",
+			"--label", "org.opencontainers.image.version=${localEnv:QUARTO_VERSION}",
 			"--label", "org.opencontainers.image.licenses=MIT"
 		]
 	},
@@ -30,7 +30,7 @@
 			"version": "latest"
 		},
 		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
-			"version": "release",
+			"version": "${localEnv:QUARTO_VERSION}",
 			"installTinyTex": "true",
 			"installChromium": "false"
 		},
