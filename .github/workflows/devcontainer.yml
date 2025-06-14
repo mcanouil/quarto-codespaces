@@ -21,11 +21,11 @@ jobs:
     strategy:
       matrix:
         include:
-          - IMAGE: buildpack-deps:jammy-curl
-            QUARTO_VERSION: release
+          - QUARTO_VERSION: release
+            IMAGE: buildpack-deps:jammy-curl
             imageTag: release,latest
-          - IMAGE: buildpack-deps:jammy-curl
-            QUARTO_VERSION: prerelease
+          - QUARTO_VERSION: prerelease
+            IMAGE: buildpack-deps:jammy-curl
             imageTag: prerelease
     steps:
       - uses: actions/checkout@v4
