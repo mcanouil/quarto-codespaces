@@ -22,10 +22,10 @@ jobs:
     strategy:
       matrix:
         include:
-          - QUARTO_VERSION: ./.devcontainer/devcontainer.json
+          - QUARTO_VERSION: .devcontainer/devcontainer.json
             IMAGE_TAG: release,latest
             IMAGE: buildpack-deps:jammy-curl
-          - QUARTO_VERSION: ./.devcontainer/pre-release.json
+          - QUARTO_VERSION: .devcontainer/pre-release.json
             IMAGE_TAG: prerelease
             IMAGE: buildpack-deps:jammy-curl
     steps:
