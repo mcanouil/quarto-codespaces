@@ -18,15 +18,16 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    name: Build ${{ matrix.QUARTO_VERSION }} Dev Container
     strategy:
       matrix:
         include:
           - QUARTO_VERSION: release
+            IMAGE_TAG: release,latest
             IMAGE: buildpack-deps:jammy-curl
-            imageTag: release,latest
           - QUARTO_VERSION: prerelease
+            IMAGE_TAG: prerelease
             IMAGE: buildpack-deps:jammy-curl
-            imageTag: prerelease
     steps:
       - uses: actions/checkout@v4
 
@@ -51,7 +52,7 @@ jobs:
           imageName: ghcr.io/${{ github.repository }}
           cacheFrom: ghcr.io/${{ github.repository }}
           noCache: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
-          imageTag: ${{ matrix.imageTag }}
+          imageTag: ${{ matrix.IMAGE_TAG }}
           push: always
           platform: linux/amd64,linux/arm64
         env:
