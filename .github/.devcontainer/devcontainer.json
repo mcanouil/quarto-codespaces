@@ -1,13 +1,12 @@
 {
 	"name": "Quarto",
 	"build": {
-		// "dockerfile": "./Dockerfile",
-		// "context": ".",
-		// "args": {
-		// 	"IMAGE": "${localEnv:IMAGE}"
-		// 	// "IMAGE": "buildpack-deps:jammy-curl"
-		// },
-		"image": "${localEnv:IMAGE}",
+		"dockerfile": "./Dockerfile",
+		"context": ".",
+		"args": {
+			"IMAGE": "${localEnv:IMAGE}"
+			// "IMAGE": "buildpack-deps:jammy-curl"
+		},
 		"options": [
 			"--label", "org.opencontainers.image.title=Quarto Codespaces",
 			"--label", "org.opencontainers.image.description=Quarto Codespaces / Dev Containers setup for quick online testing.",
