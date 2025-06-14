@@ -14,11 +14,14 @@
 			"--label", "org.opencontainers.image.url=https://github.com/mcanouil/quarto-codespaces",
 			"--label", "org.opencontainers.image.source=https://github.com/mcanouil/quarto-codespaces",
 			// "--label", "org.opencontainers.image.ref.name=",
-			"--label", "org.opencontainers.image.version=${localEnv:QUARTO_VERSION}",
+			"--label", "org.opencontainers.image.version=${remoteEnv:QUARTO_VERSION}",
 			"--label", "org.opencontainers.image.licenses=MIT"
 		]
 	},
 	"remoteUser": "vscode",
+	"remoteEnv": {
+		"QUARTO_VERSION": "${localEnv:QUARTO_VERSION}"
+	},
 	"features": {
 		// "./quarto-computing-dependencies": {
 		// 	"rDeps": "rmarkdown,languageserver,nx10/httpgd@v2.0.3,prompt,lintr",
