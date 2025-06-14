@@ -14,7 +14,7 @@
 			"--label", "org.opencontainers.image.url=https://github.com/mcanouil/quarto-codespaces",
 			"--label", "org.opencontainers.image.source=https://github.com/mcanouil/quarto-codespaces",
 			// "--label", "org.opencontainers.image.ref.name=",
-			// "--label", "org.opencontainers.image.version=",
+			"--label", "org.opencontainers.image.version=${localEnv:QUARTO_VERSION}",
 			"--label", "org.opencontainers.image.licenses=MIT"
 		]
 	},
@@ -29,7 +29,7 @@
 			"version": "latest"
 		},
 		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
-			"version": "release",
+			"version": "${localEnv:QUARTO_VERSION}",
 			"installTinyTex": "true",
 			"installChromium": "false"
 		},
