@@ -18,14 +18,14 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build ${{ matrix.QUARTO_VERSION }} Dev Container
+    name: Build '${{ matrix.QUARTO_VERSION }}' Dev Container
     strategy:
       matrix:
         include:
-          - QUARTO_VERSION: release
+          - QUARTO_VERSION: ./.devcontainer/devcontainer.json
             IMAGE_TAG: release,latest
             IMAGE: buildpack-deps:jammy-curl
-          - QUARTO_VERSION: prerelease
+          - QUARTO_VERSION: ./.devcontainer/pre-release.json
             IMAGE_TAG: prerelease
             IMAGE: buildpack-deps:jammy-curl
     steps:
@@ -55,6 +55,7 @@ jobs:
           imageTag: ${{ matrix.IMAGE_TAG }}
           push: always
           platform: linux/amd64,linux/arm64
+          configFile: ${{ matrix.QUARTO_VERSION }}
         env:
           IMAGE: ${{ matrix.IMAGE }}
 

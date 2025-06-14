@@ -20,16 +20,16 @@
 	},
 	"remoteUser": "vscode",
 	"features": {
-		// "./quarto-computing-dependencies": {
-		// 	"rDeps": "rmarkdown,languageserver,nx10/httpgd@v2.0.3,prompt,lintr",
-		// 	"pythonDeps": "jupyter,papermill",
-		// 	"juliaDeps": "IJulia"
-		// },
-		// "./uv": {
-		// 	"version": "latest"
-		// },
+		"./quarto-computing-dependencies": {
+			"rDeps": "rmarkdown,languageserver,nx10/httpgd@v2.0.3,prompt,lintr",
+			"pythonDeps": "jupyter,papermill",
+			"juliaDeps": "IJulia"
+		},
+		"./uv": {
+			"version": "latest"
+		},
 		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
-			"version": "release",
+			"version": "prerelease",
 			"installTinyTex": "true",
 			"installChromium": "false"
 		},
