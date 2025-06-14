@@ -18,7 +18,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: "Build '${{ matrix.QUARTO_VERSION }}' Dev Container"
+    name: Build - Quarto ${{ matrix.QUARTO_VERSION }}
     strategy:
       matrix:
         include:
