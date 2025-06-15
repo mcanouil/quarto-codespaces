@@ -1,6 +1,6 @@
 {
 	"name": "Universal - Quarto Codespaces",
-	"image": "ghcr.io/mcanouil/quarto-codespaces:releast-universal",
+	"image": "ghcr.io/mcanouil/quarto-codespaces:release-universal",
 	"remoteUser": "codespace",
 	"features": {
 		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
