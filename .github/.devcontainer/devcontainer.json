@@ -18,7 +18,7 @@
 			"--label", "org.opencontainers.image.licenses=MIT"
 		]
 	},
-	"remoteUser": "vscode",
+	"remoteUser": "${localEnv:USER}",
 	"features": {
 		"./quarto-computing-dependencies": {
 			"rDeps": "rmarkdown,languageserver,nx10/httpgd@v2.0.3,prompt,lintr",
