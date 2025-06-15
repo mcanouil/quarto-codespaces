@@ -18,7 +18,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build - Quarto ${{ matrix.QUARTO_VERSION }}
+    name: Build - Quarto ${{ matrix.QUARTO_VERSION }} (${{ matrix.IMAGE }})
     strategy:
       matrix:
         include:
