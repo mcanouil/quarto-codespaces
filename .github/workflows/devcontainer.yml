@@ -1,4 +1,4 @@
-name: Dev Container Docker Image Build
+name: "Build: Base Images"
 
 on:
   workflow_dispatch:

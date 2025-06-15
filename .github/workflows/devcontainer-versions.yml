@@ -1,9 +1,9 @@
-name: Dev Container Docker Image Build Versions
+name: "Build: Versions Images"
 
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["Dev Container Docker Image Build"]
+    workflows: ["Build: Base Images"]
     types:
       - completed
 
