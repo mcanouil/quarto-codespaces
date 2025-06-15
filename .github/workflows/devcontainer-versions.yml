@@ -1,11 +1,11 @@
-name: Dev Container Docker Image Build
+name: Dev Container Docker Image Build Versions
 
 on:
   workflow_dispatch:
-  release:
-    types: [published]
-  schedule:
-    - cron: "0 6 * * sun"
+  workflow_run:
+    workflows: ["Dev Container Docker Image Build"]
+    types:
+      - completed
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}
@@ -18,26 +18,18 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build - Quarto ${{ matrix.QUARTO_VERSION }} (${{ matrix.IMAGE }})
+    name: Build - Quarto ${{ matrix.QUARTO_VERSION }}
     strategy:
       matrix:
-        include:
-          - QUARTO_VERSION: release
-            IMAGE_TAG: release,release-jammy,latest
-            IMAGE: buildpack-deps:jammy-curl
-            USER: vscode
-          - QUARTO_VERSION: prerelease
-            IMAGE_TAG: prerelease,prerelease-jammy
-            IMAGE: buildpack-deps:jammy-curl
-            USER: vscode
-          # - QUARTO_VERSION: release
-          #   IMAGE_TAG: release-universal
-          #   IMAGE: mcr.microsoft.com/devcontainers/universal:latest
-          #   USER: codespace
-          # - QUARTO_VERSION: prerelease
-          #   IMAGE_TAG: prerelease-universal
-          #   IMAGE: mcr.microsoft.com/devcontainers/universal:latest
-          #   USER: codespace
+        QUARTO_VERSION:
+          - 1.0
+          - 1.1
+          - 1.2
+          - 1.3
+          - 1.4
+          - 1.5
+          - 1.6
+          - 1.7
     steps:
       - uses: actions/checkout@v4
 
@@ -58,18 +50,14 @@ jobs:
       - name: Build and run Dev Container on release
         uses: devcontainers/ci@v0.3
         with:
-          subFolder: .github
           imageName: ghcr.io/${{ github.repository }}
           cacheFrom: ghcr.io/${{ github.repository }}
           noCache: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
-          imageTag: ${{ matrix.IMAGE_TAG }}
+          imageTag: ${{ matrix.QUARTO_VERSION }}
           push: always
           platform: linux/amd64
           # platform: linux/amd64,linux/arm64
-        env:
-          IMAGE: ${{ matrix.IMAGE }}
-          QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
-          USER: ${{ matrix.USER }}
+          configFile: ${{ format('.devcontainer/mcanouil-{0}/devcontainer.json', matrix.QUARTO_VERSION) }}
 
   clean:
     needs: "build"

@@ -18,8 +18,19 @@
 			"--label", "org.opencontainers.image.licenses=MIT"
 		]
 	},
-	"remoteUser": "vscode",
+	"remoteUser": "${localEnv:USER}",
 	"features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+			"installZsh": "true",
+			"username": "${localEnv:USER}",
+			// "userUid": "1000",
+			// "userGid": "1000",
+			"upgradePackages": "true"
+		},
+		"ghcr.io/devcontainers/features/git:1": {
+			"version": "latest",
+			"ppa": "false"
+		},
 		"./quarto-computing-dependencies": {
 			"rDeps": "rmarkdown,languageserver,nx10/httpgd@v2.0.3,prompt,lintr",
 			"pythonDeps": "jupyter,papermill",

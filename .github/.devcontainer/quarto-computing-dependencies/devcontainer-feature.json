@@ -21,17 +21,6 @@
 		}
   },
   "dependsOn": {
-    "ghcr.io/devcontainers/features/common-utils:2": {
-			"installZsh": "true",
-			"username": "vscode",
-			"userUid": "1000",
-			"userGid": "1000",
-			"upgradePackages": "true"
-		},
-		"ghcr.io/devcontainers/features/git:1": {
-			"version": "latest",
-			"ppa": "false"
-		},
 		"ghcr.io/rocker-org/devcontainer-features/r-rig:1": {
 			"version": "release",
 			"vscodeRSupport": "none",
