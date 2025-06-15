@@ -40,10 +40,9 @@
 			"version": "latest"
 		},
 		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
-			"version": "${localEnv:QUARTO_VERSION}",
-			"installTinyTex": "true",
-			"installChromium": "false"
+			"version": "${localEnv:QUARTO_VERSION}"
 		},
+		"./tinytex": {},
 		"ghcr.io/devcontainers/features/github-cli:1": {}
 	}
 }

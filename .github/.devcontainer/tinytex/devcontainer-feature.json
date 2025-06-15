@@ -1,0 +1,10 @@
+{
+  "id": "tinytex",
+  "version": "1.0.0",
+  "name": "TinyTeX",
+  "description": "Install TinyTeX, a lightweight LaTeX distribution.",
+  "installsAfter": [
+		"ghcr.io/devcontainers/features/common-utils",
+    "ghcr.io/rocker-org/devcontainer-features/quarto-cli"
+  ]
+}
