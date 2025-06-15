@@ -64,8 +64,7 @@ jobs:
           noCache: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
           imageTag: ${{ matrix.IMAGE_TAG }}
           push: always
-          platform: linux/amd64
-          # platform: linux/amd64,linux/arm64
+          platform: linux/amd64,linux/arm64
         env:
           IMAGE: ${{ matrix.IMAGE }}
           QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
@@ -78,6 +77,8 @@ jobs:
     name: Build - Quarto ${{ matrix.QUARTO_VERSION }}
     strategy:
       matrix:
+        PLATFORM:
+          - "linux/amd64,linux/arm64"
         QUARTO_VERSION:
           - "1.0"
           - "1.1"
@@ -87,6 +88,13 @@ jobs:
           - "1.5"
           - "1.6"
           - "1.7"
+        include:
+          - QUARTO_VERSION: "1.0"
+            PLATFORM: "linux/amd64"
+          - QUARTO_VERSION: "1.1"
+            PLATFORM: "linux/amd64"
+          - QUARTO_VERSION: "1.2"
+            PLATFORM: "linux/amd64"
     steps:
       - uses: actions/checkout@v4
       - name: Set up QEMU for multi-architecture builds
@@ -108,7 +116,7 @@ jobs:
           noCache: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
           imageTag: ${{ matrix.QUARTO_VERSION }},${{ matrix.QUARTO_VERSION }}-jammy
           push: always
-          platform: linux/amd64
+          platform: ${{ matrix.PLATFORM }}
           # platform: linux/amd64,linux/arm64
           configFile: ${{ format('.devcontainer/mcanouil-{0}/devcontainer.json', matrix.QUARTO_VERSION) }}
             

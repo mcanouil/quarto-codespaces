@@ -6,10 +6,6 @@ export DEBIAN_FRONTEND=noninteractive
 
 USERNAME=${USERNAME:-${_REMOTE_USER:-"automatic"}}
 
-R_DEPS=${RDEPS:-"rmarkdown"}
-PYTHON_DEPS=${PYTHONDEPS:-"jupyter,papermill"}
-JULIA_DEPS=${JULIADEPS:-"IJulia"}
-
 if [ "$(id -u)" -ne 0 ]; then
   echo -e 'Script must be run as root. Use sudo, su, or add "USER root" to your Dockerfile before running this script.'
   exit 1
@@ -38,27 +34,27 @@ elif [ "${USERNAME}" = "none" ] || ! id -u "${USERNAME}" >/dev/null 2>&1; then
   USERNAME=root
 fi
 
-quarto_r_deps() {
-  local deps=$1
-  deps=$(echo "${deps}" | sed 's/,/","/g')
-  su "${USERNAME}" -c "Rscript -e 'pak::pkg_install(c(\"${deps}\"))'"
+apt_get_update() {
+  if [ "$(find /var/lib/apt/lists/* | wc -l)" = "0" ]; then
+    echo "Running apt-get update..."
+    apt-get update -y
+  fi
 }
 
-quarto_python_deps() {
-  local deps=$1
-  deps=$(echo "${deps}" | sed 's/,/ /g')
-  python3 -m pip install ${deps}
+# Checks if packages are installed and installs them if not
+check_packages() {
+  if ! dpkg -s "$@" >/dev/null 2>&1; then
+    apt_get_update
+    apt-get -y install --no-install-recommends "$@"
+  fi
 }
 
-quarto_julia_deps() {
-  local deps=$1
-  deps=$(echo "${deps}" | sed 's/,/","/g')
-  su "${USERNAME}" -c "~/.juliaup/bin/julia -e 'using Pkg; Pkg.add.([\"${deps}\"])'"
-}
-
-quarto_r_deps ${R_DEPS}
-quarto_python_deps ${PYTHON_DEPS}
-quarto_julia_deps ${JULIA_DEPS}
+echo "Installing TinyTeX..."
+check_packages libfontconfig
+# su "${USERNAME}" -c 'quarto install tinytex --quiet'
+check_packages curl ca-certificates
+su "${USERNAME}" -c 'curl -sL "https://yihui.org/tinytex/install-bin-unix.sh" | sh'
+echo "TinyTeX installation complete."
 
 apt-get clean && rm -rf /var/lib/apt/lists/*
 
