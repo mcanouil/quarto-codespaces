@@ -30,14 +30,14 @@ jobs:
             IMAGE_TAG: prerelease,prerelease-jammy
             IMAGE: buildpack-deps:jammy-curl
             USER: vscode
-          - QUARTO_VERSION: release
-            IMAGE_TAG: release-universal
-            IMAGE: mcr.microsoft.com/devcontainers/universal:latest
-            USER: codespace
-          - QUARTO_VERSION: prerelease
-            IMAGE_TAG: prerelease-universal
-            IMAGE: mcr.microsoft.com/devcontainers/universal:latest
-            USER: codespace
+          # - QUARTO_VERSION: release
+          #   IMAGE_TAG: release-universal
+          #   IMAGE: mcr.microsoft.com/devcontainers/universal:latest
+          #   USER: codespace
+          # - QUARTO_VERSION: prerelease
+          #   IMAGE_TAG: prerelease-universal
+          #   IMAGE: mcr.microsoft.com/devcontainers/universal:latest
+          #   USER: codespace
     steps:
       - uses: actions/checkout@v4
 
