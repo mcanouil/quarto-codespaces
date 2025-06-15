@@ -54,7 +54,7 @@ jobs:
           noCache: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
           imageTag: ${{ matrix.IMAGE_TAG }}
           push: always
-          platform: linux/arm64
+          platform: linux/amd64
           # platform: linux/amd64,linux/arm64
         env:
           IMAGE: ${{ matrix.IMAGE }}
