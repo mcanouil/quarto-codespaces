@@ -25,9 +25,9 @@ jobs:
           - QUARTO_VERSION: release
             IMAGE_TAG: release,latest
             IMAGE: buildpack-deps:jammy-curl
-          # - QUARTO_VERSION: prerelease
-          #   IMAGE_TAG: prerelease
-          #   IMAGE: buildpack-deps:jammy-curl
+          - QUARTO_VERSION: prerelease
+            IMAGE_TAG: prerelease
+            IMAGE: buildpack-deps:jammy-curl
     steps:
       - uses: actions/checkout@v4
 
