@@ -15,6 +15,12 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
+architecture="$(dpkg --print-architecture)"
+if [ "${architecture}" != "amd64" ] && [ "${architecture}" != "arm64" ]; then
+  echo "(!) Architecture ${architecture} unsupported"
+  exit 2
+fi
+
 # Determine the appropriate non-root user
 if [ "${USERNAME}" = "auto" ] || [ "${USERNAME}" = "automatic" ]; then
   USERNAME=""
