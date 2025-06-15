@@ -18,7 +18,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build ${{ matrix.QUARTO_VERSION }} Dev Container
+    name: Build - Quarto ${{ matrix.QUARTO_VERSION }}
     strategy:
       matrix:
         include:
@@ -54,9 +54,11 @@ jobs:
           noCache: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
           imageTag: ${{ matrix.IMAGE_TAG }}
           push: always
-          platform: linux/amd64,linux/arm64
+          platform: linux/amd64
+          # platform: linux/amd64,linux/arm64
         env:
           IMAGE: ${{ matrix.IMAGE }}
+          QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
 
   clean:
     needs: "build"
