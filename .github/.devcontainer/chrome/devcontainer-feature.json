@@ -1,0 +1,10 @@
+{
+  "id": "chrome",
+  "version": "1.0.0",
+  "name": "Chrome",
+  "description": "Install Google Chrome web browser.",
+  "installsAfter": [
+		"ghcr.io/devcontainers/features/common-utils",
+		"ghcr.io/devcontainers/features/git"
+  ]
+}

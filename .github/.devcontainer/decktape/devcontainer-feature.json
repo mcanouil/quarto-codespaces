@@ -1,0 +1,19 @@
+{
+  "id": "decktape",
+  "version": "1.0.0",
+  "name": "decktape",
+  "description": "Install decktape, a tool for generating PDFs from web pages.",
+  "options": {
+    "node": {
+      "default": "22",
+      "description": "Select the Node version to install.",
+      "proposals": ["22"],
+      "type": "string"
+    }
+  },
+  "installsAfter": [
+		"ghcr.io/devcontainers/features/common-utils",
+		"ghcr.io/devcontainers/features/git",
+    "./chrome"
+  ]
+}
