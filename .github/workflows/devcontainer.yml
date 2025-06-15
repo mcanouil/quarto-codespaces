@@ -106,7 +106,7 @@ jobs:
           imageName: ghcr.io/${{ github.repository }}
           cacheFrom: ghcr.io/${{ github.repository }}
           noCache: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
-          imageTag: ${{ matrix.QUARTO_VERSION }}
+          imageTag: ${{ matrix.QUARTO_VERSION }},${{ matrix.QUARTO_VERSION }}-jammy
           push: always
           platform: linux/amd64
           # platform: linux/amd64,linux/arm64
