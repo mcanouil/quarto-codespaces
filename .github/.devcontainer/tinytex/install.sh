@@ -51,16 +51,9 @@ check_packages() {
 
 echo "Installing TinyTeX..."
 check_packages libfontconfig
-
-if [ "${architecture}" == "amd64" ]; then
-  su "${USERNAME}" -c 'quarto install tinytex --quiet'
-fi
-
-if [ "${architecture}" == "arm64" ]; then
-  check_packages curl ca-certificates
-  su "${USERNAME}" -c 'curl -sL "https://yihui.org/tinytex/install-bin-unix.sh" | sh'
-fi
-
+# su "${USERNAME}" -c 'quarto install tinytex --quiet'
+check_packages curl ca-certificates
+su "${USERNAME}" -c 'curl -sL "https://yihui.org/tinytex/install-bin-unix.sh" | sh'
 echo "TinyTeX installation complete."
 
 apt-get clean && rm -rf /var/lib/apt/lists/*
