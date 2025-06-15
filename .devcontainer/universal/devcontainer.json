@@ -1,11 +1,35 @@
 {
 	"name": "Universal - Quarto Codespaces",
-	"image": "ghcr.io/mcanouil/quarto-codespaces:release-universal",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": ".",
+		"args": {
+			"IMAGE": "mcr.microsoft.com/devcontainers/universal:latest"
+		},
+		"options": [
+			"--label", "org.opencontainers.image.title=Quarto Codespaces",
+			"--label", "org.opencontainers.image.description=Quarto Codespaces / Dev Containers setup for quick online testing.",
+			"--label", "org.opencontainers.image.authors=Mickaël CANOUIL <https://mickael.canouil.fr>",
+			"--label", "org.opencontainers.image.url=https://github.com/mcanouil/quarto-codespaces",
+			"--label", "org.opencontainers.image.source=https://github.com/mcanouil/quarto-codespaces",
+			// "--label", "org.opencontainers.image.ref.name=",
+			// "--label", "org.opencontainers.image.version=",
+			"--label", "org.opencontainers.image.licenses=MIT"
+		]
+	},
 	"remoteUser": "codespace",
 	"features": {
+		"./quarto-computing-dependencies": {
+			"rDeps": "rmarkdown,languageserver,nx10/httpgd@v2.0.3,prompt,lintr",
+			"pythonDeps": "jupyter,papermill",
+			"juliaDeps": "IJulia"
+		},
+		"./uv": {
+			"version": "latest"
+		},
 		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
 			"version": "release",
-			"installTinyTex": "false",
+			"installTinyTex": "true",
 			"installChromium": "false"
 		}
 	},
