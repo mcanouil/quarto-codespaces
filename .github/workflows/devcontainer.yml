@@ -23,11 +23,11 @@ jobs:
       matrix:
         include:
           - QUARTO_VERSION: release
-            IMAGE_TAG: release,latest
+            IMAGE_TAG: release,release-jammy,latest
             IMAGE: buildpack-deps:jammy-curl
             USER: vscode
           - QUARTO_VERSION: prerelease
-            IMAGE_TAG: prerelease
+            IMAGE_TAG: prerelease,prerelease-jammy
             IMAGE: buildpack-deps:jammy-curl
             USER: vscode
           - QUARTO_VERSION: release
