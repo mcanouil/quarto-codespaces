@@ -6,8 +6,6 @@ export DEBIAN_FRONTEND=noninteractive
 
 USERNAME=${USERNAME:-${_REMOTE_USER:-"automatic"}}
 
-VERSION=${VERSION:-"latest"}
-
 if [ "$(id -u)" -ne 0 ]; then
   echo -e 'Script must be run as root. Use sudo, su, or add "USER root" to your Dockerfile before running this script.'
   exit 1
@@ -51,19 +49,12 @@ check_packages() {
   fi
 }
 
-install_uv() {
-  local version=$1
-  local url="https://github.com/astral-sh/uv/releases/${version}/download/uv-installer.sh"
-  check_packages curl ca-certificates
-  curl --proto '=https' --tlsv1.2 -LsSf ${url} | env UV_INSTALL_DIR="/usr/local/bin" sh
-}
-
-enable_autocompletion() {
-  echo 'eval "$(uv generate-shell-completion zsh)"' >> /usr/share/zsh/vendor-completions/_uv
-}
-
-install_uv ${VERSION}
-enable_autocompletion
+echo "Installing TinyTeX..."
+check_packages libfontconfig
+# su "${USERNAME}" -c 'quarto install tinytex --quiet'
+check_packages curl ca-certificates
+su "${USERNAME}" -c 'curl -sL "https://yihui.org/tinytex/install-bin-unix.sh" | sh'
+echo "TinyTeX installation complete."
 
 apt-get clean && rm -rf /var/lib/apt/lists/*
 

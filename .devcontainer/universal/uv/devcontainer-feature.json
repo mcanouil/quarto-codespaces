@@ -11,7 +11,5 @@
       "type": "string"
     }
   },
-  "installsAfter": [
-    "./quarto-computing-dependencies"
-  ]
+  "installsAfter": ["./quarto-computing-dependencies"]
 }
