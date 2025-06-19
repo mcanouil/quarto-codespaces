@@ -12,39 +12,47 @@ show_help() {
 }
 
 initialise_r() {
+  local deps=$1
+  deps=$(echo "${deps}" | sed 's/,/","/g')
   if [ "${FORCE}" = true ] || [ ! -f "renv.lock" ]; then
     if [ -f ".Rprofile" ] && grep -q 'source("renv/activate.R")' .Rprofile; then
       sed -i '' '/source("renv\/activate.R")/d' .Rprofile
     fi
     Rscript -e 'renv::init(bare = FALSE)'
-    Rscript -e 'renv::install(c("rmarkdown", "languageserver", "nx10/httpgd@v2.0.3", "prompt", "lintr", "cli"))'
+    Rscript -e "renv::install(c('${deps}'))"
     Rscript -e 'renv::snapshot(type = "all")'
   fi
 }
 
 initialise_python() {
+  local deps=$1
+  deps=$(echo "${deps}" | sed 's/,/ /g')
   if [ "${FORCE}" = true ] || [ ! -f "requirements.txt" ]; then
     python3 -m venv .venv
     source .venv/bin/activate
-    python3 -m pip install jupyter papermill
+    python3 -m pip install ${deps}
     python3 -m pip freeze > requirements.txt
   fi
 }
 
 initialise_uv() {
+  local deps=$1
+  deps=$(echo "${deps}" | sed 's/,/ /g')
   if [ "${FORCE}" = true ] || [ ! -f "uv.lock" ]; then
     uv init --no-package --vcs none --bare --no-readme --author-from none
     uv venv
     source .venv/bin/activate
-    uv add jupyter papermill
+    uv add ${deps}
     uv sync
   fi
 }
 
 initialise_julia() {
+  local deps=$1
+  deps=$(echo "${deps}" | sed 's/,/","/g')
   if [ "${FORCE}" = true ] || [ ! -f "Project.toml" ]; then
     julia -e 'using Pkg; Pkg.activate("."); Pkg.instantiate()'
-    julia --project=. -e 'using Pkg; Pkg.add("IJulia")'
+    julia --project=. -e "using Pkg; Pkg.add([\"${deps}\"])"
   fi
 }
 
@@ -73,23 +81,23 @@ while [[ "$#" -gt 0 ]]; do
   shift
 done
 
-case $WHAT in
+case ${WHAT} in
   all)
-    initialise_r
-    initialise_uv
-    initialise_julia
+    initialise_r "rmarkdown,languageserver,nx10/httpgd@v2.0.4"
+    initialise_uv "jupyter,papermill"
+    initialise_julia "IJulia"
     ;;
   r)
-    initialise_r
+    initialise_r "rmarkdown,languageserver,nx10/httpgd@v2.0.4"
     ;;
   python)
-    initialise_uv
+    initialise_uv "jupyter,papermill"
     ;;
   julia)
-    initialise_julia
+    initialise_julia "IJulia"
     ;;
   *)
-    echo "Unknown option for --what: $WHAT"
+    echo "Unknown option for --what: ${WHAT}"
     show_help
     exit 1
     ;;
