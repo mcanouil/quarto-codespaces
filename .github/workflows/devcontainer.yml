@@ -6,6 +6,7 @@ on:
     types: [published]
   schedule:
     - cron: "0 6 * * sun"
+  pull_request:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event_name }}
@@ -63,7 +64,7 @@ jobs:
           cacheFrom: ghcr.io/${{ github.repository }}
           noCache: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
           imageTag: ${{ matrix.IMAGE_TAG }}
-          push: always
+          push: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' && 'always' || 'never' }}
           platform: linux/amd64,linux/arm64
         env:
           IMAGE: ${{ matrix.IMAGE }}
@@ -72,6 +73,7 @@ jobs:
 
   build-versions:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
     needs:
       - "build"
     name: Build - Quarto ${{ matrix.QUARTO_VERSION }}
