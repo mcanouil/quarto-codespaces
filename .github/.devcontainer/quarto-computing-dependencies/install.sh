@@ -6,6 +6,8 @@ export DEBIAN_FRONTEND=noninteractive
 
 USERNAME=${USERNAME:-${_REMOTE_USER:-"automatic"}}
 
+PLATFORMS=${INSTALL_ON_PLATFORMS:-"amd64,arm64"}
+
 R_DEPS=${RDEPS:-"rmarkdown"}
 PYTHON_DEPS=${PYTHONDEPS:-"jupyter,papermill"}
 JULIA_DEPS=${JULIADEPS:-"IJulia"}
@@ -56,9 +58,13 @@ quarto_julia_deps() {
   su "${USERNAME}" -c "~/.juliaup/bin/julia -e 'using Pkg; Pkg.add.([\"${deps}\"])'"
 }
 
-quarto_r_deps ${R_DEPS}
-quarto_python_deps ${PYTHON_DEPS}
-quarto_julia_deps ${JULIA_DEPS}
+if [[ ",${PLATFORMS}," == *",${architecture},"* ]]; then
+  quarto_r_deps ${R_DEPS}
+  quarto_python_deps ${PYTHON_DEPS}
+  quarto_julia_deps ${JULIA_DEPS}
+else
+  echo "(!) Skipping R, Python, and Julia dependencies for ${architecture} architecture"
+fi
 
 apt-get clean && rm -rf /var/lib/apt/lists/*
 
