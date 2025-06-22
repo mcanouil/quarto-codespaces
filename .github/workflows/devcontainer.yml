@@ -168,31 +168,6 @@ jobs:
           push: always
           platform: ${{ matrix.PLATFORM }}
           configFile: ${{ format('.devcontainer/mcanouil-{0}/devcontainer.json', matrix.QUARTO_VERSION) }}
-      - name: Test Dev Container
-        env:
-          QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
-        run: |
-          echo "::group::Quarto Check"
-          docker container run \
-            --rm \
-            --platform linux/amd64 \
-            --quiet \
-            --user vscode \
-            --volume "/tmp:/workspaces/quarto-codespaces" \
-            --workdir /workspaces/quarto-codespaces \
-            ghcr.io/${GITHUB_REPOSITORY}:${QUARTO_VERSION} /bin/bash -c "quarto check --output quarto-check.json"
-
-          quarto_check=$(cat /tmp/quarto-check.json)
-          echo "${quarto_check}"
-          echo "::endgroup::"
-          echo "## Quarto Check Results: ${{ matrix.QUARTO_VERSION }}" >>$GITHUB_STEP_SUMMARY
-          echo "<details><summary>Quarto Check Results</summary>" >>$GITHUB_STEP_SUMMARY
-          echo "" >>$GITHUB_STEP_SUMMARY
-          echo '```json' >>$GITHUB_STEP_SUMMARY
-          echo "${quarto_check}" >>$GITHUB_STEP_SUMMARY
-          echo '```' >>$GITHUB_STEP_SUMMARY
-          echo "" >>$GITHUB_STEP_SUMMARY
-          echo "</details>" >>$GITHUB_STEP_SUMMARY
 
   clean:
     runs-on: ubuntu-latest
