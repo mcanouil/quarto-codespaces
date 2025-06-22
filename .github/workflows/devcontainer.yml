@@ -110,9 +110,11 @@ jobs:
           echo "::endgroup::"
           echo "## Quarto Check Results: ${{ matrix.QUARTO_VERSION }}" >>$GITHUB_STEP_SUMMARY
           echo "<details><summary>Quarto Check Results</summary>" >>$GITHUB_STEP_SUMMARY
+          echo "" >>$GITHUB_STEP_SUMMARY
           echo '```json' >>$GITHUB_STEP_SUMMARY
           echo "${quarto_check}" >>$GITHUB_STEP_SUMMARY
           echo '```' >>$GITHUB_STEP_SUMMARY
+          echo "" >>$GITHUB_STEP_SUMMARY
           echo "</details>" >>$GITHUB_STEP_SUMMARY
 
   build-versions:
@@ -181,9 +183,11 @@ jobs:
           echo "::endgroup::"
           echo "## Quarto Check Results: ${{ matrix.QUARTO_VERSION }}" >>$GITHUB_STEP_SUMMARY
           echo "<details><summary>Quarto Check Results</summary>" >>$GITHUB_STEP_SUMMARY
+          echo "" >>$GITHUB_STEP_SUMMARY
           echo '```json' >>$GITHUB_STEP_SUMMARY
           echo "${quarto_check}" >>$GITHUB_STEP_SUMMARY
           echo '```' >>$GITHUB_STEP_SUMMARY
+          echo "" >>$GITHUB_STEP_SUMMARY
           echo "</details>" >>$GITHUB_STEP_SUMMARY
 
   clean:
