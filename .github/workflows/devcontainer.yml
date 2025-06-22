@@ -91,7 +91,12 @@ jobs:
           IMAGE: ${{ matrix.IMAGE }}
           QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
           USER: ${{ matrix.USER }}
-          VERSION: ${{ steps.image_version.outputs.VERSION }}
+          ANNOTATION_VERSION: "${{ steps.image_version.outputs.VERSION }} (${{ github.sha }})"
+          ANNOTATION_TITLE: "Quarto Codespaces"
+          ANNOTATION_DESCRIPTION: "Quarto Codespaces / Dev Containers setup for quick online testing and workshops."
+          ANNOTATION_AUTHORS: "Mickaël CANOUIL <https://mickael.canouil.fr>"
+          ANNOTATION_URL: ${{ github.server_url }}/${{ github.repository }}
+          ANNOTATION_LICENSE: "MIT"
 
   build-versions:
     runs-on: ubuntu-latest
