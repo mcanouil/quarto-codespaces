@@ -12,7 +12,7 @@ It includes configuration files and scripts to initialise and manage these envir
 Using [`ghcr.io/mcanouil/quarto-codespaces:latest`](https://github.com/mcanouil/quarto-codespaces/pkgs/container/quarto-codespaces) as a base image for a quick deployment (Ubuntu 22.04 - Jammy Jellyfish):  
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/mcanouil/quarto-codespaces?quickstart=1&devcontainer_path=.devcontainer%2Fdevcontainer.json)
 
-Using Codespaces default base image ([`ghcr.io/mcanouil/quarto-codespaces:release-universal`](https://github.com/mcanouil/quarto-codespaces/pkgs/container/quarto-codespaces)) to mitigate storage usage (Ubuntu 20.04 - Focal Fossa):  
+Using Codespaces default base image ([`ghcr.io/mcanouil/quarto-codespaces:release-universal`](https://github.com/mcanouil/quarto-codespaces/pkgs/container/quarto-codespaces)) to mitigate GitHub storage usage (Ubuntu 20.04 - Focal Fossa):  
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/mcanouil/quarto-codespaces?quickstart=1&devcontainer_path=.devcontainer%2Funiversal%2Fdevcontainer.json)
 
 ## Using as a Template
