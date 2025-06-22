@@ -59,7 +59,7 @@ install_uv() {
 }
 
 enable_autocompletion() {
-  echo 'eval "$(uv generate-shell-completion zsh)"' >> /usr/share/zsh/vendor-completions/_uv
+  echo 'eval "$(uv generate-shell-completion zsh)"' >>/usr/share/zsh/vendor-completions/_uv
 }
 
 install_uv ${VERSION}

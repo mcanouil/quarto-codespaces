@@ -121,7 +121,7 @@ jobs:
           push: always
           platform: ${{ matrix.PLATFORM }}
           configFile: ${{ format('.devcontainer/mcanouil-{0}/devcontainer.json', matrix.QUARTO_VERSION) }}
-            
+
   clean:
     runs-on: ubuntu-latest
     needs:

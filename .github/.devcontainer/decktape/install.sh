@@ -34,7 +34,7 @@ install_decktape() {
   local version=$1
   local url="https://deb.nodesource.com/setup_${version}.x "
   check_packages curl ca-certificates
-  curl --proto '=https' --tlsv1.2 -LsSf ${url} | sudo -E bash - 
+  curl --proto '=https' --tlsv1.2 -LsSf ${url} | sudo -E bash -
   check_packages nodejs
   npm install -g decktape
 }
