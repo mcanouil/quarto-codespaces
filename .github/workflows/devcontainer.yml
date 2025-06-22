@@ -105,7 +105,7 @@ jobs:
             --workdir /workspaces/quarto-codespaces \
             ghcr.io/mcanouil/quarto-codespaces:latest /bin/bash -c "quarto check --output quarto-check.json"
 
-          quarto_check=$(cat /tmp/quarto-codespaces/quarto-check.json)
+          quarto_check=$(cat /tmp/quarto-check.json)
           echo "${quarto_check}"
           echo "::endgroup::"
           echo "## Quarto Check Results: ${{ matrix.QUARTO_VERSION }}" >>$GITHUB_STEP_SUMMARY
@@ -167,17 +167,16 @@ jobs:
       - name: Test Dev Container
         run: |
           echo "::group::Quarto Check"
-          mkdir -p /tmp/quarto-codespaces
           docker container run \
             --rm \
             --platform linux/amd64 \
             --quiet \
             --user vscode \
-            --volume "/tmp/quarto-codespaces:/workspaces/quarto-codespaces" \
+            --volume "/tmp:/workspaces/quarto-codespaces" \
             --workdir /workspaces/quarto-codespaces \
             ghcr.io/mcanouil/quarto-codespaces:latest /bin/bash -c "quarto check --output quarto-check.json"
 
-          quarto_check=$(cat /tmp/quarto-codespaces/quarto-check.json)
+          quarto_check=$(cat /tmp/quarto-check.json)
           echo "${quarto_check}"
           echo "::endgroup::"
           echo "## Quarto Check Results: ${{ matrix.QUARTO_VERSION }}" >>$GITHUB_STEP_SUMMARY
