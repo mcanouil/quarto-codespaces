@@ -53,7 +53,7 @@ This file defines the development container settings, including the base image, 
 ### Docker Image
 
 The Dev Container configuration is used to build a Docker image that is available for use.
-You can pull the latest image using the following command:
+You can pull the latest image (using Quarto stable release) using the following command:
 
 ```sh
 docker pull ghcr.io/mcanouil/quarto-codespaces:latest
