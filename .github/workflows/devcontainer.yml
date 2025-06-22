@@ -96,13 +96,24 @@ jobs:
       - name: Test Dev Container
         run: |
           echo "::group::Quarto Check"
-          quarto_check=$(docker run --rm --user vscode ghcr.io/${{ github.repository }}:${{ matrix.QUARTO_VERSION }} /bin/bash -c "quarto check" 2>&1)
+          docker container run \
+            --rm \
+            --platform linux/amd64 \
+            --quiet \
+            --user vscode \
+            --volume "$PWD:/workspaces/quarto-codespaces" \
+            --workdir /workspaces/quarto-codespaces \
+            ghcr.io/mcanouil/quarto-codespaces:latest /bin/bash -c "quarto check --output quarto-check.json"
+
+          quarto_check=$(cat quarto-check.json)
           echo "${quarto_check}"
           echo "::endgroup::"
           echo "## Quarto Check Results: ${{ matrix.QUARTO_VERSION }}" >>$GITHUB_STEP_SUMMARY
-          echo '```sh' >>$GITHUB_STEP_SUMMARY
+          echo "<details><summary>Quarto Check Results</summary>" >>$GITHUB_STEP_SUMMARY
+          echo '```json' >>$GITHUB_STEP_SUMMARY
           echo "${quarto_check}" >>$GITHUB_STEP_SUMMARY
           echo '```' >>$GITHUB_STEP_SUMMARY
+          echo "</details>" >>$GITHUB_STEP_SUMMARY
 
   build-versions:
     runs-on: ubuntu-latest
@@ -156,13 +167,24 @@ jobs:
       - name: Test Dev Container
         run: |
           echo "::group::Quarto Check"
-          quarto_check=$(docker run --rm --user vscode ghcr.io/${{ github.repository }}:${{ matrix.QUARTO_VERSION }} /bin/bash -c "quarto check" 2>&1)
+          docker container run \
+            --rm \
+            --platform linux/amd64 \
+            --quiet \
+            --user vscode \
+            --volume "$PWD:/workspaces/quarto-codespaces" \
+            --workdir /workspaces/quarto-codespaces \
+            ghcr.io/mcanouil/quarto-codespaces:latest /bin/bash -c "quarto check --output quarto-check.json"
+
+          quarto_check=$(cat quarto-check.json)
           echo "${quarto_check}"
           echo "::endgroup::"
           echo "## Quarto Check Results: ${{ matrix.QUARTO_VERSION }}" >>$GITHUB_STEP_SUMMARY
-          echo '```sh' >>$GITHUB_STEP_SUMMARY
+          echo "<details><summary>Quarto Check Results</summary>" >>$GITHUB_STEP_SUMMARY
+          echo '```json' >>$GITHUB_STEP_SUMMARY
           echo "${quarto_check}" >>$GITHUB_STEP_SUMMARY
           echo '```' >>$GITHUB_STEP_SUMMARY
+          echo "</details>" >>$GITHUB_STEP_SUMMARY
 
   clean:
     runs-on: ubuntu-latest
