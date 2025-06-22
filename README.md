@@ -42,11 +42,13 @@ This file defines the development container settings, including the base image, 
 - **Remote User**: The default user is set to `vscode`.
 - **Installed Features**:
   - Common utilities with Zsh shell.
-  - Latest Git version.
-  - R environment with `renv` support and `rmarkdown`.
-  - Latest Python version with shared libraries and `jupyter`.
-  - Julia environment with the latest release channel and `IJulia`.
-  - Quarto CLI with TinyTeX installed.
+  - [Git](https://git-scm.com/) for version control.
+  - [R](https://www.r-project.org/) with `renv` support and `rmarkdown`.
+  - [Python](https://www.python.org/) with shared libraries, `jupyter` and [`uv`](https://docs.astral.sh/uv/).
+  - [Julia](https://julialang.org/) with the latest release channel and `IJulia`.
+  - [TinyTeX](https://github.com/rstudio/tinytex) for LaTeX support.
+  - [Decktape](https://github.com/astefanutti/decktape) for PDF generation from HTML presentations.
+  - [Quarto CLI](https://quarto.org/) for scientific and technical publishing.
 
 ### Docker Image
 
