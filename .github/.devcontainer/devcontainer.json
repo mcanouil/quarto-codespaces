@@ -27,7 +27,7 @@
       "--label",
       "${ANNOTATION_VERSION}",
       "--label",
-      "$ANNOTATION_{LICENCES}",
+      "${ANNOTATION_LICENCES}",
       "--annotation",
       "${ANNOTATION_TITLE}",
       "--annotation",
@@ -41,7 +41,7 @@
       "--annotation",
       "${ANNOTATION_VERSION}",
       "--annotation",
-      "$ANNOTATION_{LICENCES}"
+      "${ANNOTATION_LICENCES}"
     ]
   },
   "remoteUser": "${localEnv:USER}",
