@@ -57,6 +57,17 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Push Docker image Setting
+        id: push
+        env:
+          PUSH_DOCKER_IMAGE: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
+        run: |
+          if [ "${PUSH_DOCKER_IMAGE}" = "true" ]; then
+            echo "PUSH=always" >$GITHUB_OUTPUT
+          else
+            echo "PUSH=never" >$GITHUB_OUTPUT
+          fi
+
       - name: Build and run Dev Container on release
         uses: devcontainers/ci@v0.3
         with:
@@ -65,7 +76,7 @@ jobs:
           cacheFrom: ghcr.io/${{ github.repository }}
           noCache: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
           imageTag: ${{ matrix.IMAGE_TAG }}
-          push: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' && 'always' || 'never' }}
+          push: ${{ steps.push.outputs.PUSH }}
           platform: linux/amd64
         env:
           IMAGE: ${{ matrix.IMAGE }}
