@@ -67,6 +67,15 @@ jobs:
           else
             echo "PUSH=never" >$GITHUB_OUTPUT
           fi
+      
+      - name: Define Image Version
+        id: image_version
+        run: |
+          if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
+            echo "VERSION=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
+          else
+            echo "VERSION=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          fi
 
       - name: Build and run Dev Container on release
         uses: devcontainers/ci@v0.3
@@ -82,6 +91,7 @@ jobs:
           IMAGE: ${{ matrix.IMAGE }}
           QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
           USER: ${{ matrix.USER }}
+          VERSION: ${{ steps.image_version.outputs.VERSION }}
 
   build-versions:
     runs-on: ubuntu-latest

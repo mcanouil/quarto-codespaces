@@ -10,7 +10,7 @@
       "AUTHORS": "Mickaël CANOUIL <https://mickael.canouil.fr>",
       "URL": "https://github.com/mcanouil/quarto-codespaces",
       "SOURCE": "https://github.com/mcanouil/quarto-codespaces",
-      "VERSION": "${localEnv:QUARTO_VERSION}",
+      "VERSION": "${localEnv:VERSION}",
       "LICENCES": "MIT"
     },
     "options": [
