@@ -4,59 +4,78 @@
     "dockerfile": "./Dockerfile",
     "context": ".",
     "args": {
-      "IMAGE": "${localEnv:IMAGE}"
-      // "IMAGE": "buildpack-deps:jammy-curl"
+      "IMAGE": "${localEnv:IMAGE}",
+      "ANNOTATION_TITLE": "org.opencontainers.image.title=Quarto Codespaces",
+      "ANNOTATION_DESCRIPTION": "org.opencontainers.image.description=Quarto Codespaces / Dev Containers setup for quick online testing.",
+      "ANNOTATION_AUTHORS": "org.opencontainers.image.authors=Mickaël CANOUIL <https://mickael.canouil.fr>",
+      "ANNOTATION_URL": "org.opencontainers.image.url=https://github.com/mcanouil/quarto-codespaces",
+      "ANNOTATION_SOURCE": "org.opencontainers.image.source=https://github.com/mcanouil/quarto-codespaces",
+      "ANNOTATION_VERSION": "org.opencontainers.image.version=${localEnv:QUARTO_VERSION}",
+      "ANNOTATION_LICENCES": "org.opencontainers.image.licenses=MIT"
     },
     "options": [
       "--label",
-      "org.opencontainers.image.title=Quarto Codespaces",
+      "${ANNOTATION_TITLE}",
       "--label",
-      "org.opencontainers.image.description=Quarto Codespaces / Dev Containers setup for quick online testing.",
+      "${ANNOTATION_DESCRIPTION}",
       "--label",
-      "org.opencontainers.image.authors=Mickaël CANOUIL <https://mickael.canouil.fr>",
+      "${ANNOTATION_AUTHORS}",
       "--label",
-      "org.opencontainers.image.url=https://github.com/mcanouil/quarto-codespaces",
+      "${ANNOTATION_URL}",
       "--label",
-      "org.opencontainers.image.source=https://github.com/mcanouil/quarto-codespaces",
-      // "--label", "org.opencontainers.image.ref.name=",
+      "${ANNOTATION_SOURCE}",
       "--label",
-      "org.opencontainers.image.version=${localEnv:QUARTO_VERSION}",
+      "${ANNOTATION_VERSION}",
       "--label",
-      "org.opencontainers.image.licenses=MIT"
+      "$ANNOTATION_{LICENCES}",
+      "--annotation",
+      "${ANNOTATION_TITLE}",
+      "--annotation",
+      "${ANNOTATION_DESCRIPTION}",
+      "--annotation",
+      "${ANNOTATION_AUTHORS}",
+      "--annotation",
+      "${ANNOTATION_URL}",
+      "--annotation",
+      "${ANNOTATION_SOURCE}",
+      "--annotation",
+      "${ANNOTATION_VERSION}",
+      "--annotation",
+      "$ANNOTATION_{LICENCES}"
     ]
   },
   "remoteUser": "${localEnv:USER}",
   "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {
-			"installZsh": "true",
-			"username": "${localEnv:USER}",
-			// "userUid": "1000",
-			// "userGid": "1000",
-			"upgradePackages": "true"
-		},
-		"ghcr.io/devcontainers/features/git:1": {
-			"version": "latest",
-			"ppa": "false"
-		},
+      "installZsh": "true",
+      "username": "${localEnv:USER}",
+      // "userUid": "1000",
+      // "userGid": "1000",
+      "upgradePackages": "true"
+    },
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest",
+      "ppa": "false"
+    },
     "./quarto-computing-dependencies": {
       "installOnPlatforms": "amd64",
       "rDeps": "rmarkdown,languageserver,nx10/httpgd@v2.0.4",
       "pythonDeps": "jupyter,papermill",
       "juliaDeps": "IJulia"
     },
-		"./uv": {
-			"version": "latest"
-		},
-		"./chrome": {},
-		"./decktape": {
-			"node": "22"
-		},
+    "./uv": {
+      "version": "latest"
+    },
+    "./chrome": {},
+    "./decktape": {
+      "node": "22"
+    },
     "./tinytex": {},
-		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
-			"version": "${localEnv:QUARTO_VERSION}",
-			"installTinyTex": "true",
-			"installChromium": "false"
-		},
-		"ghcr.io/devcontainers/features/github-cli:1": {}
-	}
+    "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
+      "version": "${localEnv:QUARTO_VERSION}",
+      "installTinyTex": "true",
+      "installChromium": "false"
+    },
+    "ghcr.io/devcontainers/features/github-cli:1": {}
+  }
 }
