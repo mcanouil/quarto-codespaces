@@ -1,25 +1,32 @@
 {
-	"name": "Quarto",
-	"build": {
-		"dockerfile": "./Dockerfile",
-		"context": ".",
-		"args": {
-			"IMAGE": "${localEnv:IMAGE}"
-			// "IMAGE": "buildpack-deps:jammy-curl"
-		},
-		"options": [
-			"--label", "org.opencontainers.image.title=Quarto Codespaces",
-			"--label", "org.opencontainers.image.description=Quarto Codespaces / Dev Containers setup for quick online testing.",
-			"--label", "org.opencontainers.image.authors=Mickaël CANOUIL <https://mickael.canouil.fr>",
-			"--label", "org.opencontainers.image.url=https://github.com/mcanouil/quarto-codespaces",
-			"--label", "org.opencontainers.image.source=https://github.com/mcanouil/quarto-codespaces",
-			// "--label", "org.opencontainers.image.ref.name=",
-			"--label", "org.opencontainers.image.version=${localEnv:QUARTO_VERSION}",
-			"--label", "org.opencontainers.image.licenses=MIT"
-		]
-	},
-	"remoteUser": "${localEnv:USER}",
-	"features": {
+  "name": "Quarto",
+  "build": {
+    "dockerfile": "./Dockerfile",
+    "context": ".",
+    "args": {
+      "IMAGE": "${localEnv:IMAGE}"
+      // "IMAGE": "buildpack-deps:jammy-curl"
+    },
+    "options": [
+      "--label",
+      "org.opencontainers.image.title=Quarto Codespaces",
+      "--label",
+      "org.opencontainers.image.description=Quarto Codespaces / Dev Containers setup for quick online testing.",
+      "--label",
+      "org.opencontainers.image.authors=Mickaël CANOUIL <https://mickael.canouil.fr>",
+      "--label",
+      "org.opencontainers.image.url=https://github.com/mcanouil/quarto-codespaces",
+      "--label",
+      "org.opencontainers.image.source=https://github.com/mcanouil/quarto-codespaces",
+      // "--label", "org.opencontainers.image.ref.name=",
+      "--label",
+      "org.opencontainers.image.version=${localEnv:QUARTO_VERSION}",
+      "--label",
+      "org.opencontainers.image.licenses=MIT"
+    ]
+  },
+  "remoteUser": "${localEnv:USER}",
+  "features": {
     "ghcr.io/devcontainers/features/common-utils:2": {
 			"installZsh": "true",
 			"username": "${localEnv:USER}",
@@ -31,11 +38,12 @@
 			"version": "latest",
 			"ppa": "false"
 		},
-		"./quarto-computing-dependencies": {
-			"rDeps": "rmarkdown,languageserver,nx10/httpgd@v2.0.3,prompt,lintr",
-			"pythonDeps": "jupyter,papermill",
-			"juliaDeps": "IJulia"
-		},
+    "./quarto-computing-dependencies": {
+      "installOnPlatforms": "amd64",
+      "rDeps": "rmarkdown,languageserver,nx10/httpgd@v2.0.4",
+      "pythonDeps": "jupyter,papermill",
+      "juliaDeps": "IJulia"
+    },
 		"./uv": {
 			"version": "latest"
 		},
@@ -43,6 +51,7 @@
 		"./decktape": {
 			"node": "22"
 		},
+    "./tinytex": {},
 		"ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
 			"version": "${localEnv:QUARTO_VERSION}",
 			"installTinyTex": "true",
