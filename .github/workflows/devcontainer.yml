@@ -95,10 +95,10 @@ jobs:
           ANNOTATION_LICENSE: "MIT"
       - name: Test Dev Container
         run: |
-          ::group::Quarto Check
+          echo "::group::Quarto Check"
           quarto_check=$(docker run --rm --user vscode ghcr.io/${{ github.repository }}:${{ matrix.QUARTO_VERSION }} /bin/bash -c "quarto check")
           echo "$quarto_check"
-          ::endgroup::
+          echo "::endgroup::"
           echo "## Quarto Check Results: ${{ matrix.QUARTO_VERSION }}" >> $GITHUB_STEP_SUMMARY
           echo "```sh" >> $GITHUB_STEP_SUMMARY
           echo "${quarto_check}" >> $GITHUB_STEP_SUMMARY
@@ -155,10 +155,10 @@ jobs:
           configFile: ${{ format('.devcontainer/mcanouil-{0}/devcontainer.json', matrix.QUARTO_VERSION) }}
       - name: Test Dev Container
         run: |
-          ::group::Quarto Check
+          echo "::group::Quarto Check"
           quarto_check=$(docker run --rm --user vscode ghcr.io/${{ github.repository }}:${{ matrix.QUARTO_VERSION }} /bin/bash -c "quarto check")
           echo "${quarto_check}"
-          ::endgroup::
+          echo "::endgroup::"
           echo "## Quarto Check Results: ${{ matrix.QUARTO_VERSION }}" >> $GITHUB_STEP_SUMMARY
           echo "```sh" >> $GITHUB_STEP_SUMMARY
           echo "${quarto_check}" >> $GITHUB_STEP_SUMMARY
