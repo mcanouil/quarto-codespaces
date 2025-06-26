@@ -1,6 +1,6 @@
 # Quarto Codespaces
 
-[![Dev Container Docker Image Build](https://github.com/mcanouil/quarto-codespaces/actions/workflows/devcontainer.yml/badge.svg)](https://github.com/mcanouil/quarto-codespaces/actions/workflows/devcontainer.yml)
+[![Dev Container Docker Image Build](https://github.com/mcanouil/quarto-codespaces/actions/workflows/devcontainer.yml/badge.svg?event=release)](https://github.com/mcanouil/quarto-codespaces/actions/workflows/devcontainer.yml)
 
 Setup to deploy [GitHub Codespaces](https://github.com/features/codespaces) (Codespaces) or [Development Containers](https://containers.dev/) (Dev Containers) with [Quarto](https://quarto.org/).
 
