@@ -19,27 +19,15 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build - Quarto ${{ matrix.QUARTO_VERSION }} (${{ matrix.IMAGE }})
+    name: Build - Quarto ${{ matrix.QUARTO_VERSION }}
     if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' || github.event_name == 'pull_request' }}
     strategy:
       matrix:
         include:
           - QUARTO_VERSION: release
             IMAGE_TAG: release,release-jammy,latest
-            IMAGE: buildpack-deps:jammy-curl
-            USER: vscode
           - QUARTO_VERSION: prerelease
             IMAGE_TAG: prerelease,prerelease-jammy
-            IMAGE: buildpack-deps:jammy-curl
-            USER: vscode
-          # - QUARTO_VERSION: release
-          #   IMAGE_TAG: release-universal
-          #   IMAGE: mcr.microsoft.com/devcontainers/universal:latest
-          #   USER: codespace
-          # - QUARTO_VERSION: prerelease
-          #   IMAGE_TAG: prerelease-universal
-          #   IMAGE: mcr.microsoft.com/devcontainers/universal:latest
-          #   USER: codespace
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -55,16 +43,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Push Docker image Setting
-        id: push
-        env:
-          PUSH_DOCKER_IMAGE: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
-        run: |
-          if [ "${PUSH_DOCKER_IMAGE}" = "true" ]; then
-            echo "PUSH=always" >$GITHUB_OUTPUT
-          else
-            echo "PUSH=never" >$GITHUB_OUTPUT
-          fi
       - name: Define Image Version
         id: image_version
         run: |
@@ -74,19 +52,20 @@ jobs:
             echo "VERSION=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           fi
       - name: Build and run Dev Container on release
+        id: devcontainer-ci
         uses: devcontainers/ci@v0.3
         with:
+          imageTag: ${{ matrix.IMAGE_TAG }}
           subFolder: .github
           imageName: ghcr.io/${{ github.repository }}
-          cacheFrom: ghcr.io/${{ github.repository }}
-          noCache: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
-          imageTag: ${{ matrix.IMAGE_TAG }}
-          push: ${{ steps.push.outputs.PUSH }}
+          noCache: true
+          eventFilterForPush: "release"
           platform: linux/amd64
+          runCmd: "quarto check"
         env:
-          IMAGE: ${{ matrix.IMAGE }}
+          IMAGE: "buildpack-deps:jammy-curl"
           QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
-          USER: ${{ matrix.USER }}
+          USER: "vscode"
           ANNOTATION_VERSION: "${{ steps.image_version.outputs.VERSION }} (${{ github.sha }})"
           ANNOTATION_TITLE: "Quarto Codespaces"
           ANNOTATION_DESCRIPTION: "Quarto Codespaces / Dev Containers setup for quick online testing and workshops."
@@ -94,28 +73,19 @@ jobs:
           ANNOTATION_URL: ${{ github.server_url }}/${{ github.repository }}
           ANNOTATION_LICENSE: "MIT"
       - name: Test Dev Container
-        if: ${{ github.event_name == 'release' }}
         env:
           QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
+          DEVCONTAINER_RUN_CMD: ${{ steps.devcontainer-ci.outputs.runCmdOutput }}
         run: |
           echo "::group::Quarto Check"
-          docker container run \
-            --rm \
-            --platform linux/amd64 \
-            --quiet \
-            --user vscode \
-            --volume "/tmp:/workspaces/quarto-codespaces" \
-            --workdir /workspaces/quarto-codespaces \
-            ghcr.io/${GITHUB_REPOSITORY}:${QUARTO_VERSION} /bin/bash -c "quarto check --output quarto-check.json"
-
-          quarto_check=$(cat /tmp/quarto-check.json)
-          echo "${quarto_check}"
+          echo "${DEVCONTAINER_RUN_CMD}"
           echo "::endgroup::"
-          echo "## Quarto Check Results: ${{ matrix.QUARTO_VERSION }}" >>$GITHUB_STEP_SUMMARY
+
+          echo "## Quarto Check Results: ${QUARTO_VERSION}" >>$GITHUB_STEP_SUMMARY
           echo "<details><summary>Quarto Check Results</summary>" >>$GITHUB_STEP_SUMMARY
           echo "" >>$GITHUB_STEP_SUMMARY
-          echo '```json' >>$GITHUB_STEP_SUMMARY
-          echo "${quarto_check}" >>$GITHUB_STEP_SUMMARY
+          echo '```txt' >>$GITHUB_STEP_SUMMARY
+          echo "${DEVCONTAINER_RUN_CMD}" >>$GITHUB_STEP_SUMMARY
           echo '```' >>$GITHUB_STEP_SUMMARY
           echo "" >>$GITHUB_STEP_SUMMARY
           echo "</details>" >>$GITHUB_STEP_SUMMARY
@@ -163,9 +133,7 @@ jobs:
         uses: devcontainers/ci@v0.3
         with:
           imageName: ghcr.io/${{ github.repository }}
-          cacheFrom: ghcr.io/${{ github.repository }}
-          noCache: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
-          imageTag: ${{ matrix.QUARTO_VERSION }},${{ matrix.QUARTO_VERSION }}-jammy
+          noCache: true
           push: always
           platform: ${{ matrix.PLATFORM }}
           configFile: ${{ format('.devcontainer/mcanouil-{0}/devcontainer.json', matrix.QUARTO_VERSION) }}
