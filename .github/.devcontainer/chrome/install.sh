@@ -36,12 +36,31 @@ elif [ "${USERNAME}" = "none" ] || ! id -u "${USERNAME}" >/dev/null 2>&1; then
   USERNAME=root
 fi
 
+apt_get_update() {
+  if [ "$(find /var/lib/apt/lists/* | wc -l)" = "0" ]; then
+    echo "Running apt-get update..."
+    apt-get update -y
+  fi
+}
+
+# Checks if packages are installed and installs them if not
+check_packages() {
+  if ! dpkg -s "$@" >/dev/null 2>&1; then
+    apt_get_update
+    apt-get -y install --no-install-recommends "$@"
+  fi
+}
+
 install_chrome() {
-  local arch="$(dpkg --print-architecture)"
+  local arch="$1"
   check_packages wget gnupg
   wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
   echo "deb [arch=${arch}] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google.list
   check_packages google-chrome-stable
 }
 
+install_chrome ${arch}
+
 apt-get clean && rm -rf /var/lib/apt/lists/*
+
+echo "Done!"

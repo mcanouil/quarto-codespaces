@@ -49,12 +49,16 @@ check_packages() {
   fi
 }
 
-echo "Installing TinyTeX..."
-check_packages libfontconfig
-# su "${USERNAME}" -c 'quarto install tinytex --quiet'
-check_packages curl ca-certificates
-su "${USERNAME}" -c 'curl -sL "https://yihui.org/tinytex/install-bin-unix.sh" | sh'
-echo "TinyTeX installation complete."
+install_tinytex() {
+  echo "Installing TinyTeX..."
+  check_packages libfontconfig
+  # su "${USERNAME}" -c 'quarto install tinytex --quiet'
+  check_packages curl ca-certificates
+  su "${USERNAME}" -c 'curl -sL "https://yihui.org/tinytex/install-bin-unix.sh" | sh'
+  echo "TinyTeX installation complete."
+}
+
+install_tinytex
 
 apt-get clean && rm -rf /var/lib/apt/lists/*
 
