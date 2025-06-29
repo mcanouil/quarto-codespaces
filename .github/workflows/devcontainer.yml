@@ -61,7 +61,7 @@ jobs:
           noCache: true
           eventFilterForPush: "release"
           platform: linux/amd64
-          runCmd: echo "$(CI=true quarto check 2>&1)" | sed '/^(|)/d; s/\x1b\[[0-9;]*[mGK]//g'
+          runCmd: echo "$(CI=true quarto check 2>&1)" | sed '/^\(/d; s/\x1b\[[0-9;]*[mGK]//g'
         env:
           IMAGE: "buildpack-deps:jammy-curl"
           QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
