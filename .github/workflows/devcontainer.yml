@@ -61,7 +61,7 @@ jobs:
           noCache: true
           eventFilterForPush: "release"
           platform: linux/amd64
-          runCmd: "quarto check"
+          runCmd: "CI=true quarto check"
         env:
           IMAGE: "buildpack-deps:jammy-curl"
           QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
@@ -77,17 +77,15 @@ jobs:
           QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
           DEVCONTAINER_RUN_CMD: ${{ steps.devcontainer-ci.outputs.runCmdOutput }}
         run: |
-          FILTERED_OUTPUT=$(echo "${DEVCONTAINER_RUN_CMD}" | awk '!/^\(/')
-          
           echo "::group::Quarto Check"
-          echo "${FILTERED_OUTPUT}"
+          echo "${DEVCONTAINER_RUN_CMD}"
           echo "::endgroup::"
 
           echo "## Quarto Check Results: ${QUARTO_VERSION}" >>$GITHUB_STEP_SUMMARY
           echo "<details><summary>Quarto Check Results</summary>" >>$GITHUB_STEP_SUMMARY
           echo "" >>$GITHUB_STEP_SUMMARY
           echo '```txt' >>$GITHUB_STEP_SUMMARY
-          echo "${FILTERED_OUTPUT}" >>$GITHUB_STEP_SUMMARY
+          echo "${DEVCONTAINER_RUN_CMD}" >>$GITHUB_STEP_SUMMARY
           echo '```' >>$GITHUB_STEP_SUMMARY
           echo "" >>$GITHUB_STEP_SUMMARY
           echo "</details>" >>$GITHUB_STEP_SUMMARY
