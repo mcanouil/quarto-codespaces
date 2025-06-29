@@ -53,9 +53,9 @@ check_packages() {
 
 install_chrome() {
   local arch="$1"
-  check_packages wget gnupg
-  wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-  echo "deb [arch=${arch}] http://dl.google.com/linux/chrome/deb/ stable main" | sudo tee /etc/apt/sources.list.d/google.list
+  check_packages curl gnupg
+  curl -fSsL https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor | tee /usr/share/keyrings/google-chrome.gpg >>/dev/null
+  echo deb [arch=${arch} signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main | tee /etc/apt/sources.list.d/google-chrome.list
   check_packages google-chrome-stable
 }
 
