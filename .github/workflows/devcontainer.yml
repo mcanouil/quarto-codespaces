@@ -133,6 +133,7 @@ jobs:
         uses: devcontainers/ci@v0.3
         with:
           imageName: ghcr.io/${{ github.repository }}
+          imageTag: ${{ matrix.QUARTO_VERSION }},${{ matrix.QUARTO_VERSION }}-jammy
           noCache: true
           push: always
           platform: ${{ matrix.PLATFORM }}
