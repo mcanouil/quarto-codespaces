@@ -77,7 +77,8 @@ jobs:
           QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
           DEVCONTAINER_RUN_CMD: ${{ steps.devcontainer-ci.outputs.runCmdOutput }}
         run: |
-          FILTERED_OUTPUT=$(echo "${DEVCONTAINER_RUN_CMD}" | grep -v '^(')
+          # FILTERED_OUTPUT=$(echo "${DEVCONTAINER_RUN_CMD}" | grep -v '^(')
+          FILTERED_OUTPUT=$(echo "${DEVCONTAINER_RUN_CMD}" | awk '!/^\(/')
           
           echo "::group::Quarto Check"
           echo "${FILTERED_OUTPUT}"
