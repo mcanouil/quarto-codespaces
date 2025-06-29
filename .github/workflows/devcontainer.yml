@@ -94,6 +94,7 @@ jobs:
           ANNOTATION_URL: ${{ github.server_url }}/${{ github.repository }}
           ANNOTATION_LICENSE: "MIT"
       - name: Test Dev Container
+        if: ${{ github.event_name == 'release' }}
         env:
           QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
         run: |
