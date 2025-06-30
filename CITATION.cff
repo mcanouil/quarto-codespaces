@@ -6,7 +6,7 @@ authors:
     given-names: "Mickaël"
     orcid: "https://orcid.org/0000-0002-3396-4549"
 date-released: "2025-06-30"
-version: 1.9.0
+version: 2025.06.30
 url: "https://github.com/mcanouil/quarto-codespaces"
 repository-code: "https://github.com/mcanouil/quarto-codespaces"
 license: "MIT"
