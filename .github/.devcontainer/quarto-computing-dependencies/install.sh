@@ -42,18 +42,27 @@ fi
 
 quarto_r_deps() {
   local deps=$1
+  if [ "${deps}" = "false" ]; then
+    return
+  fi
   deps=$(echo "${deps}" | sed 's/,/","/g')
   su "${USERNAME}" -c "Rscript -e 'pak::pkg_install(c(\"${deps}\"))'"
 }
 
 quarto_python_deps() {
   local deps=$1
+  if [ "${deps}" = "false" ]; then
+    return
+  fi
   deps=$(echo "${deps}" | sed 's/,/ /g')
   python3 -m pip install ${deps}
 }
 
 quarto_julia_deps() {
   local deps=$1
+  if [ "${deps}" = "false" ]; then
+    return
+  fi
   deps=$(echo "${deps}" | sed 's/,/","/g')
   su "${USERNAME}" -c "~/.juliaup/bin/julia -e 'using Pkg; Pkg.add.([\"${deps}\"])'"
 }
