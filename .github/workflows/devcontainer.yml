@@ -20,7 +20,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: Build - Quarto ${{ matrix.QUARTO_VERSION }}
-    if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' || github.event_name == 'pull_request' }}
+    if: >-
+      ! endsWith(github.event.pull_request.user.login, '[bot]') &&
+        (
+          github.event_name == 'release' ||
+            github.event_name == 'workflow_dispatch' ||
+            github.event_name == 'pull_request'
+        )
     strategy:
       matrix:
         include:
@@ -92,9 +98,12 @@ jobs:
 
   build-versions:
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' }}
     needs:
       - "build"
+    if: >-
+      github.event_name == 'release' ||
+        github.event_name == 'workflow_dispatch' ||
+        github.event_name == 'schedule'
     name: Build - Quarto ${{ matrix.QUARTO_VERSION }}
     strategy:
       matrix:
@@ -143,7 +152,10 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - "build-versions"
-    if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' || github.event_name == 'schedule' }}
+    if: >-
+      github.event_name == 'release' ||
+        github.event_name == 'workflow_dispatch' ||
+        github.event_name == 'schedule'
     continue-on-error: true
     steps:
       - name: Delete obsolete/untagged versions
