@@ -36,7 +36,7 @@ jobs:
             IMAGE_TAG: prerelease,prerelease-jammy
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Set up QEMU for multi-architecture builds
         uses: docker/setup-qemu-action@v3
       - name: Setup Docker buildx for multi-architecture builds
@@ -126,7 +126,7 @@ jobs:
           - QUARTO_VERSION: "1.2"
             PLATFORM: "linux/amd64"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Set up QEMU for multi-architecture builds
         uses: docker/setup-qemu-action@v3
       - name: Setup Docker buildx for multi-architecture builds
