@@ -31,6 +31,75 @@ To use it, follow these steps:
 3. If you don't have a Codespace already, create a new one.
 4. The Codespace will be set up automatically using the configuration provided in this repository.
 
+### Using Custom Configurations
+
+By default, Codespaces uses the main configuration located at `.devcontainer/devcontainer.json` (Quarto stable release).
+However, this repository provides several pre-configured alternatives for different Quarto versions and setups:
+
+#### Available Configurations
+
+- **Default**: `.devcontainer/devcontainer.json` - Latest stable Quarto release
+- **Universal**: `.devcontainer/universal/devcontainer.json` - Based on Microsoft's universal base image (Ubuntu 20.04)
+- **Specific Quarto versions**:
+  - `.devcontainer/quarto-1.8/devcontainer.json` - Quarto 1.8
+  - `.devcontainer/quarto-1.7/devcontainer.json` - Quarto 1.7
+  - `.devcontainer/quarto-1.6/devcontainer.json` - Quarto 1.6
+  - `.devcontainer/quarto-1.5/devcontainer.json` - Quarto 1.5
+  - And more versions available in the `.devcontainer/` directory
+- **Prerelease**: `.devcontainer/quarto-prerelease/devcontainer.json` - Latest Quarto prerelease
+
+#### Selecting a Custom Configuration
+
+To use a specific configuration when creating a Codespace:
+
+1. **Via URL**: You can directly specify the configuration using URL parameters:
+
+   ```url
+   https://codespaces.new/mcanouil/quarto-codespaces?devcontainer_path=.devcontainer%2Funiversal%2Fdevcontainer.json
+   ```
+
+2. **Via Codespaces Interface**:
+   - When creating a new Codespace, click on the "Configure dev container" option.
+   - Select the desired configuration from the dropdown menu.
+   - Click "Create codespace".
+
+3. **For Template Users**: If you're using this as a template for your own repository:
+   - Copy the desired configuration to `.devcontainer/devcontainer.json` in your repository.
+   - Modify the configuration as needed for your specific requirements.
+   - Commit the changes to apply the custom configuration.
+
+#### Creating Your Own Configuration
+
+You can also create a completely custom configuration by:
+
+1. Copying an existing configuration file as a starting point
+2. Modifying the following sections as needed:
+   - **Base image**: Change the `image` property or use `build` for custom Dockerfile.
+   - **Features**: Add or remove Dev Container features.
+   - **Extensions**: Customise VS Code extensions.
+   - **Settings**: Adjust VS Code settings.
+   - **Environment variables**: Add custom environment variables.
+
+Example custom configuration structure:
+
+```json
+{
+  "name": "Custom Quarto Setup",
+  "image": "ghcr.io/mcanouil/quarto-codespaces:latest",
+  "features": {
+    "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
+      "version": "1.8"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": ["quarto.quarto"],
+      "settings": {}
+    }
+  }
+}
+```
+
 ## Dev Container Configuration
 
 The Dev Container configuration is located in [`.github/.devcontainer/devcontainer.json`](.github/.devcontainer/devcontainer.json).
