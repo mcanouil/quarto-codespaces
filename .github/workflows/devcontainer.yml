@@ -32,8 +32,16 @@ jobs:
         include:
           - QUARTO_VERSION: release
             IMAGE_TAG: release,release-jammy,latest
+            CONFIG_FILE: .devcontainer/devcontainer.json
           - QUARTO_VERSION: prerelease
             IMAGE_TAG: prerelease,prerelease-jammy
+            CONFIG_FILE: .devcontainer/devcontainer.json
+          - QUARTO_VERSION: release
+            IMAGE_TAG: release-light,release-light-jammy
+            CONFIG_FILE: .devcontainer/devcontainer-light.json
+          - QUARTO_VERSION: prerelease
+            IMAGE_TAG: prerelease-light,prerelease-light-jammy
+            CONFIG_FILE: .devcontainer/devcontainer-light.json
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
@@ -68,6 +76,7 @@ jobs:
           eventFilterForPush: "release"
           platform: linux/amd64
           runCmd: echo "$(CI=true quarto check 2>&1)" | sed '/^(/d; s/\x1b\[[0-9;]*[mGK]//g'
+          configFile: ${{ matrix.CONFIG_FILE }}
         env:
           IMAGE: "buildpack-deps:jammy-curl"
           QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
@@ -80,14 +89,14 @@ jobs:
           ANNOTATION_LICENSE: "MIT"
       - name: Test Dev Container
         env:
-          QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
+          IMAGE_TAG: ${{ matrix.IMAGE_TAG }}
           DEVCONTAINER_RUN_CMD: ${{ steps.devcontainer-ci.outputs.runCmdOutput }}
         run: |
           echo "::group::Quarto Check"
           echo "${DEVCONTAINER_RUN_CMD}"
           echo "::endgroup::"
 
-          echo "## Quarto Check Results: ${QUARTO_VERSION}" >>$GITHUB_STEP_SUMMARY
+          echo "## Quarto Check Results: ${IMAGE_TAG}" >>$GITHUB_STEP_SUMMARY
           echo "<details><summary>Quarto Check Results</summary>" >>$GITHUB_STEP_SUMMARY
           echo "" >>$GITHUB_STEP_SUMMARY
           echo '```txt' >>$GITHUB_STEP_SUMMARY
