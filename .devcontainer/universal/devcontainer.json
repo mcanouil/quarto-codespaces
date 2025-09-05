@@ -1,5 +1,5 @@
 {
-  "name": "Universal - Quarto Codespaces",
+  "name": "Release - Universal - Quarto Codespaces",
   "build": {
     "dockerfile": "Dockerfile",
     "context": ".",
