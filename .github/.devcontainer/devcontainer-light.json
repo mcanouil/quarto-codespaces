@@ -1,0 +1,54 @@
+{
+  "name": "Quarto",
+  "build": {
+    "dockerfile": "./Dockerfile",
+    "context": ".",
+    "args": {
+      "IMAGE": "${localEnv:IMAGE}"
+    },
+    "options": [
+      "--label", "org.opencontainers.image.title=${localEnv:ANNOTATION_TITLE}",
+      "--annotation", "org.opencontainers.image.title=${localEnv:ANNOTATION_TITLE}",
+      "--label", "org.opencontainers.image.description=${localEnv:ANNOTATION_DESCRIPTION}",
+      "--annotation", "org.opencontainers.image.description=${localEnv:ANNOTATION_DESCRIPTION}",
+      "--label", "org.opencontainers.image.authors=${localEnv:ANNOTATION_AUTHORS}",
+      "--annotation", "org.opencontainers.image.authors=${localEnv:ANNOTATION_AUTHORS}",
+      "--label", "org.opencontainers.image.url=${localEnv:ANNOTATION_URL}",
+      "--annotation", "org.opencontainers.image.url=${localEnv:ANNOTATION_URL}",
+      "--label", "org.opencontainers.image.source=${localEnv:ANNOTATION_URL}",
+      "--annotation", "org.opencontainers.image.source=${localEnv:ANNOTATION_URL}",
+      "--label", "org.opencontainers.image.version=${localEnv:ANNOTATION_VERSION}",
+      "--annotation", "org.opencontainers.image.version=${localEnv:ANNOTATION_VERSION}",
+      "--label", "org.opencontainers.image.licenses=${localEnv:ANNOTATION_LICENSE}",
+      "--annotation", "org.opencontainers.image.licenses=${localEnv:ANNOTATION_LICENSE}"
+    ]
+  },
+  "remoteUser": "${localEnv:USER}",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": "true",
+      "username": "${localEnv:USER}",
+      // "userUid": "1000",
+      // "userGid": "1000",
+      "upgradePackages": "true"
+    },
+    "ghcr.io/devcontainers/features/git:1": {
+      "version": "latest",
+      "ppa": "false"
+    },
+    "./quarto-computing-dependencies": {
+      "installOnPlatforms": "amd64",
+      "rDeps": "false",
+      "pythonDeps": "false",
+      "juliaDeps": "false"
+    },
+    "./uv": {
+      "version": "latest"
+    },
+    "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
+      "version": "${localEnv:QUARTO_VERSION}",
+      "installTinyTex": "false",
+      "installChromium": "false"
+    }
+  }
+}
