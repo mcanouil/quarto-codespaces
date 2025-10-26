@@ -45,7 +45,7 @@
     "./uv": {
       "version": "latest"
     },
-    "./chrome": {},
+    "./chromium": {},
     "./decktape": {
       "node": "22"
     },
