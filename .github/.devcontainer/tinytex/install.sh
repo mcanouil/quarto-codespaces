@@ -54,8 +54,12 @@ install_tinytex() {
   check_packages libfontconfig
   # su "${USERNAME}" -c 'quarto install tinytex --quiet'
   check_packages curl ca-certificates
-  su "${USERNAME}" -c 'curl -sL "https://yihui.org/tinytex/install-bin-unix.sh" | sh'
+  export TINYTEX_DIR="/opt/tinytex"
+  curl -sL "https://yihui.org/tinytex/install-bin-unix.sh" | sh
   echo "TinyTeX installation complete."
+  ln -s "${TINYTEX_DIR}/.TinyTeX" "${HOME}/.TinyTeX"
+  ln -s "${TINYTEX_DIR}/.TinyTeX" "/home/${USERNAME}/.TinyTeX"
+  ln -s "${TINYTEX_DIR}/.TinyTeX/bin/$(uname -m)-linux" /usr/local/bin/tinytex
 }
 
 install_tinytex
