@@ -29,7 +29,7 @@
       "installRMarkdown": "false"
     },
     "ghcr.io/devcontainers/features/python:1": {
-      "version": "latest",
+      "version": "3.13.9",
       "enableShared": "true"
     },
     "ghcr.io/julialang/devcontainer-features/julia:1": {
