@@ -55,6 +55,7 @@ install_tinytex() {
   # su "${USERNAME}" -c 'quarto install tinytex --quiet'
   check_packages curl ca-certificates
   export TINYTEX_DIR="/opt/tinytex"
+  mkdir -p "${TINYTEX_DIR}"
   curl -sL "https://yihui.org/tinytex/install-bin-unix.sh" | sh
   echo "TinyTeX installation complete."
   ln -s "${TINYTEX_DIR}/.TinyTeX" "${HOME}/.TinyTeX"
