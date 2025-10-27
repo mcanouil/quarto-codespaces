@@ -18,6 +18,7 @@ initialise_r() {
     if [ -f ".Rprofile" ] && grep -q 'source("renv/activate.R")' .Rprofile; then
       sed -i '' '/source("renv\/activate.R")/d' .Rprofile
     fi
+    Rscript -e 'if (!requireNamespace("renv", quietly = TRUE)) pak::pkg_install("renv")'
     Rscript -e 'renv::init(bare = FALSE)'
     Rscript -e "renv::install(c('${deps}'))"
     Rscript -e 'renv::snapshot(type = "all")'
