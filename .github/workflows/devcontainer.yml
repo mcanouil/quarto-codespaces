@@ -72,7 +72,7 @@ jobs:
           IFS=',' read -ra TAG_ARRAY <<< "${BASE_TAGS}"
           TAGS_WITH_BUILD=""
           for tag in "${TAG_ARRAY[@]}"; do
-            TAGS_WITH_BUILD="${TAGS_WITH_BUILD},${tag}+${BUILD_ID}"
+            TAGS_WITH_BUILD="${TAGS_WITH_BUILD},${tag}-${BUILD_ID}"
           done
 
           # Combine original tags with build metadata tags (remove leading comma)
@@ -173,7 +173,7 @@ jobs:
 
           # Create base tags and build metadata tags
           BASE_TAGS="${QUARTO_VERSION},${QUARTO_VERSION}-jammy"
-          TAGS_WITH_BUILD="${QUARTO_VERSION}+${BUILD_ID},${QUARTO_VERSION}-jammy+${BUILD_ID}"
+          TAGS_WITH_BUILD="${QUARTO_VERSION}-${BUILD_ID},${QUARTO_VERSION}-jammy-${BUILD_ID}"
           echo "Base tags: ${BASE_TAGS}"
           echo "Build metadata tags: ${TAGS_WITH_BUILD}"
 
