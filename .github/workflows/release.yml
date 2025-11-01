@@ -30,13 +30,11 @@ jobs:
 
       - name: Get GitHub App User ID
         id: get-user-id
-        shell: bash
         run: echo "user-id=$(gh api "/users/${{ steps.app-token.outputs.app-slug }}[bot]" --jq .id)" >> "$GITHUB_OUTPUT"
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
 
       - name: Git Config
-        shell: bash
         run: |
           git config --global user.name '${{ steps.app-token.outputs.app-slug }}[bot]'
           git config --global user.email '${{ steps.get-user-id.outputs.user-id }}+${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com'
@@ -46,7 +44,6 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           COMMIT: "ci: bump version for release :rocket:"
-        shell: bash
         run: |
           if git show-ref --quiet refs/heads/${BRANCH}; then
             echo "Branch ${BRANCH} already exists."
@@ -80,7 +77,6 @@ jobs:
       - name: Release extension on GitHub
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        shell: bash
         run: |
           DATE=$(grep "^date-released:" CITATION.cff | sed 's/date-released: //;s/"//g')
           VERSION=$(grep "^version:" CITATION.cff | sed 's/version: //;s/"//g')
