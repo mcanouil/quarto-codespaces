@@ -31,37 +31,66 @@ jobs:
       matrix:
         include:
           - QUARTO_VERSION: release
-            IMAGE_TAG: release,release-jammy,latest
+            IMAGE_TAG_BASE: release,release-jammy,latest
           - QUARTO_VERSION: prerelease
-            IMAGE_TAG: prerelease,prerelease-jammy
+            IMAGE_TAG_BASE: prerelease,prerelease-jammy
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+
       - name: Set up QEMU for multi-architecture builds
         uses: docker/setup-qemu-action@v3
+
       - name: Setup Docker buildx for multi-architecture builds
         uses: docker/setup-buildx-action@v3
         with:
           use: true
+
       - name: Login to Docker registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Define Image Version
         id: image_version
         run: |
           if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
-            echo "VERSION=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
+            echo "VERSION=${GITHUB_REF_NAME}" >> ${GITHUB_OUTPUT}
           else
-            echo "VERSION=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+            echo "VERSION=$(git rev-parse --short HEAD)" >> ${GITHUB_OUTPUT}
           fi
+
+      - name: Define Image Tags with Build Metadata
+        id: image_tags
+        env:
+          BASE_TAGS: ${{ matrix.IMAGE_TAG_BASE }}
+          QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
+        run: |
+          BUILD_ID=$(date -u +%Y%m%d%H%M)
+          echo "::group::Build Metadata Tags for ${QUARTO_VERSION}"
+          echo "Build ID: ${BUILD_ID}"
+          echo "Base tags: ${BASE_TAGS}"
+
+          # Split base tags and add build metadata versions
+          IFS=',' read -ra TAG_ARRAY <<< "${BASE_TAGS}"
+          TAGS_WITH_BUILD=""
+          for tag in "${TAG_ARRAY[@]}"; do
+            TAGS_WITH_BUILD="${TAGS_WITH_BUILD},${tag}-${BUILD_ID}"
+          done
+
+          # Combine original tags with build metadata tags (remove leading comma)
+          ALL_TAGS="${BASE_TAGS}${TAGS_WITH_BUILD}"
+          echo "All tags: ${ALL_TAGS}"
+          echo "::endgroup::"
+          echo "IMAGE_TAG=${ALL_TAGS}" >> ${GITHUB_OUTPUT}
+
       - name: Build and run Dev Container on release
         id: devcontainer-ci
         uses: devcontainers/ci@v0.3
         with:
-          imageTag: ${{ matrix.IMAGE_TAG }}
+          imageTag: ${{ steps.image_tags.outputs.IMAGE_TAG }}
           subFolder: .github
           imageName: ghcr.io/${{ github.repository }}
           noCache: true
@@ -78,6 +107,7 @@ jobs:
           ANNOTATION_AUTHORS: "Mickaël CANOUIL <https://mickael.canouil.fr>"
           ANNOTATION_URL: ${{ github.server_url }}/${{ github.repository }}
           ANNOTATION_LICENSE: "MIT"
+
       - name: Test Dev Container
         env:
           QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
@@ -87,24 +117,177 @@ jobs:
           echo "${DEVCONTAINER_RUN_CMD}"
           echo "::endgroup::"
 
-          echo "## Quarto Check Results: ${QUARTO_VERSION}" >>$GITHUB_STEP_SUMMARY
-          echo "<details><summary>Quarto Check Results</summary>" >>$GITHUB_STEP_SUMMARY
-          echo "" >>$GITHUB_STEP_SUMMARY
-          echo '```txt' >>$GITHUB_STEP_SUMMARY
-          echo "${DEVCONTAINER_RUN_CMD}" >>$GITHUB_STEP_SUMMARY
-          echo '```' >>$GITHUB_STEP_SUMMARY
-          echo "" >>$GITHUB_STEP_SUMMARY
-          echo "</details>" >>$GITHUB_STEP_SUMMARY
+          (
+            echo "## Quarto Check Results: ${QUARTO_VERSION}"
+            echo "<details><summary>Quarto Check Results</summary>"
+            echo ""
+            echo '```txt'
+            echo "${DEVCONTAINER_RUN_CMD}"
+            echo '```'
+            echo ""
+            echo "</details>"
+          ) >>${GITHUB_STEP_SUMMARY}
 
-  build-versions:
+      - name: Save quarto check output
+        env:
+          QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
+          DEVCONTAINER_RUN_CMD: ${{ steps.devcontainer-ci.outputs.runCmdOutput }}
+        run: |
+          mkdir -p /tmp/quarto-check-outputs
+          echo "${DEVCONTAINER_RUN_CMD}" > "/tmp/quarto-check-outputs/${QUARTO_VERSION}.txt"
+
+      - name: Upload quarto check output
+        uses: actions/upload-artifact@v5
+        with:
+          name: quarto-check-${{ matrix.QUARTO_VERSION }}
+          path: /tmp/quarto-check-outputs/${{ matrix.QUARTO_VERSION }}.txt
+          retention-days: 1
+
+  update-readme:
     runs-on: ubuntu-latest
+
     needs:
       - "build"
+
     if: >-
       github.event_name == 'release' ||
         github.event_name == 'workflow_dispatch' ||
         github.event_name == 'schedule'
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: true
+
+      - name: Create GitHub App token
+        uses: actions/create-github-app-token@v2
+        id: app-token
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.APP_KEY }}
+
+      - name: Get GitHub App User ID
+        id: get-user-id
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          echo "user-id=$(gh api "/users/${{ steps.app-token.outputs.app-slug }}[bot]" --jq .id)" >> "$GITHUB_OUTPUT"
+
+      - name: Git Config
+        run: |
+          git config --global user.name '${{ steps.app-token.outputs.app-slug }}[bot]'
+          git config --global user.email '${{ steps.get-user-id.outputs.user-id }}+${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com'
+
+      - name: Download quarto check outputs
+        uses: actions/download-artifact@v4
+        with:
+          path: /tmp/quarto-check-outputs
+
+      - name: Update README with quarto check outputs
+        env:
+          BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          update_readme_section() {
+            local version=$1
+            local output_file=$2
+            local build_url=$3
+
+            # Normalise version for marker tags
+            local version_upper=$(echo "${version}" | tr '[:lower:]' '[:upper:]')
+
+            # Define markers
+            local output_start="<!-- QUARTO_CHECK_${version_upper}_START -->"
+            local output_end="<!-- QUARTO_CHECK_${version_upper}_END -->"
+            local url_start="<!-- QUARTO_CHECK_${version_upper}_BUILD_URL_START -->"
+            local url_end="<!-- QUARTO_CHECK_${version_upper}_BUILD_URL_END -->"
+
+            # Read the output
+            local quarto_output=$(cat "${output_file}")
+
+            # Create temporary file
+            local temp_file=$(mktemp)
+
+            # Update quarto check output section
+            awk -v start="${output_start}" \
+                -v end="${output_end}" \
+                -v output="${quarto_output}" '
+              BEGIN { in_block=0 }
+              $0 ~ start {
+                print $0
+                print "```txt"
+                print output
+                print "```"
+                in_block=1
+                next
+              }
+              $0 ~ end {
+                print $0
+                in_block=0
+                next
+              }
+              !in_block { print }
+            ' README.md > "${temp_file}"
+
+            # Update build URL section
+            awk -v start="${url_start}" \
+                -v end="${url_end}" \
+                -v url="${build_url}" '
+              BEGIN { in_block=0 }
+              $0 ~ start {
+                print $0
+                print "[View build log](" url ")"
+                in_block=1
+                next
+              }
+              $0 ~ end {
+                print $0
+                in_block=0
+                next
+              }
+              !in_block { print }
+            ' "${temp_file}" > README.md
+
+            rm -f "${temp_file}"
+
+            echo "Updated ${version} section in README.md"
+          }
+
+          # Update both release and prerelease sections
+          update_readme_section "release" "/tmp/quarto-check-outputs/quarto-check-release/release.txt" "${BUILD_URL}"
+          update_readme_section "prerelease" "/tmp/quarto-check-outputs/quarto-check-prerelease/prerelease.txt" "${BUILD_URL}"
+
+      - name: Commit and push changes
+        run: |
+          git add README.md
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "ci: update quarto check outputs in README.md"
+            git push
+          fi
+
+  build-versions:
+    runs-on: ubuntu-latest
+
     name: Build - Quarto ${{ matrix.QUARTO_VERSION }}
+
+    needs:
+      - "build"
+      - "update-readme"
+
+    if: >-
+      (github.event_name == 'release' ||
+        github.event_name == 'workflow_dispatch' ||
+        github.event_name == 'schedule') &&
+      always() &&
+      needs.build.result == 'success' &&
+      needs.update-readme.result == 'success'
+
     strategy:
       matrix:
         PLATFORM:
@@ -128,22 +311,47 @@ jobs:
             PLATFORM: "linux/amd64"
     steps:
       - uses: actions/checkout@v5
+
       - name: Set up QEMU for multi-architecture builds
         uses: docker/setup-qemu-action@v3
+
       - name: Setup Docker buildx for multi-architecture builds
         uses: docker/setup-buildx-action@v3
         with:
           use: true
+
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Define Image Tags with Build Metadata
+        id: image_tags
+        env:
+          QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
+        run: |
+          BUILD_ID=$(date -u +%Y%m%d%H%M)
+          echo "::group::Build Metadata Tags for Quarto ${QUARTO_VERSION}"
+          echo "Build ID: ${BUILD_ID}"
+
+          # Create base tags and build metadata tags
+          BASE_TAGS="${QUARTO_VERSION},${QUARTO_VERSION}-jammy"
+          TAGS_WITH_BUILD="${QUARTO_VERSION}-${BUILD_ID},${QUARTO_VERSION}-jammy-${BUILD_ID}"
+          echo "Base tags: ${BASE_TAGS}"
+          echo "Build metadata tags: ${TAGS_WITH_BUILD}"
+
+          # Combine original tags with build metadata tags
+          ALL_TAGS="${BASE_TAGS},${TAGS_WITH_BUILD}"
+          echo "All tags: ${ALL_TAGS}"
+          echo "::endgroup::"
+          echo "IMAGE_TAG=${ALL_TAGS}" >> ${GITHUB_OUTPUT}
+
       - name: Build and run Dev Container on release
         uses: devcontainers/ci@v0.3
         with:
           imageName: ghcr.io/${{ github.repository }}
-          imageTag: ${{ matrix.QUARTO_VERSION }},${{ matrix.QUARTO_VERSION }}-jammy
+          imageTag: ${{ steps.image_tags.outputs.IMAGE_TAG }}
           noCache: true
           push: always
           platform: ${{ matrix.PLATFORM }}

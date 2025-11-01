@@ -130,6 +130,40 @@ docker pull ghcr.io/mcanouil/quarto-codespaces:latest
 
 Available tags: [`ghcr.io/mcanouil/quarto-codespaces`](https://github.com/mcanouil/quarto-codespaces/pkgs/container/quarto-codespaces)
 
+#### Quarto Check Output
+
+The following outputs show the `quarto check` results from the latest builds of the Docker images:
+
+<details>
+<summary>Release Image</summary>
+
+<!-- QUARTO_CHECK_RELEASE_START -->
+```txt
+Quarto check output will be automatically updated here after each build.
+```
+<!-- QUARTO_CHECK_RELEASE_END -->
+
+<!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/workflows/devcontainer.yml)
+<!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
+
+</details>
+
+<details>
+<summary>Prerelease Image</summary>
+
+<!-- QUARTO_CHECK_PRERELEASE_START -->
+```txt
+Quarto check output will be automatically updated here after each build.
+```
+<!-- QUARTO_CHECK_PRERELEASE_END -->
+
+<!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/workflows/devcontainer.yml)
+<!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
+
+</details>
+
 ## Initialisation Script
 
 The initialisation script [init.sh](init.sh) is used to set up the R, Python, and Julia environments.
