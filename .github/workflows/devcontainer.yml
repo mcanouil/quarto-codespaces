@@ -61,8 +61,12 @@ jobs:
         id: image_tags
         env:
           BASE_TAGS: ${{ matrix.IMAGE_TAG_BASE }}
+          QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
         run: |
           BUILD_ID=$(date -u +%Y%m%d%H%M)
+          echo "::group::Build Metadata Tags for ${QUARTO_VERSION}"
+          echo "Build ID: ${BUILD_ID}"
+          echo "Base tags: ${BASE_TAGS}"
 
           # Split base tags and add build metadata versions
           IFS=',' read -ra TAG_ARRAY <<< "${BASE_TAGS}"
@@ -73,6 +77,8 @@ jobs:
 
           # Combine original tags with build metadata tags (remove leading comma)
           ALL_TAGS="${BASE_TAGS}${TAGS_WITH_BUILD}"
+          echo "All tags: ${ALL_TAGS}"
+          echo "::endgroup::"
           echo "IMAGE_TAG=${ALL_TAGS}" >> $GITHUB_OUTPUT
       - name: Build and run Dev Container on release
         id: devcontainer-ci
@@ -162,13 +168,19 @@ jobs:
           QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
         run: |
           BUILD_ID=$(date -u +%Y%m%d%H%M)
+          echo "::group::Build Metadata Tags for Quarto ${QUARTO_VERSION}"
+          echo "Build ID: ${BUILD_ID}"
 
           # Create base tags and build metadata tags
           BASE_TAGS="${QUARTO_VERSION},${QUARTO_VERSION}-jammy"
           TAGS_WITH_BUILD="${QUARTO_VERSION}+${BUILD_ID},${QUARTO_VERSION}-jammy+${BUILD_ID}"
+          echo "Base tags: ${BASE_TAGS}"
+          echo "Build metadata tags: ${TAGS_WITH_BUILD}"
 
           # Combine original tags with build metadata tags
           ALL_TAGS="${BASE_TAGS},${TAGS_WITH_BUILD}"
+          echo "All tags: ${ALL_TAGS}"
+          echo "::endgroup::"
           echo "IMAGE_TAG=${ALL_TAGS}" >> $GITHUB_OUTPUT
       - name: Build and run Dev Container on release
         uses: devcontainers/ci@v0.3
