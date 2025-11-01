@@ -265,6 +265,7 @@ jobs:
       - name: Commit and push changes
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          BRANCH: "ci/update-quarto-check-readme"
           COMMIT: "ci: update quarto check outputs in README.md"
         run: |
           if git show-ref --quiet refs/heads/${BRANCH}; then
