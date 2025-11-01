@@ -31,9 +31,9 @@ jobs:
       matrix:
         include:
           - QUARTO_VERSION: release
-            IMAGE_TAG: release,release-jammy,latest
+            IMAGE_TAG_BASE: release,release-jammy,latest
           - QUARTO_VERSION: prerelease
-            IMAGE_TAG: prerelease,prerelease-jammy
+            IMAGE_TAG_BASE: prerelease,prerelease-jammy
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
@@ -57,11 +57,28 @@ jobs:
           else
             echo "VERSION=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           fi
+      - name: Define Image Tags with Build Metadata
+        id: image_tags
+        env:
+          BASE_TAGS: ${{ matrix.IMAGE_TAG_BASE }}
+        run: |
+          BUILD_ID=$(date -u +%Y%m%d%H%M)
+
+          # Split base tags and add build metadata versions
+          IFS=',' read -ra TAG_ARRAY <<< "${BASE_TAGS}"
+          TAGS_WITH_BUILD=""
+          for tag in "${TAG_ARRAY[@]}"; do
+            TAGS_WITH_BUILD="${TAGS_WITH_BUILD},${tag}+${BUILD_ID}"
+          done
+
+          # Combine original tags with build metadata tags (remove leading comma)
+          ALL_TAGS="${BASE_TAGS}${TAGS_WITH_BUILD}"
+          echo "IMAGE_TAG=${ALL_TAGS}" >> $GITHUB_OUTPUT
       - name: Build and run Dev Container on release
         id: devcontainer-ci
         uses: devcontainers/ci@v0.3
         with:
-          imageTag: ${{ matrix.IMAGE_TAG }}
+          imageTag: ${{ steps.image_tags.outputs.IMAGE_TAG }}
           subFolder: .github
           imageName: ghcr.io/${{ github.repository }}
           noCache: true
@@ -139,11 +156,25 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Define Image Tags with Build Metadata
+        id: image_tags
+        env:
+          QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
+        run: |
+          BUILD_ID=$(date -u +%Y%m%d%H%M)
+
+          # Create base tags and build metadata tags
+          BASE_TAGS="${QUARTO_VERSION},${QUARTO_VERSION}-jammy"
+          TAGS_WITH_BUILD="${QUARTO_VERSION}+${BUILD_ID},${QUARTO_VERSION}-jammy+${BUILD_ID}"
+
+          # Combine original tags with build metadata tags
+          ALL_TAGS="${BASE_TAGS},${TAGS_WITH_BUILD}"
+          echo "IMAGE_TAG=${ALL_TAGS}" >> $GITHUB_OUTPUT
       - name: Build and run Dev Container on release
         uses: devcontainers/ci@v0.3
         with:
           imageName: ghcr.io/${{ github.repository }}
-          imageTag: ${{ matrix.QUARTO_VERSION }},${{ matrix.QUARTO_VERSION }}-jammy
+          imageTag: ${{ steps.image_tags.outputs.IMAGE_TAG }}
           noCache: true
           push: always
           platform: ${{ matrix.PLATFORM }}
