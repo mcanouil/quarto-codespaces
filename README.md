@@ -139,12 +139,58 @@ The following outputs show the `quarto check` results from the latest builds of 
 
 <!-- QUARTO_CHECK_RELEASE_START -->
 ```txt
-Quarto check output will be automatically updated here after each build.
+Quarto 1.8.25
+[✓] Checking environment information...
+      Quarto cache location: /home/vscode/.cache/quarto
+[✓] Checking versions of quarto binary dependencies...
+      Pandoc version 3.6.3: OK
+      Dart Sass version 1.87.0: OK
+      Deno version 2.3.1: OK
+      Typst version 0.13.0: OK
+[✓] Checking versions of quarto dependencies......OK
+[✓] Checking Quarto installation......OK
+      Version: 1.8.25
+      Path: /opt/quarto/bin
+
+[✓] Checking tools....................OK
+      TinyTeX: (external install)
+      Chromium: (not installed)
+
+(|) Checking LaTeX....................[✓] Checking LaTeX....................OK
+      Using: TinyTex
+      Path: /home/vscode/.TinyTeX/bin/x86_64-linux
+      Version: 2025
+
+[✓] Checking Chrome Headless....................OK
+      Using: Chrome found on system
+      Path: /usr/bin/google-chrome
+      Source: PATH
+
+(|) Checking basic markdown render....[✓] Checking basic markdown render....OK
+
+(|) Checking Python 3 installation....[✓] Checking Python 3 installation....OK
+      Version: 3.13.9
+      Path: /usr/local/python/current/bin/python3
+      Jupyter: 5.9.1
+      Kernels: julia-1.12, python3
+
+(|) Checking Jupyter engine render....[✓] Checking Jupyter engine render....OK
+
+(|) Checking R installation...........[✓] Checking R installation...........OK
+      Version: 4.5.2
+      Path: /opt/R/4.5.2/lib/R
+      LibPaths:
+        - /home/vscode/R/x86_64-pc-linux-gnu-library/4.5
+        - /opt/R/4.5.2/lib/R/library
+      knitr: 1.50
+      rmarkdown: 2.30
+
+(|) Checking Knitr engine render......[✓] Checking Knitr engine render......OK
 ```
 <!-- QUARTO_CHECK_RELEASE_END -->
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/workflows/devcontainer.yml)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/19002419188)
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
 </details>
@@ -154,12 +200,58 @@ Quarto check output will be automatically updated here after each build.
 
 <!-- QUARTO_CHECK_PRERELEASE_START -->
 ```txt
-Quarto check output will be automatically updated here after each build.
+Quarto 1.9.9
+[✓] Checking environment information...
+      Quarto cache location: /home/vscode/.cache/quarto
+[✓] Checking versions of quarto binary dependencies...
+      Pandoc version 3.6.3: OK
+      Dart Sass version 1.87.0: OK
+      NOTE: Deno version 2.4.5 does not strictly match 2.3.1 and strict checking is enabled. Please use 2.3.1.
+      Typst version 0.13.0: OK
+[✓] Checking versions of quarto dependencies......OK
+[✓] Checking Quarto installation......OK
+      Version: 1.9.9
+      Path: /opt/quarto/bin
+
+[✓] Checking tools....................OK
+      TinyTeX: (external install)
+      Chromium: (not installed)
+
+(|) Checking LaTeX....................[✓] Checking LaTeX....................OK
+      Using: TinyTex
+      Path: /home/vscode/.TinyTeX/bin/x86_64-linux
+      Version: 2025
+
+[✓] Checking Chrome Headless....................OK
+      Using: Chrome found on system
+      Path: /usr/bin/google-chrome
+      Source: PATH
+
+(|) Checking basic markdown render....[✓] Checking basic markdown render....OK
+
+(|) Checking Python 3 installation....[✓] Checking Python 3 installation....OK
+      Version: 3.13.9
+      Path: /usr/local/python/current/bin/python3
+      Jupyter: 5.9.1
+      Kernels: julia-1.12, python3
+
+(|) Checking Jupyter engine render....[✓] Checking Jupyter engine render....OK
+
+(|) Checking R installation...........[✓] Checking R installation...........OK
+      Version: 4.5.2
+      Path: /opt/R/4.5.2/lib/R
+      LibPaths:
+        - /home/vscode/R/x86_64-pc-linux-gnu-library/4.5
+        - /opt/R/4.5.2/lib/R/library
+      knitr: 1.50
+      rmarkdown: 2.30
+
+(|) Checking Knitr engine render......[✓] Checking Knitr engine render......OK
 ```
 <!-- QUARTO_CHECK_PRERELEASE_END -->
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/workflows/devcontainer.yml)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/19002419188)
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
 </details>
