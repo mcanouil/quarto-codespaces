@@ -73,14 +73,16 @@ jobs:
           echo "Build ID: ${BUILD_ID}"
           echo "Base tags: ${BASE_TAGS}"
 
-          # Split base tags and add build metadata versions
+          # Split base tags and add build metadata versions (exclude 'latest')
           IFS=',' read -ra TAG_ARRAY <<< "${BASE_TAGS}"
           TAGS_WITH_BUILD=""
           for tag in "${TAG_ARRAY[@]}"; do
-            TAGS_WITH_BUILD="${TAGS_WITH_BUILD},${tag}-${BUILD_ID}"
+            if [[ "${tag}" != "latest" ]]; then
+              TAGS_WITH_BUILD="${TAGS_WITH_BUILD},${tag}-${BUILD_ID}"
+            fi
           done
 
-          # Combine original tags with build metadata tags (remove leading comma)
+          # Combine original tags with build metadata tags
           ALL_TAGS="${BASE_TAGS}${TAGS_WITH_BUILD}"
           echo "All tags: ${ALL_TAGS}"
           echo "::endgroup::"
