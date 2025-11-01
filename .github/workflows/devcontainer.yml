@@ -261,15 +261,25 @@ jobs:
           update_readme_section "prerelease" "/tmp/quarto-check-outputs/quarto-check-prerelease/prerelease.txt" "${BUILD_URL}"
 
       - name: Commit and push changes
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          COMMIT: "ci: update quarto check outputs in README.md"
         run: |
-          git add README.md
-
-          if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "ci: update quarto check outputs in README.md"
-            git push
+          if git show-ref --quiet refs/heads/${BRANCH}; then
+            echo "Branch ${BRANCH} already exists."
+            git branch -D "${BRANCH}"
+            git push origin --delete "${BRANCH}"
           fi
+
+          git checkout -b "${BRANCH}"
+          git add README.md || echo "No changes to add"
+          git commit -m "${COMMIT}" || echo "No changes to commit"
+          git push --force origin ${BRANCH} || echo "No changes to push"
+
+          sleep 5
+          gh pr create --fill-first --base "main" --head "${BRANCH}" --label "Type: CI/CD :robot:"
+          sleep 2
+          gh pr merge --auto --squash --delete-branch
 
   build-versions:
     runs-on: ubuntu-latest
