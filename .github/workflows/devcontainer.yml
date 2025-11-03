@@ -191,7 +191,7 @@ jobs:
           git config --global user.email '${{ steps.get-user-id.outputs.user-id }}+${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com'
 
       - name: Download quarto check outputs
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v6
         with:
           path: /tmp/quarto-check-outputs
 
