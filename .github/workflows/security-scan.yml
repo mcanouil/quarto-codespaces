@@ -26,8 +26,6 @@ jobs:
         include:
           - QUARTO_VERSION: release
             IMAGE_TAG: release
-          - QUARTO_VERSION: prerelease
-            IMAGE_TAG: prerelease
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
