@@ -7,20 +7,34 @@
       "IMAGE": "${localEnv:IMAGE}"
     },
     "options": [
-      "--label", "org.opencontainers.image.title=${localEnv:ANNOTATION_TITLE}",
-      "--annotation", "org.opencontainers.image.title=${localEnv:ANNOTATION_TITLE}",
-      "--label", "org.opencontainers.image.description=${localEnv:ANNOTATION_DESCRIPTION}",
-      "--annotation", "org.opencontainers.image.description=${localEnv:ANNOTATION_DESCRIPTION}",
-      "--label", "org.opencontainers.image.authors=${localEnv:ANNOTATION_AUTHORS}",
-      "--annotation", "org.opencontainers.image.authors=${localEnv:ANNOTATION_AUTHORS}",
-      "--label", "org.opencontainers.image.url=${localEnv:ANNOTATION_URL}",
-      "--annotation", "org.opencontainers.image.url=${localEnv:ANNOTATION_URL}",
-      "--label", "org.opencontainers.image.source=${localEnv:ANNOTATION_URL}",
-      "--annotation", "org.opencontainers.image.source=${localEnv:ANNOTATION_URL}",
-      "--label", "org.opencontainers.image.version=${localEnv:ANNOTATION_VERSION}",
-      "--annotation", "org.opencontainers.image.version=${localEnv:ANNOTATION_VERSION}",
-      "--label", "org.opencontainers.image.licenses=${localEnv:ANNOTATION_LICENSE}",
-      "--annotation", "org.opencontainers.image.licenses=${localEnv:ANNOTATION_LICENSE}"
+      "--label",
+      "org.opencontainers.image.title=${localEnv:ANNOTATION_TITLE}",
+      "--annotation",
+      "org.opencontainers.image.title=${localEnv:ANNOTATION_TITLE}",
+      "--label",
+      "org.opencontainers.image.description=${localEnv:ANNOTATION_DESCRIPTION}",
+      "--annotation",
+      "org.opencontainers.image.description=${localEnv:ANNOTATION_DESCRIPTION}",
+      "--label",
+      "org.opencontainers.image.authors=${localEnv:ANNOTATION_AUTHORS}",
+      "--annotation",
+      "org.opencontainers.image.authors=${localEnv:ANNOTATION_AUTHORS}",
+      "--label",
+      "org.opencontainers.image.url=${localEnv:ANNOTATION_URL}",
+      "--annotation",
+      "org.opencontainers.image.url=${localEnv:ANNOTATION_URL}",
+      "--label",
+      "org.opencontainers.image.source=${localEnv:ANNOTATION_URL}",
+      "--annotation",
+      "org.opencontainers.image.source=${localEnv:ANNOTATION_URL}",
+      "--label",
+      "org.opencontainers.image.version=${localEnv:ANNOTATION_VERSION}",
+      "--annotation",
+      "org.opencontainers.image.version=${localEnv:ANNOTATION_VERSION}",
+      "--label",
+      "org.opencontainers.image.licenses=${localEnv:ANNOTATION_LICENSE}",
+      "--annotation",
+      "org.opencontainers.image.licenses=${localEnv:ANNOTATION_LICENSE}"
     ]
   },
   "remoteUser": "${localEnv:USER}",
@@ -55,6 +69,7 @@
       "installTinyTex": "false",
       "installChromium": "false"
     },
-    "ghcr.io/devcontainers/features/github-cli:1": {}
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "./cleanup": {}
   }
 }

@@ -1,0 +1,16 @@
+{
+  "id": "cleanup",
+  "version": "1.0.0",
+  "name": "Cleanup",
+  "description": "Remove user caches and temporary files (for example ~/.cache/R). Intended to run last.",
+  "installsAfter": [
+    "ghcr.io/devcontainers/features/common-utils",
+    "./quarto-computing-dependencies",
+    "./uv",
+    "./chrome",
+    "./decktape",
+    "./tinytex",
+    "ghcr.io/rocker-org/devcontainer-features/quarto-cli",
+    "ghcr.io/devcontainers/features/github-cli"
+  ]
+}
