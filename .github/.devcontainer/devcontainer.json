@@ -69,7 +69,9 @@
       "installTinyTex": "false",
       "installChromium": "false"
     },
-    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "version": "latest"
+    },
     "./cleanup": {}
   }
 }
