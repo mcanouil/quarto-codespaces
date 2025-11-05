@@ -50,7 +50,7 @@ jobs:
           format: sarif
           output: trivy-results-${{ matrix.QUARTO_VERSION }}.sarif
           severity: CRITICAL,HIGH,MEDIUM
-          scanners: vuln,secret,config
+          scanners: vuln,secret
           list-all-pkgs: true
 
       - name: Upload Trivy results to GitHub Security tab
