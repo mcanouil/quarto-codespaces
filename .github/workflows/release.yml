@@ -20,6 +20,7 @@ jobs:
         uses: actions/checkout@v5
         with:
           persist-credentials: true
+          fetch-tags: true
 
       - name: Create GitHub App token
         uses: actions/create-github-app-token@v2
@@ -59,7 +60,7 @@ jobs:
           # Check if version already exists as a tag/release
           SUFFIX=1
           VERSION="${BASE_VERSION}"
-          while git tag -l "${VERSION}" | grep -q "${VERSION}" || gh release view "${VERSION}" &>/dev/null; do
+          while git tag -l "${VERSION}" | grep -q "${VERSION}"; do
             SUFFIX=$((SUFFIX + 1))
             VERSION="${BASE_VERSION}-${SUFFIX}"
           done
