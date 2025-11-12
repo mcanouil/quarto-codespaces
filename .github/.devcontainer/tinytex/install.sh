@@ -75,15 +75,18 @@ install_tinytex() {
   # ln -s "${TINYTEX_DIR}/.TinyTeX/bin/$(uname -m)-linux" /usr/local/bin/tinytex
     
   # Add TinyTeX binaries to PATH for all users via /etc/profile.d/
-  echo "export PATH=\"${TINYTEX_DIR}/.TinyTeX/bin/$(uname -m)-linux:\${PATH}\"" > /etc/profile.d/tinytex.sh
-  chmod 644 /etc/profile.d/tinytex.sh
-
   # Set TEXMFVAR and TEXMFCONFIG for all users
   (
-    echo "export TEXMFVAR=\"\${HOME}/.texlive/texmf-var\""
-    echo "export TEXMFCONFIG=\"\${HOME}/.texlive/texmf-config\""
-  ) > /etc/profile.d/tinytex_env.sh
-  chmod 644 /etc/profile.d/tinytex_env.sh
+    echo "export PATH=\"${TINYTEX_DIR}/.TinyTeX/bin/$(uname -m)-linux:\${PATH}\""
+    echo "export TEXMFVAR=\"\${HOME}/.TinyTeX/texmf-var\""
+    echo "export TEXMFCONFIG=\"\${HOME}/.TinyTeX/texmf-config\""
+  ) > /etc/profile.d/tinytex.sh
+  chmod 644 /etc/profile.d/tinytex.sh
+
+  mkdir -p "/home/${USERNAME}/.TinyTeX/texmf-config/web2c" "/home/${USERNAME}/.TinyTeX/texmf-var"
+  chown -R "${USERNAME}:${USERNAME}" "/home/${USERNAME}/.TinyTeX"
+  echo "TEXMFVAR = /home/${USERNAME}/.TinyTeX/texmf-var" > "/home/${USERNAME}/.TinyTeX/texmf-config/web2c/texmf.cnf"
+
 }
 
 install_tinytex
