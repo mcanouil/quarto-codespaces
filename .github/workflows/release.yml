@@ -58,9 +58,13 @@ jobs:
           BASE_VERSION=$(date +%Y.%m.%d)
 
           # Check if version already exists as a tag/release
+          echo "Checking for existing tags matching ${BASE_VERSION}..."
+          git tag -l "${BASE_VERSION}*"
+
           SUFFIX=1
           VERSION="${BASE_VERSION}"
-          while git tag -l "${VERSION}" | grep -q "${VERSION}"; do
+          while [ -n "$(git tag -l "${VERSION}")" ]; do
+            echo "Tag ${VERSION} already exists, incrementing suffix..."
             SUFFIX=$((SUFFIX + 1))
             VERSION="${BASE_VERSION}-${SUFFIX}"
           done
