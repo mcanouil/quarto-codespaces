@@ -59,7 +59,7 @@ jobs:
 
           SUFFIX=1
           VERSION="${BASE_VERSION}"
-          while [ -n "$(git tag -l "${BASE_VERSION}*")" ]; do
+          while git rev-parse "${VERSION}" >/dev/null 2>&1; do
             echo "Tag ${VERSION} already exists, incrementing suffix..."
             SUFFIX=$((SUFFIX + 1))
             VERSION="${BASE_VERSION}-${SUFFIX}"
