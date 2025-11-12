@@ -57,17 +57,14 @@ jobs:
           DATE=$(date +%Y-%m-%d)
           BASE_VERSION=$(date +%Y.%m.%d)
 
-          # Check if version already exists as a tag/release
-          echo "Checking for existing tags matching ${BASE_VERSION}..."
-          git tag -l "${BASE_VERSION}*"
-
           SUFFIX=1
           VERSION="${BASE_VERSION}"
-          while [ -n "$(git tag -l "${VERSION}")" ]; do
+          while [ -n "$(git tag -l "${BASE_VERSION}*")" ]; do
             echo "Tag ${VERSION} already exists, incrementing suffix..."
             SUFFIX=$((SUFFIX + 1))
             VERSION="${BASE_VERSION}-${SUFFIX}"
           done
+
           echo "New version will be: ${VERSION}"
           sed -i "s/^version:.*/version: ${VERSION}/" CITATION.cff
           sed -i "s/^date-released:.*/date-released: \"${DATE}\"/" CITATION.cff
