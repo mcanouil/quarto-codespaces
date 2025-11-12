@@ -139,7 +139,7 @@ The following outputs show the `quarto check` results from the latest builds of 
 
 <!-- QUARTO_CHECK_RELEASE_START -->
 ```txt
-Quarto 1.8.25
+Quarto 1.8.26
 [✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
 [✓] Checking versions of quarto binary dependencies...
@@ -149,7 +149,7 @@ Quarto 1.8.25
       Typst version 0.13.0: OK
 [✓] Checking versions of quarto dependencies......OK
 [✓] Checking Quarto installation......OK
-      Version: 1.8.25
+      Version: 1.8.26
       Path: /opt/quarto/bin
 
 [✓] Checking tools....................OK
@@ -159,7 +159,7 @@ Quarto 1.8.25
 (|) Checking LaTeX....................[✓] Checking LaTeX....................OK
       Using: TinyTex
       Path: /home/vscode/.TinyTeX/bin/x86_64-linux
-      Version: 2025
+      Version: undefined
 
 [✓] Checking Chrome Headless....................OK
       Using: Chrome found on system
@@ -190,7 +190,7 @@ Quarto 1.8.25
 <!-- QUARTO_CHECK_RELEASE_END -->
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/19116438134)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/19312004272)
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
 </details>
@@ -200,7 +200,7 @@ Quarto 1.8.25
 
 <!-- QUARTO_CHECK_PRERELEASE_START -->
 ```txt
-Quarto 1.9.9
+Quarto 1.9.11
 [✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
 [✓] Checking versions of quarto binary dependencies...
@@ -210,7 +210,7 @@ Quarto 1.9.9
       Typst version 0.13.0: OK
 [✓] Checking versions of quarto dependencies......OK
 [✓] Checking Quarto installation......OK
-      Version: 1.9.9
+      Version: 1.9.11
       Path: /opt/quarto/bin
 
 [✓] Checking tools....................OK
@@ -220,7 +220,7 @@ Quarto 1.9.9
 (|) Checking LaTeX....................[✓] Checking LaTeX....................OK
       Using: TinyTex
       Path: /home/vscode/.TinyTeX/bin/x86_64-linux
-      Version: 2025
+      Version: undefined
 
 [✓] Checking Chrome Headless....................OK
       Using: Chrome found on system
@@ -251,7 +251,7 @@ Quarto 1.9.9
 <!-- QUARTO_CHECK_PRERELEASE_END -->
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/19116438134)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/19312004272)
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
 </details>
