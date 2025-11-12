@@ -152,13 +152,13 @@ Quarto 1.8.26
       Version: 1.8.26
       Path: /opt/quarto/bin
 
-[✓] Checking tools....................OK
+(|) Checking tools....................[✓] Checking tools....................OK
       TinyTeX: (external install)
       Chromium: (not installed)
 
 (|) Checking LaTeX....................[✓] Checking LaTeX....................OK
-      Using: TinyTex
-      Path: /home/vscode/.TinyTeX/bin/x86_64-linux
+      Using: Installation From Path
+      Path: /opt/tinytex/.TinyTeX/bin/x86_64-linux
       Version: 2025
 
 [✓] Checking Chrome Headless....................OK
@@ -190,7 +190,7 @@ Quarto 1.8.26
 <!-- QUARTO_CHECK_RELEASE_END -->
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/19299494119)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/19310534531)
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
 </details>
@@ -200,7 +200,7 @@ Quarto 1.8.26
 
 <!-- QUARTO_CHECK_PRERELEASE_START -->
 ```txt
-Quarto 1.9.10
+Quarto 1.9.11
 [✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
 [✓] Checking versions of quarto binary dependencies...
@@ -210,16 +210,16 @@ Quarto 1.9.10
       Typst version 0.13.0: OK
 [✓] Checking versions of quarto dependencies......OK
 [✓] Checking Quarto installation......OK
-      Version: 1.9.10
+      Version: 1.9.11
       Path: /opt/quarto/bin
 
-[✓] Checking tools....................OK
+(|) Checking tools....................[✓] Checking tools....................OK
       TinyTeX: (external install)
       Chromium: (not installed)
 
 (|) Checking LaTeX....................[✓] Checking LaTeX....................OK
-      Using: TinyTex
-      Path: /home/vscode/.TinyTeX/bin/x86_64-linux
+      Using: Installation From Path
+      Path: /opt/tinytex/.TinyTeX/bin/x86_64-linux
       Version: 2025
 
 [✓] Checking Chrome Headless....................OK
@@ -251,7 +251,7 @@ Quarto 1.9.10
 <!-- QUARTO_CHECK_PRERELEASE_END -->
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/19299494119)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/19310534531)
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
 </details>
