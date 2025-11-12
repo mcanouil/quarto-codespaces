@@ -58,9 +58,25 @@ install_tinytex() {
   mkdir -p "${TINYTEX_DIR}"
   curl -sL "https://yihui.org/tinytex/install-bin-unix.sh" | sh
   echo "TinyTeX installation complete."
+  
+  # Create tinytex group and add users to it
+  groupadd -f tinytex
+  usermod -a -G tinytex root
+  if [ "${USERNAME}" != "root" ]; then
+    usermod -a -G tinytex "${USERNAME}"
+  fi
+  
+  # Set group ownership and permissions
+  chgrp -R tinytex "${TINYTEX_DIR}/.TinyTeX"
+  chmod -R 775 "${TINYTEX_DIR}/.TinyTeX"
+  
   ln -s "${TINYTEX_DIR}/.TinyTeX" "${HOME}/.TinyTeX"
   ln -s "${TINYTEX_DIR}/.TinyTeX" "/home/${USERNAME}/.TinyTeX"
   ln -s "${TINYTEX_DIR}/.TinyTeX/bin/$(uname -m)-linux" /usr/local/bin/tinytex
+    
+  # Add TinyTeX binaries to PATH for all users via /etc/profile.d/
+  echo "export PATH=\"${TINYTEX_DIR}/.TinyTeX/bin/$(uname -m)-linux:\${PATH}\"" > /etc/profile.d/tinytex.sh
+  chmod 644 /etc/profile.d/tinytex.sh
 }
 
 install_tinytex
