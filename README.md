@@ -152,14 +152,14 @@ Quarto 1.8.26
       Version: 1.8.26
       Path: /opt/quarto/bin
 
-(|) Checking tools....................[✓] Checking tools....................OK
+[✓] Checking tools....................OK
       TinyTeX: (external install)
       Chromium: (not installed)
 
 (|) Checking LaTeX....................[✓] Checking LaTeX....................OK
-      Using: Installation From Path
-      Path: /opt/tinytex/.TinyTeX/bin/x86_64-linux
-      Version: 2025
+      Using: TinyTex
+      Path: /home/vscode/.TinyTeX/bin/x86_64-linux
+      Version: undefined
 
 [✓] Checking Chrome Headless....................OK
       Using: Chrome found on system
@@ -190,7 +190,7 @@ Quarto 1.8.26
 <!-- QUARTO_CHECK_RELEASE_END -->
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/19310534531)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/19312004272)
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
 </details>
@@ -213,14 +213,14 @@ Quarto 1.9.11
       Version: 1.9.11
       Path: /opt/quarto/bin
 
-(|) Checking tools....................[✓] Checking tools....................OK
+[✓] Checking tools....................OK
       TinyTeX: (external install)
       Chromium: (not installed)
 
 (|) Checking LaTeX....................[✓] Checking LaTeX....................OK
-      Using: Installation From Path
-      Path: /opt/tinytex/.TinyTeX/bin/x86_64-linux
-      Version: 2025
+      Using: TinyTex
+      Path: /home/vscode/.TinyTeX/bin/x86_64-linux
+      Version: undefined
 
 [✓] Checking Chrome Headless....................OK
       Using: Chrome found on system
@@ -251,7 +251,7 @@ Quarto 1.9.11
 <!-- QUARTO_CHECK_PRERELEASE_END -->
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/19310534531)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/19312004272)
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
 </details>
