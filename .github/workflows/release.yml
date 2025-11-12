@@ -64,7 +64,7 @@ jobs:
             SUFFIX=$((SUFFIX + 1))
             VERSION="${BASE_VERSION}-${SUFFIX}"
           done
-
+          echo "New version will be: ${VERSION}"
           sed -i "s/^version:.*/version: ${VERSION}/" CITATION.cff
           sed -i "s/^date-released:.*/date-released: \"${DATE}\"/" CITATION.cff
 
