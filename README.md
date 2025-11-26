@@ -158,7 +158,7 @@ Quarto 1.8.26
 
 (|) Checking LaTeX....................[✓] Checking LaTeX....................OK
       Using: Installation From Path
-      Path: /opt/tinytex/.TinyTeX/bin/x86_64-linux
+      Path: /usr/local/bin
       Version: 2025
 
 [✓] Checking Chrome Headless....................OK
@@ -190,7 +190,7 @@ Quarto 1.8.26
 <!-- QUARTO_CHECK_RELEASE_END -->
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/19313292200)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/19718493206)
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
 </details>
@@ -200,7 +200,7 @@ Quarto 1.8.26
 
 <!-- QUARTO_CHECK_PRERELEASE_START -->
 ```txt
-Quarto 1.9.11
+Quarto 1.9.12
 [✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
 [✓] Checking versions of quarto binary dependencies...
@@ -210,7 +210,7 @@ Quarto 1.9.11
       Typst version 0.13.0: OK
 [✓] Checking versions of quarto dependencies......OK
 [✓] Checking Quarto installation......OK
-      Version: 1.9.11
+      Version: 1.9.12
       Path: /opt/quarto/bin
 
 (|) Checking tools....................[✓] Checking tools....................OK
@@ -219,7 +219,7 @@ Quarto 1.9.11
 
 (|) Checking LaTeX....................[✓] Checking LaTeX....................OK
       Using: Installation From Path
-      Path: /opt/tinytex/.TinyTeX/bin/x86_64-linux
+      Path: /usr/local/bin
       Version: 2025
 
 [✓] Checking Chrome Headless....................OK
@@ -251,7 +251,7 @@ Quarto 1.9.11
 <!-- QUARTO_CHECK_PRERELEASE_END -->
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/19313292200)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/19718493206)
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
 </details>
