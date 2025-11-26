@@ -54,34 +54,30 @@ install_tinytex() {
   check_packages libfontconfig
   # su "${USERNAME}" -c 'quarto install tinytex --quiet'
   check_packages curl ca-certificates
-  export TINYTEX_DIR="/opt/tinytex"
-  mkdir -p "${TINYTEX_DIR}"
-  curl -sL "https://yihui.org/tinytex/install-bin-unix.sh" | sh
+  curl -sL "https://yihui.org/tinytex/install-bin-unix.sh" | sh -s - --admin --no-path
+  TINYTEX_OPT="/opt/tinytex"
+  mv /root/.TinyTeX "${TINYTEX_OPT}"
+  TINYTEX_INSTALL_DIR="${TINYTEX_OPT}/bin/$(uname -m)-linux"
+  "${TINYTEX_INSTALL_DIR}/tlmgr" option sys_bin /usr/local/bin
+  "${TINYTEX_INSTALL_DIR}/tlmgr" path add
   echo "TinyTeX installation complete."
-  
+
   # Create tinytex group and add users to it
   groupadd -f tinytex
   usermod -a -G tinytex root
   if [ "${USERNAME}" != "root" ]; then
     usermod -a -G tinytex "${USERNAME}"
   fi
-  
   # Set group ownership and permissions
-  chgrp -R tinytex "${TINYTEX_DIR}/.TinyTeX"
-  chmod -R 775 "${TINYTEX_DIR}/.TinyTeX"
-    
-  # Add TinyTeX binaries to PATH for all users via /etc/profile.d/
-  # Set TEXMFVAR and TEXMFCONFIG for all users
-  (
-    echo "export PATH=\"${TINYTEX_DIR}/.TinyTeX/bin/$(uname -m)-linux:\${PATH}\""
-    echo "export TEXMFVAR=\"\${HOME}/.TinyTeX/texmf-var\""
-    echo "export TEXMFCONFIG=\"\${HOME}/.TinyTeX/texmf-config\""
-  ) > /etc/profile.d/tinytex.sh
+  chgrp -R tinytex "${TINYTEX_OPT}"
+  chmod -R 775 "${TINYTEX_OPT}"
+
+  # Set environment variables system-wide for TinyTeX
+  echo "export TEXLIVE_USE_USERMODE=1" > /etc/profile.d/tinytex.sh
   chmod 644 /etc/profile.d/tinytex.sh
 
-  # mkdir -p "/home/${USERNAME}/.TinyTeX/texmf-config/web2c" "/home/${USERNAME}/.TinyTeX/texmf-var"
-  # chown -R "${USERNAME}:${USERNAME}" "/home/${USERNAME}/.TinyTeX"
-  # echo "TEXMFVAR = /home/${USERNAME}/.TinyTeX/texmf-var" > "/home/${USERNAME}/.TinyTeX/texmf-config/web2c/texmf.cnf"
+  # Initialise user tree for tlmgr in the non-root user's home directory
+  su "${USERNAME}" -c "tlmgr init-usertree"
 }
 
 install_tinytex
