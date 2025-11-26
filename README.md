@@ -1,6 +1,6 @@
 # Quarto Codespaces
 
-[![Dev Container Docker Image Build](https://github.com/mcanouil/quarto-codespaces/actions/workflows/devcontainer.yml/badge.svg?event=release)](https://github.com/mcanouil/quarto-codespaces/actions/workflows/devcontainer.yml)
+[![Dev Container Docker Image Build](https://github.com/mcanouil/quarto-codespaces/actions/workflows/devcontainer.yml/badge.svg?event=release)](https://github.com/mcanouil/quarto-codespaces/actions/workflows/devcontainer.yml)[![Codespaces Prebuilds](https://github.com/mcanouil/quarto-codespaces/actions/workflows/codespaces/create_codespaces_prebuilds/badge.svg)](https://github.com/mcanouil/quarto-codespaces/actions/workflows/codespaces/create_codespaces_prebuilds)
 
 Setup to deploy [GitHub Codespaces](https://github.com/features/codespaces) (Codespaces) or [Development Containers](https://containers.dev/) (Dev Containers) with [Quarto](https://quarto.org/).
 
@@ -140,43 +140,60 @@ The following outputs show the `quarto check` results from the latest builds of 
 <!-- QUARTO_CHECK_RELEASE_START -->
 ```txt
 Quarto 1.8.26
-[✓] Checking environment information...
+
+[✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
-[✓] Checking versions of quarto binary dependencies...
+
+[✓] Checking versions of quarto binary dependencies...
       Pandoc version 3.6.3: OK
       Dart Sass version 1.87.0: OK
       Deno version 2.3.1: OK
       Typst version 0.13.0: OK
-[✓] Checking versions of quarto dependencies......OK
-[✓] Checking Quarto installation......OK
+
+[✓] Checking versions of quarto dependencies......OK
+
+[✓] Checking Quarto installation......OK
       Version: 1.8.26
       Path: /opt/quarto/bin
 
-(|) Checking tools....................[✓] Checking tools....................OK
+
+(|) Checking tools....................
+[✓] Checking tools....................OK
       TinyTeX: (external install)
       Chromium: (not installed)
 
-(|) Checking LaTeX....................[✓] Checking LaTeX....................OK
+
+(|) Checking LaTeX....................
+[✓] Checking LaTeX....................OK
       Using: Installation From Path
       Path: /usr/local/bin
       Version: 2025
 
-[✓] Checking Chrome Headless....................OK
+
+[✓] Checking Chrome Headless....................OK
       Using: Chrome found on system
       Path: /usr/bin/google-chrome
       Source: PATH
 
-(|) Checking basic markdown render....[✓] Checking basic markdown render....OK
 
-(|) Checking Python 3 installation....[✓] Checking Python 3 installation....OK
+(|) Checking basic markdown render....
+[✓] Checking basic markdown render....OK
+
+
+(|) Checking Python 3 installation....
+[✓] Checking Python 3 installation....OK
       Version: 3.13.9
       Path: /usr/local/python/current/bin/python3
       Jupyter: 5.9.1
       Kernels: julia-1.12, python3
 
-(|) Checking Jupyter engine render....[✓] Checking Jupyter engine render....OK
 
-(|) Checking R installation...........[✓] Checking R installation...........OK
+(|) Checking Jupyter engine render....
+[✓] Checking Jupyter engine render....OK
+
+
+(|) Checking R installation...........
+[✓] Checking R installation...........OK
       Version: 4.5.2
       Path: /opt/R/4.5.2/lib/R
       LibPaths:
@@ -185,7 +202,9 @@ Quarto 1.8.26
       knitr: 1.50
       rmarkdown: 2.30
 
-(|) Checking Knitr engine render......[✓] Checking Knitr engine render......OK
+
+(|) Checking Knitr engine render......
+[✓] Checking Knitr engine render......OK
 ```
 <!-- QUARTO_CHECK_RELEASE_END -->
 
@@ -201,43 +220,60 @@ Quarto 1.8.26
 <!-- QUARTO_CHECK_PRERELEASE_START -->
 ```txt
 Quarto 1.9.12
-[✓] Checking environment information...
+
+[✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
-[✓] Checking versions of quarto binary dependencies...
+
+[✓] Checking versions of quarto binary dependencies...
       Pandoc version 3.6.3: OK
       Dart Sass version 1.87.0: OK
       NOTE: Deno version 2.4.5 does not strictly match 2.3.1 and strict checking is enabled. Please use 2.3.1.
       Typst version 0.13.0: OK
-[✓] Checking versions of quarto dependencies......OK
-[✓] Checking Quarto installation......OK
+
+[✓] Checking versions of quarto dependencies......OK
+
+[✓] Checking Quarto installation......OK
       Version: 1.9.12
       Path: /opt/quarto/bin
 
-(|) Checking tools....................[✓] Checking tools....................OK
+
+(|) Checking tools....................
+[✓] Checking tools....................OK
       TinyTeX: (external install)
       Chromium: (not installed)
 
-(|) Checking LaTeX....................[✓] Checking LaTeX....................OK
+
+(|) Checking LaTeX....................
+[✓] Checking LaTeX....................OK
       Using: Installation From Path
       Path: /usr/local/bin
       Version: 2025
 
-[✓] Checking Chrome Headless....................OK
+
+[✓] Checking Chrome Headless....................OK
       Using: Chrome found on system
       Path: /usr/bin/google-chrome
       Source: PATH
 
-(|) Checking basic markdown render....[✓] Checking basic markdown render....OK
 
-(|) Checking Python 3 installation....[✓] Checking Python 3 installation....OK
+(|) Checking basic markdown render....
+[✓] Checking basic markdown render....OK
+
+
+(|) Checking Python 3 installation....
+[✓] Checking Python 3 installation....OK
       Version: 3.13.9
       Path: /usr/local/python/current/bin/python3
       Jupyter: 5.9.1
       Kernels: julia-1.12, python3
 
-(|) Checking Jupyter engine render....[✓] Checking Jupyter engine render....OK
 
-(|) Checking R installation...........[✓] Checking R installation...........OK
+(|) Checking Jupyter engine render....
+[✓] Checking Jupyter engine render....OK
+
+
+(|) Checking R installation...........
+[✓] Checking R installation...........OK
       Version: 4.5.2
       Path: /opt/R/4.5.2/lib/R
       LibPaths:
@@ -246,7 +282,9 @@ Quarto 1.9.12
       knitr: 1.50
       rmarkdown: 2.30
 
-(|) Checking Knitr engine render......[✓] Checking Knitr engine render......OK
+
+(|) Checking Knitr engine render......
+[✓] Checking Knitr engine render......OK
 ```
 <!-- QUARTO_CHECK_PRERELEASE_END -->
 
