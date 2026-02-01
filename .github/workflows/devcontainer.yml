@@ -25,6 +25,7 @@ jobs:
         (
           github.event_name == 'release' ||
             github.event_name == 'workflow_dispatch' ||
+            github.event_name == 'schedule' ||
             github.event_name == 'pull_request'
         )
     strategy:
@@ -96,7 +97,10 @@ jobs:
           subFolder: .github
           imageName: ghcr.io/${{ github.repository }}
           noCache: true
-          eventFilterForPush: "release"
+          eventFilterForPush: |
+            release
+            workflow_dispatch
+            schedule
           platform: linux/amd64
           runCmd: echo "$(CI=true quarto check 2>&1)" | sed '/^(/d; s/\x1b\[[0-9;]*[mGK]//g'
         env:
