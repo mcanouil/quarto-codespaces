@@ -190,7 +190,7 @@ Quarto 1.8.27
 <!-- QUARTO_CHECK_RELEASE_END -->
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/21562312174)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/21563243982)
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
 </details>
@@ -254,7 +254,7 @@ Quarto 1.9.18
 <!-- QUARTO_CHECK_PRERELEASE_END -->
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/21562312174)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/21563243982)
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
 </details>
