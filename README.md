@@ -139,77 +139,58 @@ The following outputs show the `quarto check` results from the latest builds of 
 
 <!-- QUARTO_CHECK_RELEASE_START -->
 ```txt
-Quarto 1.8.26
-
-[✓] Checking environment information...
+Quarto 1.8.27
+[✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
-
-[✓] Checking versions of quarto binary dependencies...
+[✓] Checking versions of quarto binary dependencies...
       Pandoc version 3.6.3: OK
       Dart Sass version 1.87.0: OK
       Deno version 2.3.1: OK
       Typst version 0.13.0: OK
-
-[✓] Checking versions of quarto dependencies......OK
-
-[✓] Checking Quarto installation......OK
-      Version: 1.8.26
+[✓] Checking versions of quarto dependencies......OK
+[✓] Checking Quarto installation......OK
+      Version: 1.8.27
       Path: /opt/quarto/bin
 
-
-(|) Checking tools....................
-[✓] Checking tools....................OK
+(|) Checking tools....................[✓] Checking tools....................OK
       TinyTeX: (external install)
       Chromium: (not installed)
 
-
-(|) Checking LaTeX....................
-[✓] Checking LaTeX....................OK
+(|) Checking LaTeX....................[✓] Checking LaTeX....................OK
       Using: Installation From Path
       Path: /usr/local/bin
       Version: 2025
 
-
-[✓] Checking Chrome Headless....................OK
+[✓] Checking Chrome Headless....................OK
       Using: Chrome found on system
       Path: /usr/bin/google-chrome
       Source: PATH
 
+(|) Checking basic markdown render....[✓] Checking basic markdown render....OK
 
-(|) Checking basic markdown render....
-[✓] Checking basic markdown render....OK
-
-
-(|) Checking Python 3 installation....
-[✓] Checking Python 3 installation....OK
+(|) Checking Python 3 installation....[✓] Checking Python 3 installation....OK
       Version: 3.13.9
       Path: /usr/local/python/current/bin/python3
       Jupyter: 5.9.1
       Kernels: julia-1.12, python3
 
+(|) Checking Jupyter engine render....[✓] Checking Jupyter engine render....OK
 
-(|) Checking Jupyter engine render....
-[✓] Checking Jupyter engine render....OK
-
-
-(|) Checking R installation...........
-[✓] Checking R installation...........OK
+(|) Checking R installation...........[✓] Checking R installation...........OK
       Version: 4.5.2
       Path: /opt/R/4.5.2/lib/R
       LibPaths:
         - /home/vscode/R/x86_64-pc-linux-gnu-library/4.5
         - /opt/R/4.5.2/lib/R/library
-      knitr: 1.50
+      knitr: 1.51
       rmarkdown: 2.30
 
-
-(|) Checking Knitr engine render......
-[✓] Checking Knitr engine render......OK
+(|) Checking Knitr engine render......[✓] Checking Knitr engine render......OK
 ```
 <!-- QUARTO_CHECK_RELEASE_END -->
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/19718493206)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/21562312174)
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
 </details>
@@ -219,77 +200,61 @@ Quarto 1.8.26
 
 <!-- QUARTO_CHECK_PRERELEASE_START -->
 ```txt
-Quarto 1.9.12
-
-[✓] Checking environment information...
+Quarto 1.9.18
+[✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
-
-[✓] Checking versions of quarto binary dependencies...
-      Pandoc version 3.6.3: OK
+[✓] Checking versions of quarto binary dependencies...
+      Pandoc version 3.8.3: OK
       Dart Sass version 1.87.0: OK
-      NOTE: Deno version 2.4.5 does not strictly match 2.3.1 and strict checking is enabled. Please use 2.3.1.
-      Typst version 0.13.0: OK
-
-[✓] Checking versions of quarto dependencies......OK
-
-[✓] Checking Quarto installation......OK
-      Version: 1.9.12
+      Deno version 2.4.5: OK
+      Typst version 0.14.2: OK
+[✓] Checking versions of quarto dependencies......OK
+[✓] Checking Quarto installation......OK
+      Version: 1.9.18
       Path: /opt/quarto/bin
 
-
-(|) Checking tools....................
-[✓] Checking tools....................OK
+(|) Checking tools....................[✓] Checking tools....................OK
       TinyTeX: (external install)
       Chromium: (not installed)
+      VeraPDF: (not installed)
 
-
-(|) Checking LaTeX....................
-[✓] Checking LaTeX....................OK
+(|) Checking LaTeX....................[✓] Checking LaTeX....................OK
       Using: Installation From Path
       Path: /usr/local/bin
       Version: 2025
 
-
-[✓] Checking Chrome Headless....................OK
+[✓] Checking Chrome Headless....................OK
       Using: Chrome found on system
       Path: /usr/bin/google-chrome
       Source: PATH
 
+(|) Checking basic markdown render....[✓] Checking basic markdown render....OK
 
-(|) Checking basic markdown render....
-[✓] Checking basic markdown render....OK
-
-
-(|) Checking Python 3 installation....
-[✓] Checking Python 3 installation....OK
-      Version: 3.13.9
-      Path: /usr/local/python/current/bin/python3
-      Jupyter: 5.9.1
-      Kernels: julia-1.12, python3
-
-
-(|) Checking Jupyter engine render....
-[✓] Checking Jupyter engine render....OK
-
-
-(|) Checking R installation...........
-[✓] Checking R installation...........OK
+(|) Checking R installation...........[✓] Checking R installation...........OK
       Version: 4.5.2
       Path: /opt/R/4.5.2/lib/R
       LibPaths:
         - /home/vscode/R/x86_64-pc-linux-gnu-library/4.5
         - /opt/R/4.5.2/lib/R/library
-      knitr: 1.50
+      knitr: 1.51
       rmarkdown: 2.30
 
+(|) Checking Knitr engine render......[✓] Checking Knitr engine render......OK
 
-(|) Checking Knitr engine render......
-[✓] Checking Knitr engine render......OK
+(|) Checking Python 3 installation....[✓] Checking Python 3 installation....OK
+      Version: 3.13.9
+      Path: /usr/local/python/current/bin/python3
+      Jupyter: 5.9.1
+      Kernels: julia-1.12, python3
+
+(|) Checking Jupyter engine render....[✓] Checking Jupyter engine render....OK
+
+(|) Checking Julia installation...[✓] Checking Julia installation...
 ```
 <!-- QUARTO_CHECK_PRERELEASE_END -->
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/19718493206)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/21562312174)
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
 </details>
