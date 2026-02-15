@@ -83,12 +83,12 @@ done
 
 case ${WHAT} in
   all)
-    initialise_r "rmarkdown,languageserver,nx10/httpgd@v2.0.4"
+    initialise_r "rmarkdown,languageserver"
     initialise_uv "jupyter,papermill"
     initialise_julia "IJulia"
     ;;
   r)
-    initialise_r "rmarkdown,languageserver,nx10/httpgd@v2.0.4"
+    initialise_r "rmarkdown,languageserver"
     ;;
   python)
     initialise_uv "jupyter,papermill"
