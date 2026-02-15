@@ -26,7 +26,7 @@
   "remoteUser": "codespace",
   "features": {
     "./quarto-computing-dependencies": {
-      "rDeps": "rmarkdown,languageserver,nx10/httpgd@v2.0.3,prompt,lintr",
+      "rDeps": "rmarkdown,languageserver,prompt,lintr",
       "pythonDeps": "jupyter,papermill",
       "juliaDeps": "IJulia"
     },

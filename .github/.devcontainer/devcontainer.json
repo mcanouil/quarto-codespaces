@@ -52,7 +52,7 @@
     },
     "./quarto-computing-dependencies": {
       "installOnPlatforms": "amd64",
-      "rDeps": "rmarkdown,languageserver,nx10/httpgd@v2.0.4",
+      "rDeps": "rmarkdown,languageserver",
       "pythonDeps": "jupyter,papermill",
       "juliaDeps": "IJulia"
     },
