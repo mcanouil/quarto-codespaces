@@ -44,7 +44,7 @@ jobs:
           docker pull ghcr.io/${GITHUB_REPOSITORY}:${IMAGE_TAG}
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.34.0
+        uses: aquasecurity/trivy-action@0.34.1
         with:
           image-ref: ghcr.io/${{ github.repository }}:${{ matrix.IMAGE_TAG }}
           format: sarif
