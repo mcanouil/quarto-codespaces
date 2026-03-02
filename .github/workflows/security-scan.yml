@@ -61,7 +61,7 @@ jobs:
           category: trivy-${{ matrix.QUARTO_VERSION }}
 
       - name: Upload scan results as artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         if: always()
         with:
           name: trivy-results-${{ matrix.QUARTO_VERSION }}
