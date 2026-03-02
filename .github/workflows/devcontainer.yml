@@ -143,7 +143,7 @@ jobs:
           echo "${DEVCONTAINER_RUN_CMD}" > "/tmp/quarto-check-outputs/${QUARTO_VERSION}.txt"
 
       - name: Upload quarto check output
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: quarto-check-${{ matrix.QUARTO_VERSION }}
           path: /tmp/quarto-check-outputs/${{ matrix.QUARTO_VERSION }}.txt
