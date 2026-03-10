@@ -19,7 +19,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Build - Quarto ${{ matrix.QUARTO_VERSION }}
+    name: Build - ${{ matrix.IMAGE_TAG_BASE }}
     if: >-
       ! endsWith(github.event.pull_request.user.login, '[bot]') &&
         (
@@ -31,10 +31,42 @@ jobs:
     strategy:
       matrix:
         include:
+          # Full (existing, unchanged tags)
           - QUARTO_VERSION: release
             IMAGE_TAG_BASE: release,release-jammy,latest
+            CONFIG_FILE: ""
+            VARIANT_ID: release
           - QUARTO_VERSION: prerelease
             IMAGE_TAG_BASE: prerelease,prerelease-jammy
+            CONFIG_FILE: ""
+            VARIANT_ID: prerelease
+          # R
+          - QUARTO_VERSION: release
+            IMAGE_TAG_BASE: release-r,release-r-jammy
+            CONFIG_FILE: ".github/.devcontainer/r/devcontainer.json"
+            VARIANT_ID: release-r
+          - QUARTO_VERSION: prerelease
+            IMAGE_TAG_BASE: prerelease-r,prerelease-r-jammy
+            CONFIG_FILE: ".github/.devcontainer/r/devcontainer.json"
+            VARIANT_ID: prerelease-r
+          # Python
+          - QUARTO_VERSION: release
+            IMAGE_TAG_BASE: release-python,release-python-jammy
+            CONFIG_FILE: ".github/.devcontainer/python/devcontainer.json"
+            VARIANT_ID: release-python
+          - QUARTO_VERSION: prerelease
+            IMAGE_TAG_BASE: prerelease-python,prerelease-python-jammy
+            CONFIG_FILE: ".github/.devcontainer/python/devcontainer.json"
+            VARIANT_ID: prerelease-python
+          # Julia
+          - QUARTO_VERSION: release
+            IMAGE_TAG_BASE: release-julia,release-julia-jammy
+            CONFIG_FILE: ".github/.devcontainer/julia/devcontainer.json"
+            VARIANT_ID: release-julia
+          - QUARTO_VERSION: prerelease
+            IMAGE_TAG_BASE: prerelease-julia,prerelease-julia-jammy
+            CONFIG_FILE: ".github/.devcontainer/julia/devcontainer.json"
+            VARIANT_ID: prerelease-julia
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -94,7 +126,8 @@ jobs:
         uses: devcontainers/ci@v0.3
         with:
           imageTag: ${{ steps.image_tags.outputs.IMAGE_TAG }}
-          subFolder: .github
+          subFolder: ${{ matrix.CONFIG_FILE == '' && '.github' || '' }}
+          configFile: ${{ matrix.CONFIG_FILE }}
           imageName: ghcr.io/${{ github.repository }}
           noCache: true
           eventFilterForPush: |
@@ -116,7 +149,7 @@ jobs:
 
       - name: Test Dev Container
         env:
-          QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
+          VARIANT_ID: ${{ matrix.VARIANT_ID }}
           DEVCONTAINER_RUN_CMD: ${{ steps.devcontainer-ci.outputs.runCmdOutput }}
         run: |
           echo "::group::Quarto Check"
@@ -124,7 +157,7 @@ jobs:
           echo "::endgroup::"
 
           (
-            echo "## Quarto Check Results: ${QUARTO_VERSION}"
+            echo "## Quarto Check Results: ${VARIANT_ID}"
             echo "<details><summary>Quarto Check Results</summary>"
             echo ""
             echo '```txt'
@@ -136,17 +169,17 @@ jobs:
 
       - name: Save quarto check output
         env:
-          QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
+          VARIANT_ID: ${{ matrix.VARIANT_ID }}
           DEVCONTAINER_RUN_CMD: ${{ steps.devcontainer-ci.outputs.runCmdOutput }}
         run: |
           mkdir -p /tmp/quarto-check-outputs
-          echo "${DEVCONTAINER_RUN_CMD}" > "/tmp/quarto-check-outputs/${QUARTO_VERSION}.txt"
+          echo "${DEVCONTAINER_RUN_CMD}" > "/tmp/quarto-check-outputs/${VARIANT_ID}.txt"
 
       - name: Upload quarto check output
         uses: actions/upload-artifact@v7
         with:
-          name: quarto-check-${{ matrix.QUARTO_VERSION }}
-          path: /tmp/quarto-check-outputs/${{ matrix.QUARTO_VERSION }}.txt
+          name: quarto-check-${{ matrix.VARIANT_ID }}
+          path: /tmp/quarto-check-outputs/${{ matrix.VARIANT_ID }}.txt
           retention-days: 1
 
   update-readme:

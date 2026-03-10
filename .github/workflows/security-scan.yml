@@ -26,6 +26,12 @@ jobs:
         include:
           - QUARTO_VERSION: release
             IMAGE_TAG: release
+          - QUARTO_VERSION: release-r
+            IMAGE_TAG: release-r
+          - QUARTO_VERSION: release-python
+            IMAGE_TAG: release-python
+          - QUARTO_VERSION: release-julia
+            IMAGE_TAG: release-julia
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
