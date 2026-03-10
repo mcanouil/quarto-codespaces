@@ -53,7 +53,7 @@ check_packages() {
 
 install_juliaup() {
   check_packages curl ca-certificates
-  su "${USERNAME}" -c "curl -fsSL https://install.julialang.org | sh -s -- --yes --default-channel none"
+  su "${USERNAME}" -c "curl -fsSL https://install.julialang.org | sh -s -- --yes --default-channel ''"
   local user_home
   user_home=$(eval echo "~${USERNAME}")
   ln -sf "${user_home}/.juliaup/bin/juliaup" /usr/local/bin/juliaup
