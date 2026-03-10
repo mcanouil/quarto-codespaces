@@ -1,8 +1,8 @@
 {
-  "name": "Quarto (R)",
+  "name": "Quarto (Python)",
   "build": {
-    "dockerfile": "../Dockerfile",
-    "context": "..",
+    "dockerfile": "./Dockerfile",
+    "context": ".",
     "args": {
       "IMAGE": "${localEnv:IMAGE}"
     },
@@ -48,15 +48,18 @@
       "version": "latest",
       "ppa": "false"
     },
-    "../r-deps": {
+    "./python-deps": {
       "installOnPlatforms": "amd64",
-      "rDeps": "rmarkdown,languageserver"
+      "pythonDeps": "jupyter,papermill"
     },
-    "../uv": {
+    "./uv": {
       "version": "latest"
     },
-    "../juliaup": {
+    "./juliaup": {
       "version": "latest"
+    },
+    "ghcr.io/rocker-org/devcontainer-features/r-rig:1": {
+      "version": "none"
     },
     "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
       "version": "${localEnv:QUARTO_VERSION}",
@@ -66,6 +69,6 @@
     "ghcr.io/devcontainers/features/github-cli:1": {
       "version": "latest"
     },
-    "../cleanup": {}
+    "./cleanup": {}
   }
 }

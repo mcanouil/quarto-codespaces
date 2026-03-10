@@ -1,8 +1,8 @@
 {
   "name": "Quarto (Julia)",
   "build": {
-    "dockerfile": "../Dockerfile",
-    "context": "..",
+    "dockerfile": "./Dockerfile",
+    "context": ".",
     "args": {
       "IMAGE": "${localEnv:IMAGE}"
     },
@@ -48,11 +48,11 @@
       "version": "latest",
       "ppa": "false"
     },
-    "../julia-deps": {
+    "./julia-deps": {
       "installOnPlatforms": "amd64",
       "juliaDeps": "IJulia"
     },
-    "../uv": {
+    "./uv": {
       "version": "latest"
     },
     "ghcr.io/rocker-org/devcontainer-features/r-rig:1": {
@@ -66,6 +66,6 @@
     "ghcr.io/devcontainers/features/github-cli:1": {
       "version": "latest"
     },
-    "../cleanup": {}
+    "./cleanup": {}
   }
 }

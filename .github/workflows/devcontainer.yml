@@ -43,29 +43,29 @@ jobs:
           # R
           - QUARTO_VERSION: release
             IMAGE_TAG_BASE: release-r,release-r-jammy
-            CONFIG_FILE: ".github/.devcontainer/r/devcontainer.json"
+            CONFIG_FILE: ".github/.devcontainer/devcontainer-r.json"
             VARIANT_ID: release-r
           - QUARTO_VERSION: prerelease
             IMAGE_TAG_BASE: prerelease-r,prerelease-r-jammy
-            CONFIG_FILE: ".github/.devcontainer/r/devcontainer.json"
+            CONFIG_FILE: ".github/.devcontainer/devcontainer-r.json"
             VARIANT_ID: prerelease-r
           # Python
           - QUARTO_VERSION: release
             IMAGE_TAG_BASE: release-python,release-python-jammy
-            CONFIG_FILE: ".github/.devcontainer/python/devcontainer.json"
+            CONFIG_FILE: ".github/.devcontainer/devcontainer-python.json"
             VARIANT_ID: release-python
           - QUARTO_VERSION: prerelease
             IMAGE_TAG_BASE: prerelease-python,prerelease-python-jammy
-            CONFIG_FILE: ".github/.devcontainer/python/devcontainer.json"
+            CONFIG_FILE: ".github/.devcontainer/devcontainer-python.json"
             VARIANT_ID: prerelease-python
           # Julia
           - QUARTO_VERSION: release
             IMAGE_TAG_BASE: release-julia,release-julia-jammy
-            CONFIG_FILE: ".github/.devcontainer/julia/devcontainer.json"
+            CONFIG_FILE: ".github/.devcontainer/devcontainer-julia.json"
             VARIANT_ID: release-julia
           - QUARTO_VERSION: prerelease
             IMAGE_TAG_BASE: prerelease-julia,prerelease-julia-jammy
-            CONFIG_FILE: ".github/.devcontainer/julia/devcontainer.json"
+            CONFIG_FILE: ".github/.devcontainer/devcontainer-julia.json"
             VARIANT_ID: prerelease-julia
     steps:
       - name: Checkout code
