@@ -11,6 +11,10 @@
     "./decktape",
     "./tinytex",
     "ghcr.io/rocker-org/devcontainer-features/quarto-cli",
-    "ghcr.io/devcontainers/features/github-cli"
+    "ghcr.io/devcontainers/features/github-cli",
+    "./r-deps",
+    "./python-deps",
+    "./julia-deps",
+    "./juliaup"
   ]
 }

@@ -13,6 +13,9 @@
   },
   "installsAfter": [
     "ghcr.io/devcontainers/features/common-utils",
-    "./quarto-computing-dependencies"
+    "./quarto-computing-dependencies",
+    "./r-deps",
+    "./python-deps",
+    "./julia-deps"
   ]
 }
