@@ -1,0 +1,28 @@
+{
+  "id": "julia-deps",
+  "version": "1.0.0",
+  "name": "Install Julia Dependencies for Quarto",
+  "description": "Install Julia and Julia package dependencies for Quarto.",
+  "options": {
+    "installOnPlatforms": {
+      "type": "string",
+      "default": "amd64,arm64",
+      "description": "Comma-separated list of platforms on which to install dependencies."
+    },
+    "juliaDeps": {
+      "type": "string",
+      "default": "IJulia",
+      "description": "Specify what Julia dependencies to install."
+    }
+  },
+  "dependsOn": {
+    "ghcr.io/julialang/devcontainer-features/julia:1": {
+      "channel": "release"
+    }
+  },
+  "installsAfter": [
+    "ghcr.io/devcontainers/features/common-utils",
+    "ghcr.io/devcontainers/features/git",
+    "ghcr.io/julialang/devcontainer-features/julia"
+  ]
+}

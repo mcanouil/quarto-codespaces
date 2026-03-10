@@ -1,0 +1,17 @@
+{
+  "id": "juliaup",
+  "version": "1.0.0",
+  "name": "juliaup",
+  "description": "Install juliaup, a Julia version manager, without installing Julia itself.",
+  "options": {
+    "version": {
+      "default": "latest",
+      "description": "Select the version to install.",
+      "proposals": ["latest"],
+      "type": "string"
+    }
+  },
+  "installsAfter": [
+    "ghcr.io/devcontainers/features/common-utils"
+  ]
+}

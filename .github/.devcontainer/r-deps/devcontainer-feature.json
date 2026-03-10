@@ -1,0 +1,32 @@
+{
+  "id": "r-deps",
+  "version": "1.0.0",
+  "name": "Install R Dependencies for Quarto",
+  "description": "Install R and R package dependencies for Quarto.",
+  "options": {
+    "installOnPlatforms": {
+      "type": "string",
+      "default": "amd64,arm64",
+      "description": "Comma-separated list of platforms on which to install dependencies."
+    },
+    "rDeps": {
+      "type": "string",
+      "default": "rmarkdown",
+      "description": "Specify what R dependencies to install."
+    }
+  },
+  "dependsOn": {
+    "ghcr.io/rocker-org/devcontainer-features/r-rig:1": {
+      "version": "release",
+      "vscodeRSupport": "none",
+      "installDevTools": "false",
+      "installREnv": "true",
+      "installRMarkdown": "false"
+    }
+  },
+  "installsAfter": [
+    "ghcr.io/devcontainers/features/common-utils",
+    "ghcr.io/devcontainers/features/git",
+    "ghcr.io/rocker-org/devcontainer-features/r-rig"
+  ]
+}
