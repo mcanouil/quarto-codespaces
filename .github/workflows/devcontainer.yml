@@ -121,13 +121,18 @@ jobs:
           echo "::endgroup::"
           echo "IMAGE_TAG=${ALL_TAGS}" >> ${GITHUB_OUTPUT}
 
+      - name: Use variant devcontainer config
+        if: matrix.CONFIG_FILE != ''
+        env:
+          CONFIG_FILE: ${{ matrix.CONFIG_FILE }}
+        run: cp "${CONFIG_FILE}" .github/.devcontainer/devcontainer.json
+
       - name: Build and run Dev Container on release
         id: devcontainer-ci
         uses: devcontainers/ci@v0.3
         with:
           imageTag: ${{ steps.image_tags.outputs.IMAGE_TAG }}
-          subFolder: ${{ matrix.CONFIG_FILE == '' && '.github' || '' }}
-          configFile: ${{ matrix.CONFIG_FILE }}
+          subFolder: .github
           imageName: ghcr.io/${{ github.repository }}
           noCache: true
           eventFilterForPush: |
