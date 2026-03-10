@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
 export DEBIAN_FRONTEND=noninteractive
 
@@ -47,14 +47,14 @@ check_packages() {
 
 install_decktape() {
   local version=$1
-  local url="https://deb.nodesource.com/setup_${version}.x "
+  local url="https://deb.nodesource.com/setup_${version}.x"
   check_packages curl ca-certificates
-  curl --proto '=https' --tlsv1.2 -LsSf ${url} | sudo -E bash -
+  curl --proto '=https' --tlsv1.2 -LsSf "${url}" | bash -
   check_packages nodejs
   npm install -g decktape
 }
 
-install_decktape ${VERSION}
+install_decktape "${VERSION}"
 
 apt-get clean && rm -rf /var/lib/apt/lists/*
 
