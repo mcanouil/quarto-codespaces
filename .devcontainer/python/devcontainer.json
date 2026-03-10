@@ -1,0 +1,25 @@
+{
+  "name": "Release - Quarto Codespaces (Python)",
+  "image": "ghcr.io/mcanouil/quarto-codespaces:release-python",
+  "remoteUser": "vscode",
+  "features": {
+    "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
+      "version": "release"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "quarto.quarto",
+        "mcanouil.quarto-wizard",
+        "ms-python.python",
+        "ms-python.black-formatter",
+        "ms-python.flake8",
+        "ms-python.vscode-pylance",
+        "ms-python.pylint",
+        "ms-python.isort",
+        "ms-toolsai.jupyter"
+      ]
+    }
+  }
+}

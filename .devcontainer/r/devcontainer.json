@@ -1,0 +1,28 @@
+{
+  "name": "Release - Quarto Codespaces (R)",
+  "image": "ghcr.io/mcanouil/quarto-codespaces:release-r",
+  "remoteUser": "vscode",
+  "features": {
+    "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
+      "version": "release"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "quarto.quarto",
+        "mcanouil.quarto-wizard",
+        "REditorSupport.r",
+        "Posit.air-vscode"
+      ],
+      "settings": {
+        "r.rterm.option": ["--no-save", "--no-restore-data", "--quiet"],
+        "r.useRenvLibPath": true,
+        "[r]": {
+          "editor.defaultFormatter": "Posit.air-vscode",
+          "editor.formatOnSave": true
+        }
+      }
+    }
+  }
+}

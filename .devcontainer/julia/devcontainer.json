@@ -1,0 +1,19 @@
+{
+  "name": "Release - Quarto Codespaces (Julia)",
+  "image": "ghcr.io/mcanouil/quarto-codespaces:release-julia",
+  "remoteUser": "vscode",
+  "features": {
+    "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
+      "version": "release"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "quarto.quarto",
+        "mcanouil.quarto-wizard",
+        "julialang.language-julia"
+      ]
+    }
+  }
+}
