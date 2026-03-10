@@ -326,13 +326,6 @@ jobs:
           - "1.6"
           - "1.7"
           - "1.8"
-        include:
-          - QUARTO_VERSION: "1.0"
-            PLATFORM: "linux/amd64"
-          - QUARTO_VERSION: "1.1"
-            PLATFORM: "linux/amd64"
-          - QUARTO_VERSION: "1.2"
-            PLATFORM: "linux/amd64"
     steps:
       - uses: actions/checkout@v6
 

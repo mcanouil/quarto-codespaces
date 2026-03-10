@@ -4,6 +4,11 @@
   "name": "Install Computing Dependencies for Quarto",
   "description": "Install R, Python, and Julia dependencies for Quarto.",
   "options": {
+    "installOnPlatforms": {
+      "type": "string",
+      "default": "amd64,arm64",
+      "description": "Comma-separated list of platforms on which to install dependencies."
+    },
     "rDeps": {
       "type": "string",
       "default": "rmarkdown",

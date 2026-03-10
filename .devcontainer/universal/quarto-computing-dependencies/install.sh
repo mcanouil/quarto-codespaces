@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
 export DEBIAN_FRONTEND=noninteractive
 
@@ -34,24 +34,26 @@ fi
 
 quarto_r_deps() {
   local deps=$1
-  deps=$(echo "${deps}" | sed 's/,/","/g')
+  deps=${deps//,/\",\"}
   su "${USERNAME}" -c "Rscript -e 'pak::pkg_install(c(\"${deps}\"))'"
 }
 
 quarto_python_deps() {
   local deps=$1
-  deps=$(echo "${deps}" | sed 's/,/ /g')
-  python3 -m pip install ${deps}
+  deps=${deps//,/ }
+  # shellcheck disable=SC2086
+  python3 -m pip install --no-cache-dir ${deps}
 }
 
 quarto_julia_deps() {
   local deps=$1
-  deps=$(echo "${deps}" | sed 's/,/","/g')
+  deps=${deps//,/\",\"}
+  # shellcheck disable=SC2088
   su "${USERNAME}" -c "~/.juliaup/bin/julia -e 'using Pkg; Pkg.add.([\"${deps}\"])'"
 }
 
-quarto_r_deps ${R_DEPS}
-quarto_python_deps ${PYTHON_DEPS}
-quarto_julia_deps ${JULIA_DEPS}
+quarto_r_deps "${R_DEPS}"
+quarto_python_deps "${PYTHON_DEPS}"
+quarto_julia_deps "${JULIA_DEPS}"
 
 apt-get clean && rm -rf /var/lib/apt/lists/*

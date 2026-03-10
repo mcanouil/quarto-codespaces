@@ -27,7 +27,7 @@ echo "[cleanup] Running cleanup feature as user: ${USERNAME}"
 if [ "${USERNAME}" = "root" ]; then
   USER_HOME="/root"
 else
-  USER_HOME=$(eval echo "~${USERNAME}")
+  USER_HOME=$(getent passwd "${USERNAME}" | cut -d: -f6)
 fi
 
 echo "[cleanup] Target home: ${USER_HOME}"
@@ -66,18 +66,8 @@ for user_home in "${users_to_clean[@]}"; do
 done
 
 # Clean system-wide paths
-# system_paths=(
-#   "/opt/tinytex/.TinyTeX/tlpkg/texlive.tlpdb.main.*"
-# )
-
-# for path in "${system_paths[@]}"; do
-#   if [ -e "${path}" ]; then
-#     echo "[cleanup] Removing: ${path}"
-#     rm -rf ${path} || true
-#   else
-#     echo "[cleanup] Not found: ${path}"
-#   fi
-# done
+echo "[cleanup] Removing TinyTeX cache files"
+rm -f /opt/tinytex/tlpkg/texlive.tlpdb.main.* 2>/dev/null || true
 
 echo "[cleanup] Cleaning system temporary files"
 if [ -d "/tmp" ]; then

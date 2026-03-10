@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
 export DEBIAN_FRONTEND=noninteractive
 
@@ -49,13 +49,14 @@ install_uv() {
   local version=$1
   local url="https://github.com/astral-sh/uv/releases/${version}/download/uv-installer.sh"
   check_packages curl ca-certificates
-  curl --proto '=https' --tlsv1.2 -LsSf ${url} | env UV_INSTALL_DIR="/usr/local/bin" sh
+  curl --proto '=https' --tlsv1.2 -LsSf "${url}" | env UV_INSTALL_DIR="/usr/local/bin" sh
 }
 
 enable_autocompletion() {
-  echo 'eval "$(uv generate-shell-completion zsh)"' >> /usr/share/zsh/vendor-completions/_uv
+  # shellcheck disable=SC2016
+  echo 'eval "$(uv generate-shell-completion zsh)"' >>/usr/share/zsh/vendor-completions/_uv
 }
 
-install_uv ${VERSION}
+install_uv "${VERSION}"
 enable_autocompletion
 apt-get clean && rm -rf /var/lib/apt/lists/*

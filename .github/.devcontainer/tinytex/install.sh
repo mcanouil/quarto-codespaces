@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
 export DEBIAN_FRONTEND=noninteractive
 
@@ -71,10 +71,7 @@ install_tinytex() {
   # Set group ownership and permissions
   chgrp -R tinytex "${TINYTEX_OPT}"
   chmod -R 775 "${TINYTEX_OPT}"
-
-  # Set environment variables system-wide for TinyTeX
-  echo "export TEXLIVE_USE_USERMODE=1" > /etc/profile.d/tinytex.sh
-  chmod 644 /etc/profile.d/tinytex.sh
+  find "${TINYTEX_OPT}" -type d -exec chmod g+s {} +
 
   # Initialise user tree for tlmgr in the non-root user's home directory
   su "${USERNAME}" -c "tlmgr init-usertree"
