@@ -177,11 +177,11 @@ Quarto 1.8.27
 (|) Checking Jupyter engine render....[✓] Checking Jupyter engine render....OK
 
 (|) Checking R installation...........[✓] Checking R installation...........OK
-      Version: 4.5.2
-      Path: /opt/R/4.5.2/lib/R
+      Version: 4.5.3
+      Path: /opt/R/4.5.3/lib/R
       LibPaths:
         - /home/vscode/R/x86_64-pc-linux-gnu-library/4.5
-        - /opt/R/4.5.2/lib/R/library
+        - /opt/R/4.5.3/lib/R/library
       knitr: 1.51
       rmarkdown: 2.30
 
@@ -190,7 +190,7 @@ Quarto 1.8.27
 <!-- QUARTO_CHECK_RELEASE_END -->
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/22912821499)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/23002284673)
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
 </details>
@@ -200,7 +200,7 @@ Quarto 1.8.27
 
 <!-- QUARTO_CHECK_PRERELEASE_START -->
 ```txt
-Quarto 1.9.31
+Quarto 1.9.32
 [✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
 [✓] Checking versions of quarto binary dependencies...
@@ -210,7 +210,7 @@ Quarto 1.9.31
       Typst version 0.14.2: OK
 [✓] Checking versions of quarto dependencies......OK
 [✓] Checking Quarto installation......OK
-      Version: 1.9.31
+      Version: 1.9.32
       Path: /opt/quarto/bin
 
 (|) Checking tools....................[✓] Checking tools....................OK
@@ -232,11 +232,11 @@ Quarto 1.9.31
 (|) Checking basic markdown render....[✓] Checking basic markdown render....OK
 
 (|) Checking R installation...........[✓] Checking R installation...........OK
-      Version: 4.5.2
-      Path: /opt/R/4.5.2/lib/R
+      Version: 4.5.3
+      Path: /opt/R/4.5.3/lib/R
       LibPaths:
         - /home/vscode/R/x86_64-pc-linux-gnu-library/4.5
-        - /opt/R/4.5.2/lib/R/library
+        - /opt/R/4.5.3/lib/R/library
       knitr: 1.51
       rmarkdown: 2.30
 
@@ -255,7 +255,7 @@ Quarto 1.9.31
 <!-- QUARTO_CHECK_PRERELEASE_END -->
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/22912821499)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/23002284673)
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
 </details>
