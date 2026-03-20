@@ -62,14 +62,17 @@ install_tinytex() {
   "${TINYTEX_INSTALL_DIR}/tlmgr" path add
   echo "TinyTeX installation complete."
 
-  # Create tinytex group and add users to it
+  # Set ownership so the primary user can manage TinyTeX (including chmod
+  # calls inside tlmgr) without CAP_FOWNER. Keep a tinytex group for
+  # read/execute access by other users.
   groupadd -f tinytex
   usermod -a -G tinytex root
   if [ "${USERNAME}" != "root" ]; then
     usermod -a -G tinytex "${USERNAME}"
+    chown -R "${USERNAME}:tinytex" "${TINYTEX_OPT}"
+  else
+    chgrp -R tinytex "${TINYTEX_OPT}"
   fi
-  # Set group ownership and permissions
-  chgrp -R tinytex "${TINYTEX_OPT}"
   chmod -R 775 "${TINYTEX_OPT}"
   find "${TINYTEX_OPT}" -type d -exec chmod g+s {} +
 
