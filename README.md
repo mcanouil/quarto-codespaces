@@ -176,7 +176,7 @@ Quarto 1.9.36
         - /home/vscode/R/x86_64-pc-linux-gnu-library/4.5
         - /opt/R/4.5.3/lib/R/library
       knitr: 1.51
-      rmarkdown: 2.30
+      rmarkdown: 2.31
 
 (|) Checking Knitr engine render......[✓] Checking Knitr engine render......OK
 
@@ -193,7 +193,7 @@ Quarto 1.9.36
 <!-- QUARTO_CHECK_RELEASE_END -->
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/23443002385)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/23703188757)
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
 </details>
@@ -241,7 +241,7 @@ Quarto 1.10.0
         - /home/vscode/R/x86_64-pc-linux-gnu-library/4.5
         - /opt/R/4.5.3/lib/R/library
       knitr: 1.51
-      rmarkdown: 2.30
+      rmarkdown: 2.31
 
 (|) Checking Knitr engine render......[✓] Checking Knitr engine render......OK
 
@@ -258,7 +258,7 @@ Quarto 1.10.0
 <!-- QUARTO_CHECK_PRERELEASE_END -->
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/23443002385)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/23703188757)
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
 </details>
