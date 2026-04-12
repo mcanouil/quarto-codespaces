@@ -138,7 +138,7 @@ The following outputs show the `quarto check` results from the latest builds of 
 
 <!-- QUARTO_CHECK_RELEASE_START -->
 ```txt
-Quarto 1.9.36
+Quarto 1.9.37
 [✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
 [✓] Checking versions of quarto binary dependencies...
@@ -148,7 +148,7 @@ Quarto 1.9.36
       Typst version 0.14.2: OK
 [✓] Checking versions of quarto dependencies......OK
 [✓] Checking Quarto installation......OK
-      Version: 1.9.36
+      Version: 1.9.37
       Path: /opt/quarto/bin
 
 (|) Checking tools....................[✓] Checking tools....................OK
@@ -193,7 +193,7 @@ Quarto 1.9.36
 <!-- QUARTO_CHECK_RELEASE_END -->
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/23995978535)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/24300623636)
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
 </details>
@@ -203,7 +203,7 @@ Quarto 1.9.36
 
 <!-- QUARTO_CHECK_PRERELEASE_START -->
 ```txt
-Quarto 1.10.1
+Quarto 1.10.3
 [✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
 [✓] Checking versions of quarto binary dependencies...
@@ -213,12 +213,11 @@ Quarto 1.10.1
       Typst version 0.14.2: OK
 [✓] Checking versions of quarto dependencies......OK
 [✓] Checking Quarto installation......OK
-      Version: 1.10.1
+      Version: 1.10.3
       Path: /opt/quarto/bin
 
 (|) Checking tools....................[✓] Checking tools....................OK
       TinyTeX: (external install)
-      Chromium: (not installed)
       Chrome Headless Shell: (not installed)
       VeraPDF: (not installed)
 
@@ -258,7 +257,7 @@ Quarto 1.10.1
 <!-- QUARTO_CHECK_PRERELEASE_END -->
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/23995978535)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/24300623636)
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
 </details>
