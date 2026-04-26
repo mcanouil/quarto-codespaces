@@ -170,11 +170,11 @@ Quarto 1.9.37
 (|) Checking basic markdown render....[✓] Checking basic markdown render....OK
 
 (|) Checking R installation...........[✓] Checking R installation...........OK
-      Version: 4.5.3
-      Path: /opt/R/4.5.3/lib/R
+      Version: 4.6.0
+      Path: /opt/R/4.6.0/lib/R
       LibPaths:
-        - /home/vscode/R/x86_64-pc-linux-gnu-library/4.5
-        - /opt/R/4.5.3/lib/R/library
+        - /home/vscode/R/x86_64-pc-linux-gnu-library/4.6
+        - /opt/R/4.6.0/lib/R/library
       knitr: 1.51
       rmarkdown: 2.31
 
@@ -193,7 +193,7 @@ Quarto 1.9.37
 <!-- QUARTO_CHECK_RELEASE_END -->
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/24622988972)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/24950382147)
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
 </details>
@@ -234,11 +234,11 @@ Quarto 1.10.3
 (|) Checking basic markdown render....[✓] Checking basic markdown render....OK
 
 (|) Checking R installation...........[✓] Checking R installation...........OK
-      Version: 4.5.3
-      Path: /opt/R/4.5.3/lib/R
+      Version: 4.6.0
+      Path: /opt/R/4.6.0/lib/R
       LibPaths:
-        - /home/vscode/R/x86_64-pc-linux-gnu-library/4.5
-        - /opt/R/4.5.3/lib/R/library
+        - /home/vscode/R/x86_64-pc-linux-gnu-library/4.6
+        - /opt/R/4.6.0/lib/R/library
       knitr: 1.51
       rmarkdown: 2.31
 
@@ -257,7 +257,7 @@ Quarto 1.10.3
 <!-- QUARTO_CHECK_PRERELEASE_END -->
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/24622988972)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/24950382147)
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
 </details>
