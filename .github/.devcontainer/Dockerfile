@@ -1,2 +1,2 @@
-ARG IMAGE="buildpack-deps:jammy-curl"
+ARG IMAGE="buildpack-deps:noble-curl"
 FROM ${IMAGE}
