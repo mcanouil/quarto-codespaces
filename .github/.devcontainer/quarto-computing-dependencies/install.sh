@@ -61,6 +61,7 @@ quarto_julia_deps() {
 }
 
 if [[ ",${PLATFORMS}," == *",${architecture},"* ]]; then
+  apt-get update -y && apt-get install -y --no-install-recommends libuv1-dev && rm -rf /var/lib/apt/lists/*
   quarto_r_deps "${R_DEPS}"
   quarto_python_deps "${PYTHON_DEPS}"
   quarto_julia_deps "${JULIA_DEPS}"
