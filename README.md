@@ -9,7 +9,7 @@ Setup to deploy [GitHub Codespaces](https://github.com/features/codespaces) (Cod
 This repository provides a setup to deploy Codespaces or Dev Containers with Quarto, supporting R, Python, and Julia environments.
 It includes configuration files and scripts to initialise and manage these environments.
 
-Using [`ghcr.io/mcanouil/quarto-codespaces:latest`](https://github.com/mcanouil/quarto-codespaces/pkgs/container/quarto-codespaces) as a base image for a quick deployment (Ubuntu 22.04 - Jammy Jellyfish):  
+Using [`ghcr.io/mcanouil/quarto-codespaces:latest`](https://github.com/mcanouil/quarto-codespaces/pkgs/container/quarto-codespaces) as a base image for a quick deployment (Ubuntu 24.04 - Noble Numbat):  
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/mcanouil/quarto-codespaces?quickstart=1&devcontainer_path=.devcontainer%2Fdevcontainer.json)
 
 Using Codespaces default base image ([`ghcr.io/mcanouil/quarto-codespaces:release-universal`](https://github.com/mcanouil/quarto-codespaces/pkgs/container/quarto-codespaces)) to mitigate GitHub storage usage (Ubuntu 20.04 - Focal Fossa):  
@@ -106,7 +106,7 @@ This file defines the development container settings, including the base image, 
 
 ### Key Features
 
-- **Base Image**: The container uses the `buildpack-deps:jammy-curl` image as the base.
+- **Base Image**: The container uses the `buildpack-deps:noble-curl` image as the base.
 - **Remote User**: The default user is set to `vscode`.
 - **Installed Features**:
   - Common utilities with Zsh shell.
@@ -137,39 +137,53 @@ The following outputs show the `quarto check` results from the latest builds of 
 <summary>Release Image</summary>
 
 <!-- QUARTO_CHECK_RELEASE_START -->
+
 ```txt
 Quarto 1.9.37
-[✓] Checking environment information...
+
+[✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
-[✓] Checking versions of quarto binary dependencies...
+
+[✓] Checking versions of quarto binary dependencies...
       Pandoc version 3.8.3: OK
       Dart Sass version 1.87.0: OK
       Deno version 2.4.5: OK
       Typst version 0.14.2: OK
-[✓] Checking versions of quarto dependencies......OK
-[✓] Checking Quarto installation......OK
+
+[✓] Checking versions of quarto dependencies......OK
+
+[✓] Checking Quarto installation......OK
       Version: 1.9.37
       Path: /opt/quarto/bin
 
-(|) Checking tools....................[✓] Checking tools....................OK
+
+(|) Checking tools....................
+[✓] Checking tools....................OK
       TinyTeX: (external install)
       Chromium: (not installed)
       Chrome Headless Shell: (not installed)
       VeraPDF: (not installed)
 
-(|) Checking LaTeX....................[✓] Checking LaTeX....................OK
+
+(|) Checking LaTeX....................
+[✓] Checking LaTeX....................OK
       Using: Installation From Path
       Path: /usr/local/bin
       Version: 2026
 
-[✓] Checking Chrome Headless....................OK
+
+[✓] Checking Chrome Headless....................OK
       Using: Chrome found on system
       Path: /usr/bin/google-chrome
       Source: PATH
 
-(|) Checking basic markdown render....[✓] Checking basic markdown render....OK
 
-(|) Checking R installation...........[✓] Checking R installation...........OK
+(|) Checking basic markdown render....
+[✓] Checking basic markdown render....OK
+
+
+(|) Checking R installation...........
+[✓] Checking R installation...........OK
       Version: 4.6.0
       Path: /opt/R/4.6.0/lib/R
       LibPaths:
@@ -178,22 +192,33 @@ Quarto 1.9.37
       knitr: 1.51
       rmarkdown: 2.31
 
-(|) Checking Knitr engine render......[✓] Checking Knitr engine render......OK
 
-(|) Checking Python 3 installation....[✓] Checking Python 3 installation....OK
+(|) Checking Knitr engine render......
+[✓] Checking Knitr engine render......OK
+
+
+(|) Checking Python 3 installation....
+[✓] Checking Python 3 installation....OK
       Version: 3.13.9
       Path: /usr/local/python/current/bin/python3
       Jupyter: 5.9.1
       Kernels: julia-1.12, python3
 
-(|) Checking Jupyter engine render....[✓] Checking Jupyter engine render....OK
 
-(|) Checking Julia installation...[✓] Checking Julia installation...
+(|) Checking Jupyter engine render....
+[✓] Checking Jupyter engine render....OK
+
+
+(|) Checking Julia installation...
+[✓] Checking Julia installation...
 ```
+
 <!-- QUARTO_CHECK_RELEASE_END -->
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
+
 [View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/24967728529)
+
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
 </details>
@@ -202,38 +227,52 @@ Quarto 1.9.37
 <summary>Prerelease Image</summary>
 
 <!-- QUARTO_CHECK_PRERELEASE_START -->
+
 ```txt
 Quarto 1.10.3
-[✓] Checking environment information...
+
+[✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
-[✓] Checking versions of quarto binary dependencies...
+
+[✓] Checking versions of quarto binary dependencies...
       Pandoc version 3.8.3: OK
       Dart Sass version 1.87.0: OK
       Deno version 2.4.5: OK
       Typst version 0.14.2: OK
-[✓] Checking versions of quarto dependencies......OK
-[✓] Checking Quarto installation......OK
+
+[✓] Checking versions of quarto dependencies......OK
+
+[✓] Checking Quarto installation......OK
       Version: 1.10.3
       Path: /opt/quarto/bin
 
-(|) Checking tools....................[✓] Checking tools....................OK
+
+(|) Checking tools....................
+[✓] Checking tools....................OK
       TinyTeX: (external install)
       Chrome Headless Shell: (not installed)
       VeraPDF: (not installed)
 
-(|) Checking LaTeX....................[✓] Checking LaTeX....................OK
+
+(|) Checking LaTeX....................
+[✓] Checking LaTeX....................OK
       Using: Installation From Path
       Path: /usr/local/bin
       Version: 2026
 
-[✓] Checking Chrome Headless....................OK
+
+[✓] Checking Chrome Headless....................OK
       Using: Chrome found on system
       Path: /usr/bin/google-chrome
       Source: PATH
 
-(|) Checking basic markdown render....[✓] Checking basic markdown render....OK
 
-(|) Checking R installation...........[✓] Checking R installation...........OK
+(|) Checking basic markdown render....
+[✓] Checking basic markdown render....OK
+
+
+(|) Checking R installation...........
+[✓] Checking R installation...........OK
       Version: 4.6.0
       Path: /opt/R/4.6.0/lib/R
       LibPaths:
@@ -242,22 +281,33 @@ Quarto 1.10.3
       knitr: 1.51
       rmarkdown: 2.31
 
-(|) Checking Knitr engine render......[✓] Checking Knitr engine render......OK
 
-(|) Checking Python 3 installation....[✓] Checking Python 3 installation....OK
+(|) Checking Knitr engine render......
+[✓] Checking Knitr engine render......OK
+
+
+(|) Checking Python 3 installation....
+[✓] Checking Python 3 installation....OK
       Version: 3.13.9
       Path: /usr/local/python/current/bin/python3
       Jupyter: 5.9.1
       Kernels: julia-1.12, python3
 
-(|) Checking Jupyter engine render....[✓] Checking Jupyter engine render....OK
 
-(|) Checking Julia installation...[✓] Checking Julia installation...
+(|) Checking Jupyter engine render....
+[✓] Checking Jupyter engine render....OK
+
+
+(|) Checking Julia installation...
+[✓] Checking Julia installation...
 ```
+
 <!-- QUARTO_CHECK_PRERELEASE_END -->
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
+
 [View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/24967728529)
+
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
 </details>

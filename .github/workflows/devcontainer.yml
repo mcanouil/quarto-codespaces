@@ -3,7 +3,7 @@ name: "Build: Docker Images"
 on:
   workflow_dispatch:
   release:
-    types: [published]
+    types: [ published ]
   schedule:
     - cron: "0 6 * * sun"
   pull_request:
@@ -32,9 +32,9 @@ jobs:
       matrix:
         include:
           - QUARTO_VERSION: release
-            IMAGE_TAG_BASE: release,release-jammy,latest
+            IMAGE_TAG_BASE: release,release-noble,latest
           - QUARTO_VERSION: prerelease
-            IMAGE_TAG_BASE: prerelease,prerelease-jammy
+            IMAGE_TAG_BASE: prerelease,prerelease-noble
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -102,14 +102,16 @@ jobs:
             workflow_dispatch
             schedule
           platform: linux/amd64
-          runCmd: echo "$(CI=true quarto check 2>&1)" | sed '/^(/d; s/\x1b\[[0-9;]*[mGK]//g'
+          runCmd: echo "$(CI=true quarto check 2>&1)" | sed '/^(/d;
+            s/\x1b\[[0-9;]*[mGK]//g'
         env:
-          IMAGE: "buildpack-deps:jammy-curl"
+          IMAGE: "buildpack-deps:noble-curl"
           QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
           USER: "vscode"
           ANNOTATION_VERSION: "${{ steps.image_version.outputs.VERSION }} (${{ github.sha }})"
           ANNOTATION_TITLE: "Quarto Codespaces"
-          ANNOTATION_DESCRIPTION: "Quarto Codespaces / Dev Containers setup for quick online testing and workshops."
+          ANNOTATION_DESCRIPTION: "Quarto Codespaces / Dev Containers setup for quick
+            online testing and workshops."
           ANNOTATION_AUTHORS: "Mickaël CANOUIL <https://mickael.canouil.fr>"
           ANNOTATION_URL: ${{ github.server_url }}/${{ github.repository }}
           ANNOTATION_LICENSE: "MIT"
@@ -201,7 +203,8 @@ jobs:
 
       - name: Update README with quarto check outputs
         env:
-          BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{
+            github.run_id }}
         run: |
           update_readme_section() {
             local version=$1
@@ -308,9 +311,8 @@ jobs:
       (github.event_name == 'release' ||
         github.event_name == 'workflow_dispatch' ||
         github.event_name == 'schedule') &&
-      always() &&
-      needs.build.result == 'success' &&
-      needs.update-readme.result == 'success'
+      always() && needs.build.result == 'success' && needs.update-readme.result
+      == 'success'
 
     strategy:
       matrix:
@@ -354,8 +356,8 @@ jobs:
           echo "Build ID: ${BUILD_ID}"
 
           # Create base tags and build metadata tags
-          BASE_TAGS="${QUARTO_VERSION},${QUARTO_VERSION}-jammy"
-          TAGS_WITH_BUILD="${QUARTO_VERSION}-${BUILD_ID},${QUARTO_VERSION}-jammy-${BUILD_ID}"
+          BASE_TAGS="${QUARTO_VERSION},${QUARTO_VERSION}-noble"
+          TAGS_WITH_BUILD="${QUARTO_VERSION}-${BUILD_ID},${QUARTO_VERSION}-noble-${BUILD_ID}"
           echo "Base tags: ${BASE_TAGS}"
           echo "Build metadata tags: ${TAGS_WITH_BUILD}"
 
@@ -373,7 +375,8 @@ jobs:
           noCache: true
           push: always
           platform: ${{ matrix.PLATFORM }}
-          configFile: ${{ format('.devcontainer/quarto-{0}/devcontainer.json', matrix.QUARTO_VERSION) }}
+          configFile: ${{ format('.devcontainer/quarto-{0}/devcontainer.json',
+            matrix.QUARTO_VERSION) }}
 
   clean:
     runs-on: ubuntu-latest
