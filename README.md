@@ -186,14 +186,15 @@ Quarto 1.9.38
       Jupyter: 5.9.1
       Kernels: julia-1.12, python3
 
-(|) Checking Jupyter engine render....[✓] Checking Jupyter engine render....OK
+(|) Checking Jupyter engine render....[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+[✓] Checking Jupyter engine render....OK
 
 (|) Checking Julia installation...[✓] Checking Julia installation...
 ```
 <!-- QUARTO_CHECK_RELEASE_END -->
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/27086139066)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/27492190140)
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
 </details>
@@ -203,7 +204,7 @@ Quarto 1.9.38
 
 <!-- QUARTO_CHECK_PRERELEASE_START -->
 ```txt
-Quarto 1.10.8
+Quarto 1.10.11
 [✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
 [✓] Checking versions of quarto binary dependencies...
@@ -213,7 +214,7 @@ Quarto 1.10.8
       Typst version 0.14.2: OK
 [✓] Checking versions of quarto dependencies......OK
 [✓] Checking Quarto installation......OK
-      Version: 1.10.8
+      Version: 1.10.11
       Path: /opt/quarto/bin
 
 (|) Checking tools....................[✓] Checking tools....................OK
@@ -250,14 +251,15 @@ Quarto 1.10.8
       Jupyter: 5.9.1
       Kernels: julia-1.12, python3
 
-(|) Checking Jupyter engine render....[✓] Checking Jupyter engine render....OK
+(|) Checking Jupyter engine render....[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+[✓] Checking Jupyter engine render....OK
 
 (|) Checking Julia installation...[✓] Checking Julia installation...
 ```
 <!-- QUARTO_CHECK_PRERELEASE_END -->
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/27086139066)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/27492190140)
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
 </details>
