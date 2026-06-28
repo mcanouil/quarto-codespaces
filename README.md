@@ -170,11 +170,11 @@ Quarto 1.9.38
 (|) Checking basic markdown render....[✓] Checking basic markdown render....OK
 
 (|) Checking R installation...........[✓] Checking R installation...........OK
-      Version: 4.6.0
-      Path: /opt/R/4.6.0/lib/R
+      Version: 4.6.1
+      Path: /opt/R/4.6.1/lib/R
       LibPaths:
         - /home/vscode/R/x86_64-pc-linux-gnu-library/4.6
-        - /opt/R/4.6.0/lib/R/library
+        - /opt/R/4.6.1/lib/R/library
       knitr: 1.51
       rmarkdown: 2.31
 
@@ -194,7 +194,7 @@ Quarto 1.9.38
 <!-- QUARTO_CHECK_RELEASE_END -->
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/27897627567)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/28315083469)
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
 </details>
@@ -204,7 +204,7 @@ Quarto 1.9.38
 
 <!-- QUARTO_CHECK_PRERELEASE_START -->
 ```txt
-Quarto 1.10.11
+Quarto 1.10.13
 [✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
 [✓] Checking versions of quarto binary dependencies...
@@ -214,7 +214,7 @@ Quarto 1.10.11
       Typst version 0.14.2: OK
 [✓] Checking versions of quarto dependencies......OK
 [✓] Checking Quarto installation......OK
-      Version: 1.10.11
+      Version: 1.10.13
       Path: /opt/quarto/bin
 
 (|) Checking tools....................[✓] Checking tools....................OK
@@ -235,11 +235,11 @@ Quarto 1.10.11
 (|) Checking basic markdown render....[✓] Checking basic markdown render....OK
 
 (|) Checking R installation...........[✓] Checking R installation...........OK
-      Version: 4.6.0
-      Path: /opt/R/4.6.0/lib/R
+      Version: 4.6.1
+      Path: /opt/R/4.6.1/lib/R
       LibPaths:
         - /home/vscode/R/x86_64-pc-linux-gnu-library/4.6
-        - /opt/R/4.6.0/lib/R/library
+        - /opt/R/4.6.1/lib/R/library
       knitr: 1.51
       rmarkdown: 2.31
 
@@ -259,7 +259,7 @@ Quarto 1.10.11
 <!-- QUARTO_CHECK_PRERELEASE_END -->
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/27897627567)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/28315083469)
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
 </details>
