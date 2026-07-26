@@ -211,7 +211,7 @@ jobs:
 
           docker buildx imagetools inspect "${IMAGE}:${QUARTO_VERSION}"
 
-  update-readme:
+  update-docs:
     runs-on: ubuntu-latest
 
     needs:
@@ -261,18 +261,20 @@ jobs:
         with:
           path: /tmp/quarto-check-outputs
 
-      - name: Update README with quarto check outputs
+      - name: Update documentation with quarto check outputs
         env:
           BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{
             github.run_id }}
+          TARGET_FILE: docs/reference/quarto-check.qmd
         run: |
-          update_readme_section() {
+          update_docs_section() {
             local version=$1
             local output_file=$2
             local build_url=$3
 
             # Normalise version for marker tags
-            local version_upper=$(echo "${version}" | tr '[:lower:]' '[:upper:]')
+            local version_upper
+            version_upper=$(echo "${version}" | tr '[:lower:]' '[:upper:]')
 
             # Define markers
             local output_start="<!-- QUARTO_CHECK_${version_upper}_START -->"
@@ -280,66 +282,77 @@ jobs:
             local url_start="<!-- QUARTO_CHECK_${version_upper}_BUILD_URL_START -->"
             local url_end="<!-- QUARTO_CHECK_${version_upper}_BUILD_URL_END -->"
 
-            # Read the output
-            local quarto_output=$(cat "${output_file}")
-
             # Create temporary file
-            local temp_file=$(mktemp)
+            local temp_file
+            temp_file=$(mktemp)
 
-            # Update quarto check output section
+            # Update quarto check output section. The transcript is read from
+            # the file inside awk rather than passed with -v, because a
+            # multi-line -v value is not portable across awk variants. The
+            # blank lines around the injected block are required: without them
+            # Pandoc reads the code fence as part of the HTML comment block.
             awk -v start="${output_start}" \
                 -v end="${output_end}" \
-                -v output="${quarto_output}" '
+                -v outfile="${output_file}" '
               BEGIN { in_block=0 }
-              $0 ~ start {
+              index($0, start) {
                 print $0
+                print ""
                 print "```txt"
-                print output
+                # quarto check redraws its progress spinner with carriage
+                # returns; Pandoc reads those as line breaks and loses track
+                # of the enclosing div, so strip them.
+                while ((getline line < outfile) > 0) { gsub(/\r/, "", line); print line }
+                close(outfile)
                 print "```"
+                print ""
                 in_block=1
                 next
               }
-              $0 ~ end {
+              index($0, end) {
                 print $0
                 in_block=0
                 next
               }
               !in_block { print }
-            ' README.md > "${temp_file}"
+            ' "${TARGET_FILE}" > "${temp_file}"
 
             # Update build URL section
             awk -v start="${url_start}" \
                 -v end="${url_end}" \
                 -v url="${build_url}" '
               BEGIN { in_block=0 }
-              $0 ~ start {
+              index($0, start) {
                 print $0
+                print ""
                 print "[View build log](" url ")"
+                print ""
                 in_block=1
                 next
               }
-              $0 ~ end {
+              index($0, end) {
                 print $0
                 in_block=0
                 next
               }
               !in_block { print }
-            ' "${temp_file}" > README.md
+            ' "${temp_file}" > "${TARGET_FILE}"
 
             rm -f "${temp_file}"
 
-            echo "Updated ${version} section in README.md"
+            echo "Updated ${version} section in ${TARGET_FILE}"
           }
 
           # Update both release and prerelease sections from the amd64 builds
-          update_readme_section "release" "/tmp/quarto-check-outputs/quarto-check-release-amd64/release.txt" "${BUILD_URL}"
-          update_readme_section "prerelease" "/tmp/quarto-check-outputs/quarto-check-prerelease-amd64/prerelease.txt" "${BUILD_URL}"
+          update_docs_section "release" "/tmp/quarto-check-outputs/quarto-check-release-amd64/release.txt" "${BUILD_URL}"
+          update_docs_section "prerelease" "/tmp/quarto-check-outputs/quarto-check-prerelease-amd64/prerelease.txt" "${BUILD_URL}"
 
       - name: Commit and push changes
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
-          BRANCH: "ci/update-quarto-check-readme"
-          COMMIT: "ci: update quarto check outputs in README.md"
+          BRANCH: "ci/update-quarto-check-docs"
+          COMMIT: "ci: update quarto check outputs in documentation"
+          TARGET_FILE: docs/reference/quarto-check.qmd
         run: |
           if git show-ref --quiet refs/heads/${BRANCH}; then
             echo "Branch ${BRANCH} already exists."
@@ -349,7 +362,7 @@ jobs:
 
           git checkout -b "${BRANCH}"
 
-          git add README.md || echo "No changes to add"
+          git add "${TARGET_FILE}" || echo "No changes to add"
           git commit -m "${COMMIT}" || echo "No changes to commit"
           git push --force origin ${BRANCH} || echo "No changes to push"
 
@@ -365,13 +378,13 @@ jobs:
 
     needs:
       - "merge"
-      - "update-readme"
+      - "update-docs"
 
     if: >-
       (github.event_name == 'release' ||
         github.event_name == 'workflow_dispatch' ||
         github.event_name == 'schedule') &&
-      always() && needs.merge.result == 'success' && needs.update-readme.result
+      always() && needs.merge.result == 'success' && needs.update-docs.result
       == 'success'
 
     strategy:
