@@ -21,11 +21,15 @@ for size in 32 144 154 410; do
   rsvg-convert -s raster-dark.css -w "${size}" -h "${size}" icon.svg -o "/tmp/icon-${size}.png"
 done
 
-magick /tmp/icon-32.png  -background '#0B1220' -flatten ../../favicon.ico
+magick /tmp/icon-32.png  -background '#0B1220' -flatten -strip /tmp/icon-32-flat.png
+magick /tmp/icon-32-flat.png -define icon:format=png ../../favicon.ico
 magick /tmp/icon-144.png -background '#0B1220' -gravity center -extent 180x180 -flatten apple-touch-icon.png
 magick /tmp/icon-154.png -background '#0B1220' -gravity center -extent 192x192 -flatten icon-192.png
 magick /tmp/icon-410.png -background '#0B1220' -gravity center -extent 512x512 -flatten icon-512.png
 ```
+
+The favicon is flattened to an opaque PNG before the `.ico` is written.
+Writing the `.ico` straight from the transparent render makes ImageMagick store an uncompressed 32-bit bitmap, 4,286 bytes for the same 32x32 pixels; going through the flat PNG lets it pick a palette instead, at 2,238 bytes and byte-for-byte identical output.
 
 | File                   | Size    | Purpose                                             |
 | ---------------------- | ------- | --------------------------------------------------- |

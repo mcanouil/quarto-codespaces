@@ -2,6 +2,11 @@
 //
 //   typst compile --root . --format png --ppi 72 \
 //     assets/social/og-image.typ assets/social/og-image.png
+//   magick assets/social/og-image.png -alpha off -strip \
+//     -define png:compression-level=9 assets/social/og-image.png
+//
+// Typst writes an alpha channel that is opaque everywhere, since the page has
+// a solid fill. Dropping it is lossless and takes the file from 40 KB to 39 KB.
 //
 // `--root .` is what lets the template reach the mark in assets/icons/; Typst
 // otherwise sandboxes it to its own directory.

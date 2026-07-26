@@ -67,20 +67,17 @@ local function project_relative_input()
   return (pandoc.path.make_relative(input, project):gsub("\\", "/"))
 end
 
---- The `../` steps that separate the page from the site root.
+--- Prefix that walks from the page back to the site root, with a trailing
+--- slash. Quarto builds its own `website.favicon` href from the same offset.
 --- Empty at the root, so hrefs stay free of a redundant `./`: Quarto prefixes
 --- the site path on `404.html`, and `/quarto-codespaces/./icon.svg` is ugly.
---- @param relative_input string The input path relative to the project root
 --- @return string The offset, with a trailing slash, or an empty string
-local function offset_to_root(relative_input)
-  local steps = {}
-  for _ in relative_input:gmatch("/") do
-    table.insert(steps, "..")
-  end
-  if #steps == 0 then
+local function site_root_prefix()
+  local offset = quarto.project.offset
+  if not offset or offset == "." then
     return ""
   end
-  return table.concat(steps, "/") .. "/"
+  return offset .. "/"
 end
 
 --- Build the canonical URL for the page.
@@ -143,7 +140,7 @@ function Meta(meta)
     return meta
   end
 
-  local offset = offset_to_root(relative_input)
+  local offset = site_root_prefix()
   local tags = { '<meta property="og:type" content="website">' }
 
   if not NO_CANONICAL[relative_input] then
