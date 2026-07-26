@@ -51,7 +51,6 @@
       "ppa": "false"
     },
     "./quarto-computing-dependencies": {
-      "installOnPlatforms": "amd64",
       "rDeps": "rmarkdown,languageserver",
       "pythonDeps": "jupyter,papermill",
       "juliaDeps": "IJulia"

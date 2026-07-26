@@ -1,10 +1,15 @@
 {
   "id": "chrome",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "name": "Chrome",
-  "description": "Install Google Chrome web browser.",
+  "description": "Install Google Chrome (amd64) or Chromium (arm64) web browser.",
+  "containerEnv": {
+    "PUPPETEER_EXECUTABLE_PATH": "/usr/local/bin/chromium",
+    "QUARTO_CHROMIUM": "/usr/local/bin/chromium"
+  },
   "installsAfter": [
     "ghcr.io/devcontainers/features/common-utils",
-    "ghcr.io/devcontainers/features/git"
+    "ghcr.io/devcontainers/features/git",
+    "./decktape"
   ]
 }

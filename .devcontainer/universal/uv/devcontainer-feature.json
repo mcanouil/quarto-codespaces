@@ -11,5 +11,8 @@
       "type": "string"
     }
   },
-  "installsAfter": ["./quarto-computing-dependencies"]
+  "installsAfter": [
+    "ghcr.io/devcontainers/features/common-utils",
+    "./quarto-computing-dependencies"
+  ]
 }
