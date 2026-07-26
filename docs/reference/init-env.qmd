@@ -1,0 +1,83 @@
+---
+title: "`init-env.sh`"
+subtitle: "Create project-local R, Python, and Julia environments."
+---
+
+The container ships the language runtimes and enough packages to render, but no project-local environment.
+`init-env.sh`, at the root of the repository, creates one for R, Python, Julia, or all three.
+
+Nothing runs it for you: no configuration sets it as a `postCreateCommand`.
+Run it once, in your project directory, when you want lock files under version control.
+
+## Usage
+
+```sh
+./init-env.sh [--what/-w all|r|python|julia] [--force/-f] [--help/-h]
+```
+
+::: {.codespaces-tags}
+
+| Option | Default | Description |
+| --- | --- | --- |
+| `--what`, `-w` | `all` | Which environment to initialise: `all`, `r`, `python`, or `julia`. |
+| `--force`, `-f` | off | Reinitialise even when the lock file already exists. |
+| `--help`, `-h` | | Print the usage message and exit. |
+
+:::
+
+Without `--force`, each environment is skipped when its marker file is already present: `renv.lock` for R, `uv.lock` for Python, and `Project.toml` for Julia.
+That makes the script safe to re-run, and safe to run on a repository that already has one of the three set up.
+
+## What each environment gets
+
+::: {.codespaces-tags}
+
+| Environment | Tool | Packages | Lock file |
+| --- | --- | --- | --- |
+| R | [`renv`](https://rstudio.github.io/renv/) | `rmarkdown`, `languageserver` | `renv.lock` |
+| Python | [`uv`](https://docs.astral.sh/uv/) | `jupyter`, `papermill` | `uv.lock` |
+| Julia | `Pkg` | `IJulia` | `Project.toml` |
+
+:::
+
+The package sets are fixed in the script.
+To use different ones, edit the calls at the bottom of `init-env.sh`, or add packages afterwards with `renv::install()`, `uv add`, and `Pkg.add()`.
+
+## R
+
+```sh
+./init-env.sh --what r
+```
+
+Runs `renv::init(bare = FALSE)`, installs `rmarkdown` and `languageserver`, then snapshots with `type = "all"` so every installed package is recorded.
+
+If `.Rprofile` already sources `renv/activate.R`, the script removes that line first, so `renv::init()` starts from a clean state instead of failing against a half-configured project.
+
+The R extension is configured with `r.useRenvLibPath: true`, so it picks up the project library as soon as it exists.
+
+## Python
+
+```sh
+./init-env.sh --what python
+```
+
+Runs `uv init --no-package --vcs none --bare --no-readme --author-from none`, creates a virtual environment in `.venv`, adds `jupyter` and `papermill`, and syncs.
+
+Quarto finds `.venv` automatically when rendering from the project directory.
+
+## Julia
+
+```sh
+./init-env.sh --what julia
+```
+
+Activates the current directory as a Julia project, instantiates it, and adds `IJulia` so the Jupyter engine can run Julia cells.
+
+## Force a rebuild
+
+```sh
+./init-env.sh --what all --force
+```
+
+Recreates every environment from scratch, discarding the existing resolution.
+Use it after changing the package sets, or when a lock file no longer resolves.

@@ -1,0 +1,75 @@
+---
+title: "Container images"
+subtitle: "Tags, architectures, build schedule, and scanning."
+---
+
+Images are published to the GitHub Container registry as [`ghcr.io/mcanouil/quarto-codespaces`](https://github.com/mcanouil/quarto-codespaces/pkgs/container/quarto-codespaces).
+
+```sh
+docker pull ghcr.io/mcanouil/quarto-codespaces:latest
+```
+
+## Tags
+
+::: {.codespaces-tags}
+
+| Tag | Quarto | Architectures |
+| --- | --- | --- |
+| `latest` | stable release | `amd64`, `arm64` |
+| `release`, `release-noble` | stable release | `amd64`, `arm64` |
+| `prerelease`, `prerelease-noble` | prerelease | `amd64`, `arm64` |
+| `1.0` … `1.9` | that minor version | `amd64` |
+| `1.0-noble` … `1.9-noble` | that minor version | `amd64` |
+| `release-<build>`, `prerelease-<build>`, `<version>-<build>` | as above, pinned | as above |
+
+:::
+
+`<build>` is a UTC timestamp in `YYYYMMDDHHMM` form, written when the manifest is assembled.
+Every tag except `latest` also gets a build-metadata variant, so `release-202601180600` names one specific build of the release image and never moves.
+
+The `-noble` suffix records the base distribution: all images build from `buildpack-deps:noble-curl`, which is Ubuntu 24.04 (Noble Numbat).
+`release` and `release-noble` point at the same manifest today; the suffix exists so a future base-image change can be published side by side.
+
+Use `latest` to always get the current stable toolchain, and a build-metadata tag when a project must pin an exact image.
+
+### Which tag for which purpose
+
+- **Trying things out, workshops**: `latest`.
+- **Testing against an upcoming Quarto**: `prerelease`.
+- **Reproducing a version-specific bug**: the matching `1.x` tag.
+- **Reproducible builds and CI**: a `-<build>` tag.
+
+## Architectures
+
+`release` and `prerelease` are built on native runners, `ubuntu-latest` for `linux/amd64` and `ubuntu-24.04-arm` for `linux/arm64`, then combined into a multi-architecture manifest.
+Docker picks the right one automatically, so Apple Silicon and ARM servers run natively.
+
+The version-pinned images (`1.0` through `1.9`) are `linux/amd64` only.
+They still run on ARM hosts through emulation, more slowly.
+
+## Build schedule
+
+The `Build: Docker Images` workflow runs:
+
+- on every published release;
+- every Sunday at 06:00 UTC;
+- on demand, through `workflow_dispatch`;
+- on pull requests, as a build check that does not publish.
+
+Scheduled rebuilds mean the image tracks upstream security updates for R, Python, Julia, TinyTeX, and Chromium without waiting for a release.
+
+After each publishing build, the workflow runs `quarto check` inside the fresh image and commits the transcript to [Quarto check output](quarto-check.qmd), then deletes untagged package versions from the registry.
+
+## Security scanning
+
+The `Security: Docker Image Scan` workflow runs after each successful build, and on demand.
+It pulls the published `release` image and runs [Trivy](https://trivy.dev/) with the vulnerability and secret scanners at `CRITICAL`, `HIGH`, and `MEDIUM` severity.
+Results are uploaded as SARIF to the repository's [code scanning alerts](https://github.com/mcanouil/quarto-codespaces/security/code-scanning) and kept as a workflow artifact for 30 days.
+
+## Provenance
+
+Images carry OCI annotations and labels set at build time: title, description, authors, URL, source, licence, and a version string combining the release tag (or short commit SHA) with the full commit SHA.
+
+```sh
+docker buildx imagetools inspect ghcr.io/mcanouil/quarto-codespaces:release
+```

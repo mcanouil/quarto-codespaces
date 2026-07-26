@@ -1,0 +1,49 @@
+---
+title: "Contributing"
+subtitle: "Issues, pull requests, and how the repository is laid out."
+---
+
+Contributions are welcome.
+Open an [issue](https://github.com/mcanouil/quarto-codespaces/issues) for a bug or a request, or a [pull request](https://github.com/mcanouil/quarto-codespaces/pulls) for a change you have already made.
+
+## Repository layout
+
+::: {.codespaces-tags}
+
+| Path | Contains |
+| --- | --- |
+| `.devcontainer/` | The consumer-facing [configurations](reference/configurations.qmd). |
+| `.devcontainer/universal/` | The universal configuration and its vendored copies of two features. |
+| `.github/.devcontainer/` | The build recipe and the six local [Dev Container features](reference/features.qmd). |
+| `.github/workflows/` | Image builds, security scanning, release, and documentation deployment. |
+| `docs/` | This website. |
+| `init-env.sh` | The [environment initialisation script](reference/init-env.qmd). |
+
+:::
+
+## Changing a feature
+
+The `uv` and `quarto-computing-dependencies` features exist twice, once under `.github/.devcontainer/` and once under `.devcontainer/universal/`.
+The `check-feature-sync` job runs `diff -r` on both pairs and fails the build if they differ, so apply every change to both copies.
+
+## Changing an image
+
+Opening a pull request builds the release and prerelease images on both architectures and runs `quarto check` inside them, without publishing anything.
+The check output lands in the workflow run summary.
+
+## Changing the documentation
+
+The site is a Quarto project in `docs/`, built with the [Atelier](https://m.canouil.dev/quarto-atelier/) project type.
+
+```sh
+quarto preview docs
+```
+
+The `quarto check` transcripts on the [Quarto check output](reference/quarto-check.qmd) page are written by the build workflow.
+Edit the prose around them, but leave the `QUARTO_CHECK_*` comment markers in place.
+
+Merging to `main` deploys the site to GitHub Pages.
+
+## Licence
+
+This project is released under the [MIT licence](https://github.com/mcanouil/quarto-codespaces?tab=MIT-1-ov-file#readme).

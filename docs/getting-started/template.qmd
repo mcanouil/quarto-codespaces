@@ -1,0 +1,59 @@
+---
+title: "Use as a template"
+subtitle: "Start your own repository from this one, then keep only what you need."
+---
+
+## Create the repository
+
+Click **Use this template** on [mcanouil/quarto-codespaces](https://github.com/mcanouil/quarto-codespaces), then **Create a new repository**.
+The new repository starts with the same files and structure, including every Dev Container configuration.
+
+## Keep one configuration
+
+A template copy inherits eleven alternative configurations that you almost certainly do not need.
+Pick the one that matches your project, copy it over the default, and delete the rest:
+
+```sh
+cp .devcontainer/quarto-1.9/devcontainer.json .devcontainer/devcontainer.json
+rm -rf .devcontainer/quarto-* .devcontainer/universal
+```
+
+Commit the result; the next Codespace or Dev Container build uses it.
+
+## Or start from the image instead
+
+If you only want the toolchain, you do not need the template at all.
+Add a single file to your existing repository:
+
+```json
+{
+  "name": "My Quarto project",
+  "image": "ghcr.io/mcanouil/quarto-codespaces:latest",
+  "remoteUser": "vscode",
+  "features": {
+    "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
+      "version": "release"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "quarto.quarto",
+        "mcanouil.quarto-wizard"
+      ]
+    }
+  }
+}
+```
+
+The image already carries a Quarto release, and the `quarto-cli` feature reinstalls it at the version you request.
+Drop the `features` block to keep whichever version the image shipped with.
+
+## What to change next
+
+- `image`: pin a specific tag instead of `latest` when you need reproducible builds; see [container images](../reference/images.qmd).
+- `features`: add or remove Dev Container features; the ones this project builds are described in [Dev Container features](../reference/features.qmd).
+- `customizations.vscode`: adjust the extension list and editor settings.
+- `containerEnv`: add environment variables your project needs.
+
+The [configurations](../reference/configurations.qmd) page lists what each shipped configuration sets, which is the fastest way to see a working example of each of these.

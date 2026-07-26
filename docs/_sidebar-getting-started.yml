@@ -1,0 +1,15 @@
+website:
+  sidebar:
+    - id: getting-started
+      title: "{{< iconify octicon:rocket-16 title='Getting started' label='Getting started' >}} Getting started"
+      style: floating
+      collapse-level: 2
+      contents:
+        - text: "{{< iconify octicon:compass-16 title='Overview' label='Overview' >}} Overview"
+          href: getting-started/index.qmd
+        - text: "{{< iconify octicon:cloud-16 title='GitHub Codespaces' label='GitHub Codespaces' >}} GitHub Codespaces"
+          href: getting-started/codespaces.qmd
+        - text: "{{< iconify octicon:container-16 title='Dev Containers' label='Dev Containers' >}} Dev Containers"
+          href: getting-started/dev-containers.qmd
+        - text: "{{< iconify octicon:repo-template-16 title='Use as a template' label='Use as a template' >}} Use as a template"
+          href: getting-started/template.qmd

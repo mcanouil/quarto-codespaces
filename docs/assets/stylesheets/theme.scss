@@ -1,0 +1,140 @@
+/*-- scss:rules --*/
+
+// Pin the dark navbar and footer surfaces to the midnight/amber palette from
+// _brand.yml. Atelier defaults these tokens to a neutral slate and bridges them
+// onto the gitlink widget, so overriding them here is enough for both bars.
+:root {
+  --atelier-navbar-bg: #0b1220;
+  --atelier-navbar-surface: #111c2e;
+  --atelier-navbar-fg: #dce3ec;
+  --atelier-navbar-muted: #8ea0b8;
+  --atelier-navbar-accent: #e8a33d;
+  --atelier-navbar-accent-soft: rgba(232, 163, 61, 0.16);
+  --atelier-navbar-border: rgba(220, 227, 236, 0.14);
+
+  // Space Grotesk is geometric and reads better with negative tracking than
+  // the positive default tuned for the fallback stack.
+  --atelier-heading-letter-spacing: -0.012em;
+}
+
+// ===========================================================================
+// HOME HERO
+// ===========================================================================
+.codespaces-hero {
+  margin-block: 0 2.5rem;
+  padding: 2rem 2rem 1.75rem;
+  border: 1px solid body-mix(80%);
+  border-radius: $border-radius-lg;
+  background:
+    radial-gradient(120% 140% at 100% 0%, rgba(232, 163, 61, 0.14), transparent 60%),
+    body-mix(96%);
+
+  p {
+    max-width: 60ch;
+    font-size: 1.05rem;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.codespaces-hero-eyebrow {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid rgba(232, 163, 61, 0.4);
+  border-radius: 2rem;
+  background: rgba(232, 163, 61, 0.1);
+  color: $primary;
+  font-family: var(--bs-font-monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+// The two Codespaces badges are identical images, so each one needs its own
+// label and caption to be distinguishable; lay them out as side-by-side cards.
+.codespaces-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1rem;
+  margin-block: 1.5rem 0;
+}
+
+.codespaces-action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid body-mix(85%);
+  border-radius: $border-radius;
+  background: body-mix(98%);
+
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: body-mix(35%);
+  }
+
+  img {
+    display: block;
+  }
+}
+
+.codespaces-action-label {
+  font-family: var(--bs-font-monospace);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $primary;
+}
+
+// ===========================================================================
+// CARD GRID (section landing pages)
+// ===========================================================================
+.codespaces-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
+  margin-block: 1.5rem;
+}
+
+.codespaces-card {
+  padding: 1.1rem 1.25rem;
+  border: 1px solid body-mix(85%);
+  border-radius: $border-radius;
+  background: body-mix(97%);
+  transition: border-color 0.15s ease-in-out;
+
+  &:hover,
+  &:focus-within {
+    border-color: $primary;
+  }
+
+  h3 {
+    margin-top: 0;
+    font-size: 1.05rem;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// ===========================================================================
+// TAG AND OPTION TABLES
+// ===========================================================================
+// Reference tables are mostly tag names and option keys; keep them monospaced
+// and compact so a long tag list stays scannable.
+.codespaces-tags table {
+  font-size: 0.9rem;
+
+  td:first-child,
+  th:first-child {
+    font-family: var(--bs-font-monospace);
+    white-space: nowrap;
+  }
+}

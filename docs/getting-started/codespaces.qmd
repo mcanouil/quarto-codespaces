@@ -1,0 +1,52 @@
+---
+title: "GitHub Codespaces"
+subtitle: "Run the container in the browser or in your desktop editor, with nothing installed locally."
+---
+
+[GitHub Codespaces](https://github.com/features/codespaces) runs a Dev Container on GitHub's infrastructure and attaches an editor to it.
+This repository ships several configurations, so you can pick the Quarto version before the Codespace is created.
+
+## Create a Codespace
+
+1. Open [mcanouil/quarto-codespaces](https://github.com/mcanouil/quarto-codespaces) on GitHub.
+2. Click the green **Code** button, then the **Codespaces** tab.
+3. Click **Create codespace on main**, or reuse an existing one from the list.
+4. Wait for the container to start; the configuration in the repository is applied automatically.
+
+The default configuration is `.devcontainer/devcontainer.json`, which pulls the `latest` image and installs the Quarto stable release.
+
+## Choose a different configuration
+
+The repository provides configurations for the universal base image, the Quarto prerelease, and each Quarto minor version from `1.0` to `1.9`.
+They are listed in full on the [configurations](../reference/configurations.qmd) page.
+
+### From a URL
+
+Append `devcontainer_path` to a `codespaces.new` URL, percent-encoding the path separators:
+
+```url
+https://codespaces.new/mcanouil/quarto-codespaces?quickstart=1&devcontainer_path=.devcontainer%2Funiversal%2Fdevcontainer.json
+```
+
+```url
+https://codespaces.new/mcanouil/quarto-codespaces?quickstart=1&devcontainer_path=.devcontainer%2Fquarto-prerelease%2Fdevcontainer.json
+```
+
+### From the Codespaces interface
+
+1. Click **Code**, then the **Codespaces** tab, then the **...** menu.
+2. Choose **New with options...**.
+3. Select the configuration from the **Dev container configuration** dropdown.
+4. Click **Create codespace**.
+
+## Manage storage
+
+Codespaces storage is billed against your account quota, and the purpose-built image is large because it carries R, Python, Julia, TinyTeX, and Chromium.
+If quota matters more than start-up time, use the `universal` configuration: it builds on `mcr.microsoft.com/devcontainers/universal:latest`, which GitHub already caches for Codespaces.
+
+Deleting a Codespace you no longer need frees its storage immediately.
+
+## Prebuilds
+
+[Codespaces prebuilds](https://docs.github.com/en/codespaces/prebuilding-your-codespaces) are configured in the repository settings rather than in a committed file.
+When a prebuild is available for a configuration, GitHub labels it in the creation dialog and the Codespace starts in seconds instead of minutes.

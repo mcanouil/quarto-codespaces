@@ -1,0 +1,59 @@
+meta:
+  name: Mickaël CANOUIL
+  link:
+    home: https://mickael.canouil.fr
+    github: https://github.com/mcanouil
+    bluesky: https://bsky.app/profile/mickael.canouil.fr
+    linkedin: https://www.linkedin.com/in/MickaelCanouil
+
+color:
+  palette:
+    midnight: "#0B1220"
+    midnight-2: "#111C2E"
+    slate: "#1B2942"
+    frost: "#F5F7FA"
+    ink: "#16202E"
+    mist: "#DCE3EC"
+    amber: "#E8A33D"
+    amber-deep: "#A25E0C"
+  background:
+    dark: midnight
+    light: frost
+  foreground:
+    dark: mist
+    light: ink
+  primary:
+    dark: amber
+    light: amber-deep
+  dark:
+    dark: midnight
+    light: midnight
+  light:
+    dark: mist
+    light: mist
+
+typography:
+  fonts:
+    - family: Space Grotesk
+      source: google
+      weight: [500, 600, 700]
+    - family: IBM Plex Sans
+      source: google
+      weight: [300, 400, 500, 600]
+    - family: IBM Plex Mono
+      source: google
+      weight: [400, 500, 600]
+  base: IBM Plex Sans
+  headings:
+    family: Space Grotesk
+    weight: 600
+  monospace: IBM Plex Mono
+  link:
+    color: primary
+
+defaults:
+  bootstrap:
+    defaults:
+      tooltip-color: $background
+      tooltip-bg: $foreground
+      btn-close-color: $foreground

@@ -1,0 +1,52 @@
+---
+title: "Dev Containers"
+subtitle: "Run the same container locally with Docker."
+---
+
+A [Dev Container](https://containers.dev/) is the same specification Codespaces uses, so every configuration in this repository works on your own machine.
+
+## Requirements
+
+- [Docker](https://docs.docker.com/get-started/get-docker/), or another container runtime that the Dev Containers tooling supports.
+- Either the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) for Visual Studio Code or Positron, or the [Dev Containers CLI](https://github.com/devcontainers/cli).
+
+## With the editor extension
+
+1. Clone the repository, or your own project containing a `.devcontainer/` directory.
+2. Open the folder in Visual Studio Code or Positron.
+3. Run **Dev Containers: Reopen in Container** from the command palette.
+4. To use a configuration other than the default, run **Dev Containers: Rebuild and Reopen in Container** and pick from the list.
+
+## With the CLI
+
+```sh
+npm install -g @devcontainers/cli
+devcontainer up --workspace-folder .
+devcontainer exec --workspace-folder . quarto check
+```
+
+Add `--config` to select one of the alternative configurations:
+
+```sh
+devcontainer up \
+  --workspace-folder . \
+  --config .devcontainer/quarto-prerelease/devcontainer.json
+```
+
+## Without a Dev Container
+
+The image runs on its own, which is convenient for a one-off render or in continuous integration:
+
+```sh
+docker run --rm -v "${PWD}:/workspace" -w /workspace \
+  ghcr.io/mcanouil/quarto-codespaces:latest \
+  quarto render
+```
+
+The default user in the image is `vscode`, and mounted files keep the ownership they have on the host.
+If a render fails on permissions, add `--user "$(id -u):$(id -g)"` to the `docker run` invocation.
+
+## Architecture
+
+The `release` and `prerelease` tags are multi-architecture manifests covering `linux/amd64` and `linux/arm64`, so Apple Silicon and ARM servers pull a native image.
+Version-pinned tags such as `1.7` are built for `linux/amd64` only and run under emulation elsewhere.

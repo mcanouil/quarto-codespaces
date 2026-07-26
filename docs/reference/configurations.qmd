@@ -1,0 +1,119 @@
+---
+title: "Configurations"
+subtitle: "Every `devcontainer.json` in the repository, and how to write your own."
+---
+
+## Shipped configurations
+
+Codespaces uses `.devcontainer/devcontainer.json` unless you select another path, either through the `devcontainer_path` URL parameter or the creation dialog.
+See [GitHub Codespaces](../getting-started/codespaces.qmd) for both routes.
+
+::: {.codespaces-tags}
+
+| Path | Name | Base | Quarto |
+| --- | --- | --- | --- |
+| `.devcontainer/devcontainer.json` | Release | `quarto-codespaces:latest` | `release` |
+| `.devcontainer/quarto-prerelease/devcontainer.json` | Pre-release | `quarto-codespaces:latest` | `prerelease` |
+| `.devcontainer/quarto-1.9/devcontainer.json` | 1.9 | `quarto-codespaces:latest` | `1.9` |
+| `.devcontainer/quarto-1.8/devcontainer.json` | 1.8 | `quarto-codespaces:latest` | `1.8` |
+| `.devcontainer/quarto-1.7/devcontainer.json` | 1.7 | `quarto-codespaces:latest` | `1.7` |
+| `.devcontainer/quarto-1.6/devcontainer.json` | 1.6 | `quarto-codespaces:latest` | `1.6` |
+| `.devcontainer/quarto-1.5/devcontainer.json` | 1.5 | `quarto-codespaces:latest` | `1.5` |
+| `.devcontainer/quarto-1.4/devcontainer.json` | 1.4 | `quarto-codespaces:latest` | `1.4` |
+| `.devcontainer/quarto-1.3/devcontainer.json` | 1.3 | `quarto-codespaces:latest` | `1.3` |
+| `.devcontainer/quarto-1.2/devcontainer.json` | 1.2 | `quarto-codespaces:latest` | `1.2` |
+| `.devcontainer/quarto-1.1/devcontainer.json` | 1.1 | `quarto-codespaces:latest` | `1.1` |
+| `.devcontainer/quarto-1.0/devcontainer.json` | 1.0 | `quarto-codespaces:latest` | `1.0` |
+| `.devcontainer/universal/devcontainer.json` | Universal | `devcontainers/universal:latest` | `release` |
+| `.github/.devcontainer/devcontainer.json` | Build recipe | `buildpack-deps:noble-curl` | build argument |
+
+:::
+
+Every configuration except `universal` and the build recipe is the same file with one value changed: the `version` passed to the `quarto-cli` Dev Container feature.
+They all start from the prebuilt image, so switching between them costs a feature reinstall rather than a full image build.
+
+## The default configuration
+
+`.devcontainer/devcontainer.json` pulls `ghcr.io/mcanouil/quarto-codespaces:latest`, runs as `vscode`, and reinstalls Quarto at the stable release:
+
+```json
+{
+  "name": "Release - Quarto Codespaces",
+  "image": "ghcr.io/mcanouil/quarto-codespaces:latest",
+  "remoteUser": "vscode",
+  "features": {
+    "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
+      "version": "release"
+    }
+  }
+}
+```
+
+It also installs a fixed editor setup, shared by all the image-based configurations.
+
+### Extensions
+
+`quarto.quarto`, `mcanouil.quarto-wizard`, `REditorSupport.r`, `Posit.air-vscode`, `ms-python.python`, `ms-python.vscode-pylance`, `ms-python.black-formatter`, `ms-python.flake8`, `ms-python.pylint`, `ms-python.isort`, `ms-toolsai.jupyter`, and `julialang.language-julia`.
+
+### Settings
+
+```json
+{
+  "r.rterm.option": ["--no-save", "--no-restore-data", "--quiet"],
+  "r.useRenvLibPath": true,
+  "[r]": {
+    "editor.defaultFormatter": "Posit.air-vscode",
+    "editor.formatOnSave": true
+  }
+}
+```
+
+`r.useRenvLibPath` makes the R extension follow a project-local `renv` library, which is what [`init-env.sh`](init-env.qmd) creates.
+
+## The universal configuration
+
+`.devcontainer/universal/devcontainer.json` differs from the others in several ways.
+
+- It builds from `mcr.microsoft.com/devcontainers/universal:latest` instead of pulling this project's image, because Codespaces already caches Microsoft's base image; using it keeps your storage quota down at the cost of a longer first start.
+- The remote user is `codespace`, not `vscode`.
+- It vendors its own copies of the `quarto-computing-dependencies` and `uv` [features](features.qmd), and restricts the computing dependencies to `installOnPlatforms: amd64`.
+- It installs two extra R packages, `prompt` and `lintr`, on top of `rmarkdown` and `languageserver`.
+- It lets the `quarto-cli` feature install TinyTeX (`installTinyTex: true`) rather than using this project's `tinytex` feature, and skips Chromium.
+
+## The build recipe
+
+`.github/.devcontainer/devcontainer.json` is not meant to be opened as a development environment.
+It is the recipe the [container images](images.qmd) are built from: it starts at `buildpack-deps:noble-curl`, layers every feature, and reads the Quarto version, the remote user, and all the OCI annotations from environment variables supplied by the build workflow.
+
+## Write your own
+
+Start from an existing file and change what you need.
+
+```json
+{
+  "name": "Custom Quarto setup",
+  "image": "ghcr.io/mcanouil/quarto-codespaces:latest",
+  "remoteUser": "vscode",
+  "features": {
+    "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
+      "version": "1.9"
+    }
+  },
+  "containerEnv": {
+    "QUARTO_PRINT_STACK": "true"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": ["quarto.quarto", "mcanouil.quarto-wizard"],
+      "settings": {}
+    }
+  }
+}
+```
+
+The parts worth changing:
+
+- **Base image**: set `image` to a published tag, or replace it with `build` and a Dockerfile.
+- **Features**: add [Dev Container features](features.qmd), or drop the `quarto-cli` feature to keep the version baked into the image.
+- **Extensions and settings**: under `customizations.vscode`.
+- **Environment variables**: under `containerEnv` for the container, or `remoteEnv` for the editor session.

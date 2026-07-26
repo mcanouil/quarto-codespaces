@@ -1,0 +1,48 @@
+---
+title: "Reference"
+subtitle: "What this project ships, in detail."
+---
+
+::: {.codespaces-grid}
+
+::: {.codespaces-card}
+
+## [Configurations](configurations.qmd)
+
+Every `devcontainer.json` in the repository, what it pins, and how to write your own.
+
+:::
+
+::: {.codespaces-card}
+
+## [Container images](images.qmd)
+
+Tag scheme, architectures, build schedule, and security scanning.
+
+:::
+
+::: {.codespaces-card}
+
+## [Dev Container features](features.qmd)
+
+The features built in this repository and the upstream ones they depend on.
+
+:::
+
+::: {.codespaces-card}
+
+## [`init-env.sh`](init-env.qmd)
+
+The script that creates project-local R, Python, and Julia environments.
+
+:::
+
+::: {.codespaces-card}
+
+## [Quarto check output](quarto-check.qmd)
+
+The `quarto check` transcript from the latest release and prerelease builds.
+
+:::
+
+:::

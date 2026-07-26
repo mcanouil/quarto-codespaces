@@ -1,0 +1,156 @@
+---
+title: "Quarto check output"
+subtitle: "What `quarto check` reports inside the latest images."
+---
+
+Every publishing build runs `quarto check` inside the freshly built container and commits the transcript here, so the state of each engine is on record without pulling the image.
+
+The transcripts below come from the `linux/amd64` builds.
+The `linux/arm64` builds run the same check; their output is attached to the workflow run summary instead.
+
+::: {.callout-note}
+
+These blocks are written by the `Build: Docker Images` workflow.
+Edit the surrounding prose freely, but leave the `QUARTO_CHECK_*` comment markers in place.
+
+:::
+
+::: {.panel-tabset}
+
+## Release
+
+<!-- QUARTO_CHECK_RELEASE_START -->
+
+```txt
+Quarto 1.10.18
+[✓] Checking environment information...
+      Quarto cache location: /home/vscode/.cache/quarto
+[✓] Checking versions of quarto binary dependencies...
+      Pandoc version 3.10.0: OK
+      Dart Sass version 1.101.0: OK
+      Deno version 2.7.14: OK
+      Typst version 0.15.1: OK
+[✓] Checking versions of quarto dependencies......OK
+[✓] Checking Quarto installation......OK
+      Version: 1.10.18
+      Path: /opt/quarto/bin
+
+(|) Checking tools....................[✓] Checking tools....................OK
+      TinyTeX: (external install)
+      Chrome Headless Shell: (not installed)
+      VeraPDF: (not installed)
+
+(|) Checking LaTeX....................[✓] Checking LaTeX....................OK
+      Using: Installation From Path
+      Path: /usr/local/bin
+      Version: 2026
+
+[✓] Checking Chrome Headless....................OK
+      Using: Chrome from QUARTO_CHROMIUM
+      Path: /usr/local/bin/chromium
+
+(|) Checking basic markdown render....[✓] Checking basic markdown render....OK
+
+(|) Checking R installation...........[✓] Checking R installation...........OK
+      Version: 4.6.1
+      Path: /opt/R/4.6.1/lib/R
+      LibPaths:
+        - /home/vscode/R/x86_64-pc-linux-gnu-library/4.6
+        - /opt/R/4.6.1/lib/R/library
+      knitr: 1.51
+      rmarkdown: 2.31
+
+(|) Checking Knitr engine render......[✓] Checking Knitr engine render......OK
+
+(|) Checking Python 3 installation....[✓] Checking Python 3 installation....OK
+      Version: 3.14.6
+      Path: /usr/local/python/current/bin/python3
+      Jupyter: 5.9.1
+      Kernels: julia-1.12, python3
+
+(|) Checking Jupyter engine render....[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+[✓] Checking Jupyter engine render....OK
+
+(|) Checking Julia installation...[✓] Checking Julia installation...
+```
+
+<!-- QUARTO_CHECK_RELEASE_END -->
+
+<!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
+
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/30205279001)
+
+<!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
+
+## Pre-release
+
+<!-- QUARTO_CHECK_PRERELEASE_START -->
+
+```txt
+Quarto 1.11.0
+[✓] Checking environment information...
+      Quarto cache location: /home/vscode/.cache/quarto
+[✓] Checking versions of quarto binary dependencies...
+      Pandoc version 3.10.0: OK
+      Dart Sass version 1.101.0: OK
+      Deno version 2.7.14: OK
+      Typst version 0.15.1: OK
+[✓] Checking versions of quarto dependencies......OK
+[✓] Checking Quarto installation......OK
+      Version: 1.11.0
+      Path: /opt/quarto/bin
+
+(|) Checking tools....................[✓] Checking tools....................OK
+      TinyTeX: (external install)
+      Chrome Headless Shell: (not installed)
+      VeraPDF: (not installed)
+
+(|) Checking LaTeX....................[✓] Checking LaTeX....................OK
+      Using: Installation From Path
+      Path: /usr/local/bin
+      Version: 2026
+
+[✓] Checking Chrome Headless....................OK
+      Using: Chrome from QUARTO_CHROMIUM
+      Path: /usr/local/bin/chromium
+
+(|) Checking basic markdown render....[✓] Checking basic markdown render....OK
+
+(|) Checking R installation...........[✓] Checking R installation...........OK
+      Version: 4.6.1
+      Path: /opt/R/4.6.1/lib/R
+      LibPaths:
+        - /home/vscode/R/x86_64-pc-linux-gnu-library/4.6
+        - /opt/R/4.6.1/lib/R/library
+      knitr: 1.51
+      rmarkdown: 2.31
+
+(|) Checking Knitr engine render......[✓] Checking Knitr engine render......OK
+
+(|) Checking Python 3 installation....[✓] Checking Python 3 installation....OK
+      Version: 3.14.6
+      Path: /usr/local/python/current/bin/python3
+      Jupyter: 5.9.1
+      Kernels: julia-1.12, python3
+
+(|) Checking Jupyter engine render....[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
+[✓] Checking Jupyter engine render....OK
+
+(|) Checking Julia installation...[✓] Checking Julia installation...
+```
+
+<!-- QUARTO_CHECK_PRERELEASE_END -->
+
+<!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
+
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/30205279001)
+
+<!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
+
+:::
+
+## Reading the output
+
+- **TinyTeX: (external install)** is expected: TinyTeX lives in `/opt/tinytex`, installed by the [`tinytex` feature](features.qmd) rather than by Quarto.
+- **Chrome Headless Shell: (not installed)** is also expected, because the [`chrome` feature](features.qmd) sets `QUARTO_CHROMIUM` and the check reports `Chrome from QUARTO_CHROMIUM` further down.
+- The Jupyter engine check emits an `IPKernelApp` warning about running over TCP without encryption; that is the kernel's own notice during a local render, not a container misconfiguration.
