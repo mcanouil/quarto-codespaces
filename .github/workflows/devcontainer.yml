@@ -9,7 +9,7 @@ on:
   pull_request:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event_name }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 permissions:
@@ -90,7 +90,9 @@ jobs:
           imageTag: ${{ matrix.QUARTO_VERSION }}-${{ matrix.ARCH }}
           subFolder: .github
           imageName: ghcr.io/${{ github.repository }}
-          noCache: true
+          noCache: ${{ github.event_name != 'pull_request' }}
+          cacheFrom: ${{ github.event_name == 'pull_request' && format('ghcr.io/{0}:{1}-{2}',
+            github.repository, matrix.QUARTO_VERSION, matrix.ARCH) || '' }}
           eventFilterForPush: |
             release
             workflow_dispatch
