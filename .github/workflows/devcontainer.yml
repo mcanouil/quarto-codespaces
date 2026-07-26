@@ -296,16 +296,19 @@ jobs:
             local temp_file
             temp_file=$(mktemp)
 
-            # Update quarto check output section. The transcript is read from
-            # the file inside awk rather than passed with -v, because a
-            # multi-line -v value is not portable across awk variants. The
-            # blank lines around the injected block are required: without them
+            # Replace both marked sections in a single pass. The transcript is
+            # read from the file inside awk rather than passed with -v, because
+            # a multi-line -v value is not portable across awk variants. The
+            # blank lines around each injected block are required: without them
             # Pandoc reads the code fence as part of the HTML comment block.
-            awk -v start="${output_start}" \
-                -v end="${output_end}" \
-                -v outfile="${output_file}" '
+            awk -v output_start="${output_start}" \
+                -v output_end="${output_end}" \
+                -v url_start="${url_start}" \
+                -v url_end="${url_end}" \
+                -v outfile="${output_file}" \
+                -v url="${build_url}" '
               BEGIN { in_block=0 }
-              index($0, start) {
+              index($0, output_start) {
                 print $0
                 print ""
                 print "```txt"
@@ -319,20 +322,7 @@ jobs:
                 in_block=1
                 next
               }
-              index($0, end) {
-                print $0
-                in_block=0
-                next
-              }
-              !in_block { print }
-            ' "${TARGET_FILE}" > "${temp_file}"
-
-            # Update build URL section
-            awk -v start="${url_start}" \
-                -v end="${url_end}" \
-                -v url="${build_url}" '
-              BEGIN { in_block=0 }
-              index($0, start) {
+              index($0, url_start) {
                 print $0
                 print ""
                 print "[View build log](" url ")"
@@ -340,15 +330,15 @@ jobs:
                 in_block=1
                 next
               }
-              index($0, end) {
+              index($0, output_end) || index($0, url_end) {
                 print $0
                 in_block=0
                 next
               }
               !in_block { print }
-            ' "${temp_file}" > "${TARGET_FILE}"
+            ' "${TARGET_FILE}" > "${temp_file}"
 
-            rm -f "${temp_file}"
+            mv "${temp_file}" "${TARGET_FILE}"
 
             echo "Updated ${version} section in ${TARGET_FILE}"
           }

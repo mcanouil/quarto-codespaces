@@ -10,10 +10,10 @@ color:
   palette:
     midnight: "#0B1220"
     midnight-2: "#111C2E"
-    slate: "#1B2942"
     frost: "#F5F7FA"
     ink: "#16202E"
     mist: "#DCE3EC"
+    mist-muted: "#8EA0B8"
     amber: "#E8A33D"
     amber-deep: "#A25E0C"
   background:
