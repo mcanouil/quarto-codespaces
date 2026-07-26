@@ -1,0 +1,19 @@
+website:
+  sidebar:
+    - id: reference
+      title: "{{< iconify octicon:book-16 title='Reference' label='Reference' >}} Reference"
+      style: floating
+      collapse-level: 2
+      contents:
+        - text: "{{< iconify octicon:compass-16 title='Overview' label='Overview' >}} Overview"
+          href: reference/index.qmd
+        - text: "{{< iconify octicon:gear-16 title='Configurations' label='Configurations' >}} Configurations"
+          href: reference/configurations.qmd
+        - text: "{{< iconify octicon:package-16 title='Container images' label='Container images' >}} Container images"
+          href: reference/images.qmd
+        - text: "{{< iconify octicon:stack-16 title='Dev Container features' label='Dev Container features' >}} Dev Container features"
+          href: reference/features.qmd
+        - text: "{{< iconify octicon:terminal-16 title='init-env.sh' label='init-env.sh' >}} `init-env.sh`"
+          href: reference/init-env.qmd
+        - text: "{{< iconify octicon:checklist-16 title='Quarto check output' label='Quarto check output' >}} Quarto check output"
+          href: reference/quarto-check.qmd

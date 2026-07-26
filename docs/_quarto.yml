@@ -1,0 +1,71 @@
+project:
+  type: atelier
+  render:
+    - index.qmd
+    - getting-started/
+    - reference/
+    - contributing.qmd
+    - 404.qmd
+
+website:
+  title: "Quarto Codespaces"
+  description: "GitHub Codespaces and Dev Containers with Quarto, R, Python, and Julia, ready to render."
+  site-url: "https://m.canouil.dev/quarto-codespaces"
+  repo-url: https://github.com/mcanouil/quarto-codespaces
+  page-footer:
+    right: |
+      Licence: [MIT](https://github.com/mcanouil/quarto-codespaces?tab=MIT-1-ov-file#readme).
+  navbar:
+    left:
+      - text: "{{< iconify octicon:rocket-16 title='Getting started' label='Getting started' >}} Getting started"
+        href: getting-started/index.qmd
+      - text: "{{< iconify octicon:book-16 title='Reference' label='Reference' >}} Reference"
+        href: reference/index.qmd
+    right:
+      - text: "{{< iconify octicon:git-pull-request-16 title='Contributing' label='Contributing' >}} Contributing"
+        href: contributing.qmd
+      - href: "#gitlink-widget"
+        aria-label: "GitHub"
+
+metadata-files:
+  - _sidebar-getting-started.yml
+  - _sidebar-reference.yml
+
+brand: _brand.yml
+
+format:
+  html:
+    # A project `theme` replaces the one contributed by the `atelier` project
+    # type rather than extending it, so the extension stylesheet is listed
+    # explicitly before the project layer. The two lists are written out
+    # rather than shared through a YAML anchor, which the schema check rejects.
+    theme:
+      light:
+        - brand
+        - _extensions/mcanouil/atelier/html/theme.scss
+        - assets/stylesheets/theme.scss
+      dark:
+        - brand
+        - _extensions/mcanouil/atelier/html/theme.scss
+        - assets/stylesheets/theme.scss
+
+filters:
+  - at: post-quarto
+    path: gitlink
+
+extensions:
+  gitlink:
+    # Widget only: the platform and repository come from `website.repo-url`,
+    # and in-text reference rewriting stays off.
+    enabled: false
+    widget:
+      enabled: true
+      extra-links:
+        - text: "Container images"
+          href: "https://github.com/mcanouil/quarto-codespaces/pkgs/container/quarto-codespaces"
+          icon: package
+        - text: "Open in Codespaces"
+          href: "https://codespaces.new/mcanouil/quarto-codespaces?quickstart=1"
+          icon: rocket
+      sponsor: mcanouil
+      style-navbar-tools: true

@@ -1,0 +1,75 @@
+---
+title: "Getting started"
+subtitle: "Three ways to use this project, depending on where you want the container to run."
+---
+
+## Pick an entry point
+
+::: {.codespaces-grid}
+
+::: {.codespaces-card}
+
+### [GitHub Codespaces](codespaces.qmd)
+
+Open a container in the browser or in your desktop editor, with nothing installed locally.
+Best for trying Quarto, running a workshop, or reproducing a bug report.
+
+:::
+
+::: {.codespaces-card}
+
+### [Dev Containers](dev-containers.qmd)
+
+Run the same container on your own machine with Docker and the Dev Containers extension or CLI.
+Best for day-to-day work on an existing project.
+
+:::
+
+::: {.codespaces-card}
+
+### [As a template](template.qmd)
+
+Copy the repository and keep only the configuration you need.
+Best when you want your own project to ship a Quarto container.
+
+:::
+
+:::
+
+## The quickest path
+
+Launch a Codespace on this repository with either image.
+
+::: {.codespaces-actions}
+
+::: {.codespaces-action}
+
+[Purpose-built image]{.codespaces-action-label}
+
+[![Open in GitHub Codespaces with the purpose-built image](https://github.com/codespaces/badge.svg)](https://codespaces.new/mcanouil/quarto-codespaces?quickstart=1&devcontainer_path=.devcontainer%2Fdevcontainer.json)
+
+Uses [`ghcr.io/mcanouil/quarto-codespaces:latest`](https://github.com/mcanouil/quarto-codespaces/pkgs/container/quarto-codespaces), described in [container images](../reference/images.qmd).
+Everything is preinstalled, so it starts fastest.
+
+:::
+
+::: {.codespaces-action}
+
+[Universal base image]{.codespaces-action-label}
+
+[![Open in GitHub Codespaces with the universal base image](https://github.com/codespaces/badge.svg)](https://codespaces.new/mcanouil/quarto-codespaces?quickstart=1&devcontainer_path=.devcontainer%2Funiversal%2Fdevcontainer.json)
+
+Uses the `universal` configuration, built on Microsoft's Codespaces base image.
+It consumes less of your GitHub storage quota.
+
+:::
+
+:::
+
+## Then what?
+
+Once the container is up, `quarto check` reports the state of every engine.
+The [Quarto check output](../reference/quarto-check.qmd) page shows what the latest build produces, so you can compare against a known-good run.
+
+Language environments are not created for you.
+Run [`init-env.sh`](../reference/init-env.qmd) when you want a project-local `renv`, `uv`, or Julia environment.

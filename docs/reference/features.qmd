@@ -1,0 +1,113 @@
+---
+title: "Dev Container features"
+subtitle: "The features this repository builds, and the upstream ones they pull in."
+---
+
+The [container images](images.qmd) are assembled from Dev Container features rather than a hand-written Dockerfile.
+Six of them are local to this repository, under `.github/.devcontainer/`, and the rest come from upstream registries.
+
+They are ordered through `installsAfter`, so the graph resolves to: common utilities and Git, then the language runtimes and their packages, then `uv`, Chrome, Decktape, the Quarto CLI, TinyTeX, the GitHub CLI, and finally the cleanup pass.
+
+## Local features
+
+### `quarto-computing-dependencies`
+
+Installs the R, Python, and Julia packages Quarto needs to render computations.
+It declares `dependsOn` for the runtimes themselves, so requesting this one feature brings in R, Python, and Julia.
+
+::: {.codespaces-tags}
+
+| Option | Default | Description |
+| --- | --- | --- |
+| `installOnPlatforms` | `amd64,arm64` | Architectures to install on; other architectures are skipped with a message rather than failing. |
+| `rDeps` | `rmarkdown` | Comma-separated R packages, installed with `pak::pkg_install()`. |
+| `pythonDeps` | `jupyter,papermill` | Comma-separated Python packages, installed with `pip`. |
+| `juliaDeps` | `IJulia` | Comma-separated Julia packages, installed with `Pkg.add()`. |
+
+:::
+
+Runtime dependencies, each pinned to its release channel:
+
+- `ghcr.io/rocker-org/devcontainer-features/r-rig:1` with `installREnv: true` and without the extra R tooling, since `rmarkdown` is installed through `rDeps` instead.
+- `ghcr.io/devcontainers/features/python:1` with `enableShared: true`, which the R `reticulate` and Quarto Jupyter paths need.
+- `ghcr.io/julialang/devcontainer-features/julia:1` on the release channel.
+
+R and Julia packages are installed as the remote user, so they land in that user's library rather than the system one.
+
+### `uv`
+
+Installs [`uv`](https://docs.astral.sh/uv/) into `/usr/local/bin` from the official installer, and registers Zsh completions.
+
+::: {.codespaces-tags}
+
+| Option | Default | Description |
+| --- | --- | --- |
+| `version` | `latest` | `latest`, or a release tag from the `astral-sh/uv` repository. |
+
+:::
+
+### `chrome`
+
+Provides a headless browser for Typst previews, Mermaid diagrams, and Decktape.
+
+On `amd64` it installs Google Chrome from Google's apt repository.
+On `arm64`, where Google publishes no package, it installs Chromium through Playwright.
+Both paths expose the browser at `/usr/local/bin/chromium`, and the feature sets two environment variables so Quarto and Puppeteer find it without configuration:
+
+```json
+{
+  "PUPPETEER_EXECUTABLE_PATH": "/usr/local/bin/chromium",
+  "QUARTO_CHROMIUM": "/usr/local/bin/chromium"
+}
+```
+
+This is why `quarto check` reports `Chrome from QUARTO_CHROMIUM` rather than Quarto's own headless shell download.
+
+### `decktape`
+
+Installs Node.js from NodeSource and [Decktape](https://github.com/astefanutti/decktape) globally, for turning HTML presentations into PDF.
+
+::: {.codespaces-tags}
+
+| Option | Default | Description |
+| --- | --- | --- |
+| `version` | `22` | Node.js major version. |
+
+:::
+
+Puppeteer's bundled Chromium download is disabled; Decktape uses the browser from the `chrome` feature instead, which keeps the image smaller and works on `arm64`.
+
+### `tinytex`
+
+Installs [TinyTeX](https://github.com/rstudio/tinytex) into `/opt/tinytex` from the upstream installer, links `tlmgr` and the LaTeX binaries into `/usr/local/bin`, and creates a `tinytex` group so the remote user can install packages at runtime without `sudo`.
+It also runs `tlmgr init-usertree` for that user.
+
+Because TinyTeX is installed outside Quarto's own tree, `quarto check` reports it as `(external install)`.
+
+### `cleanup`
+
+Runs last and reclaims space before the image is committed: user caches (`.cache`, `.npm`, `.R`, `.julia/logs`, `.julia/compiled`, Yarn, Trash), `/tmp`, apt lists, and the `pip`, `uv`, and `npm` caches, plus the TinyTeX package database backups.
+
+It has no options and is safe to omit; leaving it out only makes the image larger.
+
+## Upstream features
+
+::: {.codespaces-tags}
+
+| Feature | Configured with |
+| --- | --- |
+| `ghcr.io/devcontainers/features/common-utils:2` | Zsh, the remote user, `upgradePackages: true` |
+| `ghcr.io/devcontainers/features/git:1` | `latest`, no PPA |
+| `ghcr.io/rocker-org/devcontainer-features/quarto-cli:1` | version from the build matrix, with TinyTeX and Chromium installation disabled |
+| `ghcr.io/devcontainers/features/github-cli:1` | `latest` |
+
+:::
+
+The `quarto-cli` feature is told not to install TinyTeX or Chromium because the `tinytex` and `chrome` features already provide them, on both architectures.
+
+## Duplication in the universal configuration
+
+`.devcontainer/universal/` keeps its own copies of `quarto-computing-dependencies` and `uv`, because a Dev Container configuration can only reference local features inside its own context directory.
+
+The `check-feature-sync` job in the build workflow runs `diff -r` between the two pairs of directories and fails the build if they drift.
+When you change one, change the other identically.

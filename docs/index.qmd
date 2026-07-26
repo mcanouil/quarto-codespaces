@@ -1,0 +1,125 @@
+---
+title: "Quarto Codespaces"
+subtitle: "GitHub Codespaces and Dev Containers with Quarto, R, Python, and Julia, ready to render."
+toc: false
+---
+
+::: {.codespaces-hero}
+
+[Ready to render]{.codespaces-hero-eyebrow}
+
+Open a browser tab and get a full Quarto toolchain: the Quarto CLI, R with `renv`, Python with `uv` and Jupyter, Julia with `IJulia`, TinyTeX for PDF, and headless Chromium for screenshots and Decktape.
+No local installation, no version drift, and the same container whether you run it in the cloud or on your own machine.
+
+::: {.codespaces-actions}
+
+::: {.codespaces-action}
+
+[Purpose-built image]{.codespaces-action-label}
+
+[![Open in GitHub Codespaces with the purpose-built image](https://github.com/codespaces/badge.svg)](https://codespaces.new/mcanouil/quarto-codespaces?quickstart=1&devcontainer_path=.devcontainer%2Fdevcontainer.json)
+
+Everything preinstalled, fastest to start.
+
+:::
+
+::: {.codespaces-action}
+
+[Universal base image]{.codespaces-action-label}
+
+[![Open in GitHub Codespaces with the universal base image](https://github.com/codespaces/badge.svg)](https://codespaces.new/mcanouil/quarto-codespaces?quickstart=1&devcontainer_path=.devcontainer%2Funiversal%2Fdevcontainer.json)
+
+Lighter on your GitHub storage quota.
+
+:::
+
+:::
+
+:::
+
+## Use it as an image
+
+The image is published to the GitHub Container registry and can be used as a base image, or run directly.
+
+```sh
+docker pull ghcr.io/mcanouil/quarto-codespaces:latest
+```
+
+`release` and `prerelease` images are built for `linux/amd64` and `linux/arm64`, and rebuilt every Sunday so the toolchain never goes stale.
+See [container images](reference/images.qmd) for the full tag list.
+
+## Use it as a Dev Container
+
+Point your own `.devcontainer/devcontainer.json` at the image and pin the Quarto version you need:
+
+```json
+{
+  "name": "My Quarto project",
+  "image": "ghcr.io/mcanouil/quarto-codespaces:latest",
+  "remoteUser": "vscode",
+  "features": {
+    "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
+      "version": "release"
+    }
+  }
+}
+```
+
+## What is inside
+
+::: {.codespaces-grid}
+
+::: {.codespaces-card}
+
+### Quarto
+
+The Quarto CLI with Pandoc, Dart Sass, Deno, and Typst, installed through the `quarto-cli` Dev Container feature so any version from `1.0` to `prerelease` can be selected.
+
+:::
+
+::: {.codespaces-card}
+
+### R
+
+R from `r-rig` with `renv` enabled, plus `rmarkdown` and `languageserver`, wired to the R and Air extensions with format-on-save.
+
+:::
+
+::: {.codespaces-card}
+
+### Python
+
+Python with shared libraries, `jupyter` and `papermill`, and [`uv`](https://docs.astral.sh/uv/) for dependency management.
+
+:::
+
+::: {.codespaces-card}
+
+### Julia
+
+Julia on the release channel with `IJulia`, so the Jupyter engine can render Julia cells.
+
+:::
+
+::: {.codespaces-card}
+
+### PDF and screenshots
+
+TinyTeX for LaTeX output, and Chrome or Chromium with `QUARTO_CHROMIUM` preset for Typst previews, Mermaid diagrams, and Decktape.
+
+:::
+
+::: {.codespaces-card}
+
+### Editor setup
+
+The Quarto, [Quarto Wizard](https://m.canouil.dev/quarto-wizard/), R, Air, Python, Pylance, and Jupyter extensions are installed and configured.
+
+:::
+
+:::
+
+## Next steps
+
+- [Getting started](getting-started/index.qmd) walks through Codespaces, local Dev Containers, and using this repository as a template.
+- [Reference](reference/index.qmd) documents every configuration, image tag, Dev Container feature, and the environment initialisation script.
