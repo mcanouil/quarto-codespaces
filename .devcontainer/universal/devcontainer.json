@@ -26,6 +26,7 @@
   "remoteUser": "codespace",
   "features": {
     "./quarto-computing-dependencies": {
+      "installOnPlatforms": "amd64",
       "rDeps": "rmarkdown,languageserver,prompt,lintr",
       "pythonDeps": "jupyter,papermill",
       "juliaDeps": "IJulia"

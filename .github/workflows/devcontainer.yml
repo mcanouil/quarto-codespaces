@@ -17,9 +17,23 @@ permissions:
   packages: write
 
 jobs:
+  check-feature-sync:
+    runs-on: ubuntu-latest
+    name: Check - Duplicated features in sync
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Verify duplicated dev container features are identical
+        run: |
+          diff -r .github/.devcontainer/uv .devcontainer/universal/uv
+          diff -r .github/.devcontainer/quarto-computing-dependencies .devcontainer/universal/quarto-computing-dependencies
+
   build:
     runs-on: ubuntu-latest
     name: Build - Quarto ${{ matrix.QUARTO_VERSION }}
+    needs:
+      - "check-feature-sync"
     if: >-
       ! endsWith(github.event.pull_request.user.login, '[bot]') &&
         (

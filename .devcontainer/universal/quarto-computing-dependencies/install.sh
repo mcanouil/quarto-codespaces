@@ -6,6 +6,8 @@ export DEBIAN_FRONTEND=noninteractive
 
 USERNAME=${USERNAME:-${_REMOTE_USER:-"automatic"}}
 
+PLATFORMS=${INSTALL_ON_PLATFORMS:-"amd64,arm64"}
+
 R_DEPS=${RDEPS:-"rmarkdown"}
 PYTHON_DEPS=${PYTHONDEPS:-"jupyter,papermill"}
 JULIA_DEPS=${JULIADEPS:-"IJulia"}
@@ -13,6 +15,12 @@ JULIA_DEPS=${JULIADEPS:-"IJulia"}
 if [ "$(id -u)" -ne 0 ]; then
   echo -e 'Script must be run as root. Use sudo, su, or add "USER root" to your Dockerfile before running this script.'
   exit 1
+fi
+
+architecture="$(dpkg --print-architecture)"
+if [ "${architecture}" != "amd64" ] && [ "${architecture}" != "arm64" ]; then
+  echo "(!) Architecture ${architecture} unsupported"
+  exit 2
 fi
 
 # Determine the appropriate non-root user
@@ -52,9 +60,15 @@ quarto_julia_deps() {
   su "${USERNAME}" -c "~/.juliaup/bin/julia -e 'using Pkg; Pkg.add.([\"${deps}\"])'"
 }
 
-apt-get update -y && apt-get install -y --no-install-recommends libuv1-dev && rm -rf /var/lib/apt/lists/*
-quarto_r_deps "${R_DEPS}"
-quarto_python_deps "${PYTHON_DEPS}"
-quarto_julia_deps "${JULIA_DEPS}"
+if [[ ",${PLATFORMS}," == *",${architecture},"* ]]; then
+  apt-get update -y && apt-get install -y --no-install-recommends libuv1-dev && rm -rf /var/lib/apt/lists/*
+  quarto_r_deps "${R_DEPS}"
+  quarto_python_deps "${PYTHON_DEPS}"
+  quarto_julia_deps "${JULIA_DEPS}"
+else
+  echo "(!) Skipping R, Python, and Julia dependencies for ${architecture} architecture"
+fi
 
 apt-get clean && rm -rf /var/lib/apt/lists/*
+
+echo "Done!"
