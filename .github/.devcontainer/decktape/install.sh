@@ -32,7 +32,9 @@ install_decktape() {
   check_packages curl ca-certificates
   curl --proto '=https' --tlsv1.2 -LsSf "${url}" | bash -
   check_packages nodejs
-  npm install -g decktape
+  # The browser comes from the chrome feature (PUPPETEER_EXECUTABLE_PATH);
+  # puppeteer's bundled download is amd64-only and dead weight.
+  PUPPETEER_SKIP_DOWNLOAD=true PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true npm install -g decktape
 }
 
 install_decktape "${VERSION}"

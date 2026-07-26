@@ -30,8 +30,8 @@ jobs:
           diff -r .github/.devcontainer/quarto-computing-dependencies .devcontainer/universal/quarto-computing-dependencies
 
   build:
-    runs-on: ubuntu-latest
-    name: Build - Quarto ${{ matrix.QUARTO_VERSION }}
+    runs-on: ${{ matrix.RUNNER }}
+    name: Build - Quarto ${{ matrix.QUARTO_VERSION }} (${{ matrix.ARCH }})
     needs:
       - "check-feature-sync"
     if: >-
@@ -43,20 +43,26 @@ jobs:
             github.event_name == 'pull_request'
         )
     strategy:
+      fail-fast: false
       matrix:
         include:
           - QUARTO_VERSION: release
-            IMAGE_TAG_BASE: release,release-noble,latest
+            ARCH: amd64
+            RUNNER: ubuntu-latest
+          - QUARTO_VERSION: release
+            ARCH: arm64
+            RUNNER: ubuntu-24.04-arm
           - QUARTO_VERSION: prerelease
-            IMAGE_TAG_BASE: prerelease,prerelease-noble
+            ARCH: amd64
+            RUNNER: ubuntu-latest
+          - QUARTO_VERSION: prerelease
+            ARCH: arm64
+            RUNNER: ubuntu-24.04-arm
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
 
-      - name: Set up QEMU for multi-architecture builds
-        uses: docker/setup-qemu-action@v4
-
-      - name: Setup Docker buildx for multi-architecture builds
+      - name: Setup Docker buildx
         uses: docker/setup-buildx-action@v4
         with:
           use: true
@@ -77,37 +83,11 @@ jobs:
             echo "VERSION=$(git rev-parse --short HEAD)" >> ${GITHUB_OUTPUT}
           fi
 
-      - name: Define Image Tags with Build Metadata
-        id: image_tags
-        env:
-          BASE_TAGS: ${{ matrix.IMAGE_TAG_BASE }}
-          QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
-        run: |
-          BUILD_ID=$(date -u +%Y%m%d%H%M)
-          echo "::group::Build Metadata Tags for ${QUARTO_VERSION}"
-          echo "Build ID: ${BUILD_ID}"
-          echo "Base tags: ${BASE_TAGS}"
-
-          # Split base tags and add build metadata versions (exclude 'latest')
-          IFS=',' read -ra TAG_ARRAY <<< "${BASE_TAGS}"
-          TAGS_WITH_BUILD=""
-          for tag in "${TAG_ARRAY[@]}"; do
-            if [[ "${tag}" != "latest" ]]; then
-              TAGS_WITH_BUILD="${TAGS_WITH_BUILD},${tag}-${BUILD_ID}"
-            fi
-          done
-
-          # Combine original tags with build metadata tags
-          ALL_TAGS="${BASE_TAGS}${TAGS_WITH_BUILD}"
-          echo "All tags: ${ALL_TAGS}"
-          echo "::endgroup::"
-          echo "IMAGE_TAG=${ALL_TAGS}" >> ${GITHUB_OUTPUT}
-
       - name: Build and run Dev Container on release
         id: devcontainer-ci
         uses: devcontainers/ci@v0.3
         with:
-          imageTag: ${{ steps.image_tags.outputs.IMAGE_TAG }}
+          imageTag: ${{ matrix.QUARTO_VERSION }}-${{ matrix.ARCH }}
           subFolder: .github
           imageName: ghcr.io/${{ github.repository }}
           noCache: true
@@ -115,7 +95,7 @@ jobs:
             release
             workflow_dispatch
             schedule
-          platform: linux/amd64
+          platform: linux/${{ matrix.ARCH }}
           runCmd: echo "$(CI=true quarto check 2>&1)" | sed '/^(/d;
             s/\x1b\[[0-9;]*[mGK]//g'
         env:
@@ -133,6 +113,7 @@ jobs:
       - name: Test Dev Container
         env:
           QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
+          ARCH: ${{ matrix.ARCH }}
           DEVCONTAINER_RUN_CMD: ${{ steps.devcontainer-ci.outputs.runCmdOutput }}
         run: |
           echo "::group::Quarto Check"
@@ -140,7 +121,7 @@ jobs:
           echo "::endgroup::"
 
           (
-            echo "## Quarto Check Results: ${QUARTO_VERSION}"
+            echo "## Quarto Check Results: ${QUARTO_VERSION} (${ARCH})"
             echo "<details><summary>Quarto Check Results</summary>"
             echo ""
             echo '```txt'
@@ -161,9 +142,72 @@ jobs:
       - name: Upload quarto check output
         uses: actions/upload-artifact@v7
         with:
-          name: quarto-check-${{ matrix.QUARTO_VERSION }}
+          name: quarto-check-${{ matrix.QUARTO_VERSION }}-${{ matrix.ARCH }}
           path: /tmp/quarto-check-outputs/${{ matrix.QUARTO_VERSION }}.txt
           retention-days: 1
+
+  merge:
+    runs-on: ubuntu-latest
+    name: Merge - Quarto ${{ matrix.QUARTO_VERSION }} manifests
+
+    needs:
+      - "build"
+
+    if: >-
+      github.event_name == 'release' ||
+        github.event_name == 'workflow_dispatch' ||
+        github.event_name == 'schedule'
+
+    strategy:
+      matrix:
+        include:
+          - QUARTO_VERSION: release
+            IMAGE_TAG_BASE: release,release-noble,latest
+          - QUARTO_VERSION: prerelease
+            IMAGE_TAG_BASE: prerelease,prerelease-noble
+
+    steps:
+      - name: Setup Docker buildx
+        uses: docker/setup-buildx-action@v4
+        with:
+          use: true
+
+      - name: Login to Docker registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Combine per-architecture images into multi-architecture tags
+        env:
+          BASE_TAGS: ${{ matrix.IMAGE_TAG_BASE }}
+          QUARTO_VERSION: ${{ matrix.QUARTO_VERSION }}
+        run: |
+          BUILD_ID=$(date -u +%Y%m%d%H%M)
+          IMAGE="ghcr.io/${GITHUB_REPOSITORY}"
+
+          echo "::group::Manifest tags for ${QUARTO_VERSION}"
+          echo "Build ID: ${BUILD_ID}"
+          echo "Base tags: ${BASE_TAGS}"
+
+          # Every base tag also gets a build metadata variant, except 'latest'
+          IFS=',' read -ra TAG_ARRAY <<< "${BASE_TAGS}"
+          TAG_ARGS=()
+          for tag in "${TAG_ARRAY[@]}"; do
+            TAG_ARGS+=(--tag "${IMAGE}:${tag}")
+            if [[ "${tag}" != "latest" ]]; then
+              TAG_ARGS+=(--tag "${IMAGE}:${tag}-${BUILD_ID}")
+            fi
+          done
+          echo "All tags: ${TAG_ARGS[*]}"
+          echo "::endgroup::"
+
+          docker buildx imagetools create "${TAG_ARGS[@]}" \
+            "${IMAGE}:${QUARTO_VERSION}-amd64" \
+            "${IMAGE}:${QUARTO_VERSION}-arm64"
+
+          docker buildx imagetools inspect "${IMAGE}:${QUARTO_VERSION}"
 
   update-readme:
     runs-on: ubuntu-latest
@@ -285,9 +329,9 @@ jobs:
             echo "Updated ${version} section in README.md"
           }
 
-          # Update both release and prerelease sections
-          update_readme_section "release" "/tmp/quarto-check-outputs/quarto-check-release/release.txt" "${BUILD_URL}"
-          update_readme_section "prerelease" "/tmp/quarto-check-outputs/quarto-check-prerelease/prerelease.txt" "${BUILD_URL}"
+          # Update both release and prerelease sections from the amd64 builds
+          update_readme_section "release" "/tmp/quarto-check-outputs/quarto-check-release-amd64/release.txt" "${BUILD_URL}"
+          update_readme_section "prerelease" "/tmp/quarto-check-outputs/quarto-check-prerelease-amd64/prerelease.txt" "${BUILD_URL}"
 
       - name: Commit and push changes
         env:
@@ -318,14 +362,14 @@ jobs:
     name: Build - Quarto ${{ matrix.QUARTO_VERSION }}
 
     needs:
-      - "build"
+      - "merge"
       - "update-readme"
 
     if: >-
       (github.event_name == 'release' ||
         github.event_name == 'workflow_dispatch' ||
         github.event_name == 'schedule') &&
-      always() && needs.build.result == 'success' && needs.update-readme.result
+      always() && needs.merge.result == 'success' && needs.update-readme.result
       == 'success'
 
     strategy:
@@ -346,10 +390,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - name: Set up QEMU for multi-architecture builds
-        uses: docker/setup-qemu-action@v4
-
-      - name: Setup Docker buildx for multi-architecture builds
+      - name: Setup Docker buildx
         uses: docker/setup-buildx-action@v4
         with:
           use: true
