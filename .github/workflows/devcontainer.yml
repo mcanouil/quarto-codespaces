@@ -225,6 +225,9 @@ jobs:
     permissions:
       contents: write
 
+    env:
+      TARGET_FILE: docs/reference/quarto-check.qmd
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -265,12 +268,19 @@ jobs:
         env:
           BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{
             github.run_id }}
-          TARGET_FILE: docs/reference/quarto-check.qmd
         run: |
           update_docs_section() {
             local version=$1
             local output_file=$2
             local build_url=$3
+
+            # An empty transcript would be committed as an empty code block, so
+            # fail loudly when the artifact is missing rather than silently
+            # publishing a blank section.
+            if [ ! -s "${output_file}" ]; then
+              echo "::error::Missing or empty quarto check output: ${output_file}"
+              return 1
+            fi
 
             # Normalise version for marker tags
             local version_upper
@@ -352,7 +362,6 @@ jobs:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           BRANCH: "ci/update-quarto-check-docs"
           COMMIT: "ci: update quarto check outputs in documentation"
-          TARGET_FILE: docs/reference/quarto-check.qmd
         run: |
           if git show-ref --quiet refs/heads/${BRANCH}; then
             echo "Branch ${BRANCH} already exists."
