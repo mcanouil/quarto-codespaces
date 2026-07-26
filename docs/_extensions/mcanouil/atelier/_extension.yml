@@ -1,8 +1,8 @@
 title: Atelier
 author: Mickaël Canouil
-version: 0.5.0
+version: 0.6.0
 quarto-required: '>=1.9.36'
-source: mcanouil/quarto-atelier@0.5.0
+source: mcanouil/quarto-atelier@0.6.0
 source-type: github
 contributes:
   formats:
@@ -14,6 +14,7 @@ contributes:
       code-link: false
     html:
       respect-user-color-scheme: true
+      canonical-url: true
       theme:
         light:
           - brand
