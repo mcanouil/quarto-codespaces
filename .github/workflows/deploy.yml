@@ -1,0 +1,69 @@
+name: "Deploy: Documentation"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "docs/**"
+      - ".github/workflows/deploy.yml"
+  release:
+    types: [ published ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy - Documentation website
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Setup Git user
+        uses: mcanouil/quarto-workflows/.github/actions/setup-git-user@main
+        id: setup-git-user
+        with:
+          gh-app-id: ${{ vars.APP_ID }}
+          app-key: ${{ secrets.APP_KEY }}
+          gh-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          token: ${{ steps.setup-git-user.outputs.token }}
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: release
+          tinytex: false
+
+      - name: Render website
+        working-directory: ./docs
+        run: quarto render .
+
+      - name: Prepare site for deployment
+        run: touch docs/_site/.nojekyll
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v6
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: "./docs/_site"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
