@@ -61,7 +61,7 @@
     },
     "./chrome": {},
     "./decktape": {
-      "node": "22"
+      "version": "22"
     },
     "./tinytex": {},
     "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {

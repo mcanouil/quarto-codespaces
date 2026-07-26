@@ -4,7 +4,7 @@
   "name": "decktape",
   "description": "Install decktape, a tool for generating PDFs from web pages.",
   "options": {
-    "node": {
+    "version": {
       "default": "22",
       "description": "Select the Node version to install.",
       "proposals": ["22"],
