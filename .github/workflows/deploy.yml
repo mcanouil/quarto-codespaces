@@ -74,6 +74,13 @@ jobs:
 
     if: github.event_name != 'pull_request'
 
+    # A release runs against refs/tags/<version> while the transcript commit
+    # runs against refs/heads/main, so the workflow-level group does not keep
+    # the two apart. Serialise the deployment itself on a fixed group instead.
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
