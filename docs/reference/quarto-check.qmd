@@ -72,13 +72,14 @@ Quarto 1.10.18
 [✓] Checking Jupyter engine render....OK
 
 (|) Checking Julia installation...[✓] Checking Julia installation...
+
 ```
 
 <!-- QUARTO_CHECK_RELEASE_END -->
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
 
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/30205279001)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/30213389883)
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
@@ -137,13 +138,14 @@ Quarto 1.11.0
 [✓] Checking Jupyter engine render....OK
 
 (|) Checking Julia installation...[✓] Checking Julia installation...
+
 ```
 
 <!-- QUARTO_CHECK_PRERELEASE_END -->
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
 
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/30205279001)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/30213389883)
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
