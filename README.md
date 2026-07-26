@@ -138,22 +138,21 @@ The following outputs show the `quarto check` results from the latest builds of 
 
 <!-- QUARTO_CHECK_RELEASE_START -->
 ```txt
-Quarto 1.9.38
+Quarto 1.10.18
 [✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
 [✓] Checking versions of quarto binary dependencies...
-      Pandoc version 3.8.3: OK
-      Dart Sass version 1.87.0: OK
-      Deno version 2.4.5: OK
-      Typst version 0.14.2: OK
+      Pandoc version 3.10.0: OK
+      Dart Sass version 1.101.0: OK
+      Deno version 2.7.14: OK
+      Typst version 0.15.1: OK
 [✓] Checking versions of quarto dependencies......OK
 [✓] Checking Quarto installation......OK
-      Version: 1.9.38
+      Version: 1.10.18
       Path: /opt/quarto/bin
 
 (|) Checking tools....................[✓] Checking tools....................OK
       TinyTeX: (external install)
-      Chromium: (not installed)
       Chrome Headless Shell: (not installed)
       VeraPDF: (not installed)
 
@@ -194,7 +193,7 @@ Quarto 1.9.38
 <!-- QUARTO_CHECK_RELEASE_END -->
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/29679591385)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/30194596997)
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
 </details>
@@ -204,17 +203,17 @@ Quarto 1.9.38
 
 <!-- QUARTO_CHECK_PRERELEASE_START -->
 ```txt
-Quarto 1.10.15
+Quarto 1.11.0
 [✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
 [✓] Checking versions of quarto binary dependencies...
-      Pandoc version 3.8.3: OK
-      Dart Sass version 1.87.0: OK
+      Pandoc version 3.10.0: OK
+      Dart Sass version 1.101.0: OK
       Deno version 2.7.14: OK
-      Typst version 0.14.2: OK
+      Typst version 0.15.1: OK
 [✓] Checking versions of quarto dependencies......OK
 [✓] Checking Quarto installation......OK
-      Version: 1.10.15
+      Version: 1.11.0
       Path: /opt/quarto/bin
 
 (|) Checking tools....................[✓] Checking tools....................OK
@@ -259,7 +258,7 @@ Quarto 1.10.15
 <!-- QUARTO_CHECK_PRERELEASE_END -->
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/29679591385)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/30194596997)
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
 </details>
