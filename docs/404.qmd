@@ -3,6 +3,7 @@ title: "Page not found"
 description: "This page does not exist or has moved."
 toc: false
 sidebar: false
+canonical-url: false
 ---
 
 ::: {.atelier-404}
