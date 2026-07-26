@@ -8,6 +8,10 @@ on:
     paths:
       - "docs/**"
       - ".github/workflows/deploy.yml"
+  pull_request:
+    paths:
+      - "docs/**"
+      - ".github/workflows/deploy.yml"
   release:
     types: [ published ]
 
@@ -17,24 +21,22 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    name: Deploy - Documentation website
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    name: Build - Documentation website
 
     steps:
       - name: Setup Git user
         uses: mcanouil/quarto-workflows/.github/actions/setup-git-user@main
         id: setup-git-user
         with:
-          gh-app-id: ${{ vars.APP_ID }}
+          # Pull requests from forks cannot read the app key, so fall back to
+          # the workflow token there; nothing is pushed from this workflow.
+          gh-app-id: ${{ github.event_name != 'pull_request' && vars.APP_ID || '' }}
           app-key: ${{ secrets.APP_KEY }}
           gh-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -53,17 +55,30 @@ jobs:
         working-directory: ./docs
         run: quarto render .
 
-      - name: Prepare site for deployment
-        run: touch docs/_site/.nojekyll
-
       - name: Configure GitHub Pages
+        if: github.event_name != 'pull_request'
         uses: actions/configure-pages@v6
 
       - name: Upload Pages artifact
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v5
         with:
           path: "./docs/_site"
 
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy - Documentation website
+
+    needs:
+      - "build"
+
+    if: github.event_name != 'pull_request'
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5

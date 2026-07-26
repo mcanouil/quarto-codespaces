@@ -225,6 +225,9 @@ jobs:
     permissions:
       contents: write
 
+    env:
+      TARGET_FILE: docs/reference/quarto-check.qmd
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -265,12 +268,19 @@ jobs:
         env:
           BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{
             github.run_id }}
-          TARGET_FILE: docs/reference/quarto-check.qmd
         run: |
           update_docs_section() {
             local version=$1
             local output_file=$2
             local build_url=$3
+
+            # An empty transcript would be committed as an empty code block, so
+            # fail loudly when the artifact is missing rather than silently
+            # publishing a blank section.
+            if [ ! -s "${output_file}" ]; then
+              echo "::error::Missing or empty quarto check output: ${output_file}"
+              return 1
+            fi
 
             # Normalise version for marker tags
             local version_upper
@@ -286,16 +296,19 @@ jobs:
             local temp_file
             temp_file=$(mktemp)
 
-            # Update quarto check output section. The transcript is read from
-            # the file inside awk rather than passed with -v, because a
-            # multi-line -v value is not portable across awk variants. The
-            # blank lines around the injected block are required: without them
+            # Replace both marked sections in a single pass. The transcript is
+            # read from the file inside awk rather than passed with -v, because
+            # a multi-line -v value is not portable across awk variants. The
+            # blank lines around each injected block are required: without them
             # Pandoc reads the code fence as part of the HTML comment block.
-            awk -v start="${output_start}" \
-                -v end="${output_end}" \
-                -v outfile="${output_file}" '
+            awk -v output_start="${output_start}" \
+                -v output_end="${output_end}" \
+                -v url_start="${url_start}" \
+                -v url_end="${url_end}" \
+                -v outfile="${output_file}" \
+                -v url="${build_url}" '
               BEGIN { in_block=0 }
-              index($0, start) {
+              index($0, output_start) {
                 print $0
                 print ""
                 print "```txt"
@@ -309,20 +322,7 @@ jobs:
                 in_block=1
                 next
               }
-              index($0, end) {
-                print $0
-                in_block=0
-                next
-              }
-              !in_block { print }
-            ' "${TARGET_FILE}" > "${temp_file}"
-
-            # Update build URL section
-            awk -v start="${url_start}" \
-                -v end="${url_end}" \
-                -v url="${build_url}" '
-              BEGIN { in_block=0 }
-              index($0, start) {
+              index($0, url_start) {
                 print $0
                 print ""
                 print "[View build log](" url ")"
@@ -330,15 +330,15 @@ jobs:
                 in_block=1
                 next
               }
-              index($0, end) {
+              index($0, output_end) || index($0, url_end) {
                 print $0
                 in_block=0
                 next
               }
               !in_block { print }
-            ' "${temp_file}" > "${TARGET_FILE}"
+            ' "${TARGET_FILE}" > "${temp_file}"
 
-            rm -f "${temp_file}"
+            mv "${temp_file}" "${TARGET_FILE}"
 
             echo "Updated ${version} section in ${TARGET_FILE}"
           }
@@ -352,7 +352,6 @@ jobs:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
           BRANCH: "ci/update-quarto-check-docs"
           COMMIT: "ci: update quarto check outputs in documentation"
-          TARGET_FILE: docs/reference/quarto-check.qmd
         run: |
           if git show-ref --quiet refs/heads/${BRANCH}; then
             echo "Branch ${BRANCH} already exists."
@@ -371,10 +370,9 @@ jobs:
           sleep 2
           gh pr merge --auto --squash --delete-branch
 
-  build-versions:
+  list-versions:
     runs-on: ubuntu-latest
-
-    name: Build - Quarto ${{ matrix.QUARTO_VERSION }}
+    name: List - Version-pinned configurations
 
     needs:
       - "merge"
@@ -387,21 +385,42 @@ jobs:
       always() && needs.merge.result == 'success' && needs.update-docs.result
       == 'success'
 
+    outputs:
+      versions: ${{ steps.versions.outputs.versions }}
+
+    steps:
+      - uses: actions/checkout@v7
+
+      # Derive the matrix from the repository so that adding a
+      # .devcontainer/quarto-<version>/ directory is the only step needed to
+      # build a new version.
+      - name: Collect version-pinned configurations
+        id: versions
+        run: |
+          VERSIONS=$(find .devcontainer -mindepth 1 -maxdepth 1 -type d -name 'quarto-[0-9]*' \
+            -exec basename {} \; | sed 's/^quarto-//' | sort -V | jq -R . | jq -sc .)
+
+          if [ "${VERSIONS}" = "[]" ]; then
+            echo "::error::No version-pinned configurations found under .devcontainer/"
+            exit 1
+          fi
+
+          echo "Versions: ${VERSIONS}"
+          echo "versions=${VERSIONS}" >> "${GITHUB_OUTPUT}"
+
+  build-versions:
+    runs-on: ubuntu-latest
+
+    name: Build - Quarto ${{ matrix.QUARTO_VERSION }}
+
+    needs:
+      - "list-versions"
+
     strategy:
       matrix:
         PLATFORM:
           - "linux/amd64"
-        QUARTO_VERSION:
-          - "1.0"
-          - "1.1"
-          - "1.2"
-          - "1.3"
-          - "1.4"
-          - "1.5"
-          - "1.6"
-          - "1.7"
-          - "1.8"
-          - "1.9"
+        QUARTO_VERSION: ${{ fromJSON(needs.list-versions.outputs.versions) }}
     steps:
       - uses: actions/checkout@v7
 

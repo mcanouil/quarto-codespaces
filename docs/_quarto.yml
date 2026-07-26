@@ -50,6 +50,7 @@ format:
         - assets/stylesheets/theme.scss
 
 filters:
+  - assets/filters/devcontainer-configurations.lua
   - at: post-quarto
     path: gitlink
 

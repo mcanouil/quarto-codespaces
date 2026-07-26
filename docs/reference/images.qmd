@@ -18,8 +18,8 @@ docker pull ghcr.io/mcanouil/quarto-codespaces:latest
 | `latest` | stable release | `amd64`, `arm64` |
 | `release`, `release-noble` | stable release | `amd64`, `arm64` |
 | `prerelease`, `prerelease-noble` | prerelease | `amd64`, `arm64` |
-| `1.0` … `1.9` | that minor version | `amd64` |
-| `1.0-noble` … `1.9-noble` | that minor version | `amd64` |
+| []{.version-range} | that minor version | `amd64` |
+| []{.version-range suffix="-noble"} | that minor version | `amd64` |
 | `release-<build>`, `prerelease-<build>`, `<version>-<build>` | as above, pinned | as above |
 
 :::
@@ -44,7 +44,7 @@ Use `latest` to always get the current stable toolchain, and a build-metadata ta
 `release` and `prerelease` are built on native runners, `ubuntu-latest` for `linux/amd64` and `ubuntu-24.04-arm` for `linux/arm64`, then combined into a multi-architecture manifest.
 Docker picks the right one automatically, so Apple Silicon and ARM servers run natively.
 
-The version-pinned images (`1.0` through `1.9`) are `linux/amd64` only.
+The version-pinned images ([]{.version-range}) are `linux/amd64` only.
 They still run on ARM hosts through emulation, more slowly.
 
 ## Build schedule
