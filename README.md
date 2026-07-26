@@ -26,7 +26,7 @@ docker pull ghcr.io/mcanouil/quarto-codespaces:latest
 | `latest` | stable release | `amd64`, `arm64` |
 | `release`, `release-noble` | stable release | `amd64`, `arm64` |
 | `prerelease`, `prerelease-noble` | prerelease | `amd64`, `arm64` |
-| `1.0` … `1.9`, `1.0-noble` … `1.9-noble` | that minor version | `amd64` |
+| one per Quarto minor version, with a `-noble` variant | that minor version | `amd64` |
 | any tag with a `-<YYYYMMDDHHMM>` suffix | as above, pinned to one build | as above |
 
 Images are rebuilt every Sunday and scanned with [Trivy](https://trivy.dev/).
@@ -47,7 +47,7 @@ Full tag list: [`ghcr.io/mcanouil/quarto-codespaces`](https://github.com/mcanoui
 }
 ```
 
-Configurations for the Quarto prerelease and for every minor version from `1.0` to `1.9` are in [`.devcontainer/`](.devcontainer).
+Configurations for the Quarto prerelease and for every supported Quarto minor version are in [`.devcontainer/`](.devcontainer), and listed on the [configurations](https://m.canouil.dev/quarto-codespaces/reference/configurations.html) page.
 Click **Use this template** to start your own repository from this one.
 
 ## Documentation

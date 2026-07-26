@@ -17,7 +17,7 @@ The default configuration is `.devcontainer/devcontainer.json`, which pulls the 
 
 ## Choose a different configuration
 
-The repository provides configurations for the universal base image, the Quarto prerelease, and each Quarto minor version from `1.0` to `1.9`.
+The repository provides configurations for the universal base image, the Quarto prerelease, and every Quarto minor version, []{.version-range}.
 They are listed in full on the [configurations](../reference/configurations.qmd) page.
 
 ### From a URL
