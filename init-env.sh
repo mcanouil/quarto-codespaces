@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -euo pipefail
+
 show_help() {
   echo "Usage: $0 [--what/-w all|r|python|julia] [--force/-f] [--help/-h]"
   echo "  --what/-w: Specify what to initialise (default: all)."
@@ -13,10 +15,10 @@ show_help() {
 
 initialise_r() {
   local deps=$1
-  deps=$(echo "${deps}" | sed 's/,/","/g')
+  deps=${deps//,/\",\"}
   if [ "${FORCE}" = true ] || [ ! -f "renv.lock" ]; then
     if [ -f ".Rprofile" ] && grep -q 'source("renv/activate.R")' .Rprofile; then
-      sed -i '' '/source("renv\/activate.R")/d' .Rprofile
+      sed -i.bak '/source("renv\/activate.R")/d' .Rprofile && rm -f .Rprofile.bak
     fi
     Rscript -e 'renv::init(bare = FALSE)'
     Rscript -e "renv::install(c('${deps}'))"
@@ -24,24 +26,15 @@ initialise_r() {
   fi
 }
 
-initialise_python() {
-  local deps=$1
-  deps=$(echo "${deps}" | sed 's/,/ /g')
-  if [ "${FORCE}" = true ] || [ ! -f "requirements.txt" ]; then
-    python3 -m venv .venv
-    source .venv/bin/activate
-    python3 -m pip install ${deps}
-    python3 -m pip freeze > requirements.txt
-  fi
-}
-
 initialise_uv() {
   local deps=$1
-  deps=$(echo "${deps}" | sed 's/,/ /g')
+  deps=${deps//,/ }
   if [ "${FORCE}" = true ] || [ ! -f "uv.lock" ]; then
     uv init --no-package --vcs none --bare --no-readme --author-from none
     uv venv
+    # shellcheck disable=SC1091
     source .venv/bin/activate
+    # shellcheck disable=SC2086
     uv add ${deps}
     uv sync
   fi
@@ -49,7 +42,7 @@ initialise_uv() {
 
 initialise_julia() {
   local deps=$1
-  deps=$(echo "${deps}" | sed 's/,/","/g')
+  deps=${deps//,/\",\"}
   if [ "${FORCE}" = true ] || [ ! -f "Project.toml" ]; then
     julia -e 'using Pkg; Pkg.activate("."); Pkg.instantiate()'
     julia --project=. -e "using Pkg; Pkg.add([\"${deps}\"])"
@@ -61,14 +54,14 @@ FORCE=false
 
 while [[ "$#" -gt 0 ]]; do
   case $1 in
-    --what|-w)
+    --what | -w)
       WHAT="$2"
       shift
       ;;
-    --force|-f)
+    --force | -f)
       FORCE=true
       ;;
-    --help|-h)
+    --help | -h)
       show_help
       exit 0
       ;;
