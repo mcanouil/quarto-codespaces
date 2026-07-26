@@ -46,4 +46,4 @@ There is no maskable icon: this is a documentation site, not an installable appl
 ## After a change
 
 Regenerate the rasters, then regenerate the social card, which embeds `icon-512.png`.
-See the header of `../social/og-image.typ`.
+See the header of `../social/og-image.typ`, which is how this site's card happens to be built rather than a prescribed approach.

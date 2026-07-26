@@ -1,4 +1,11 @@
-// Social preview card, 1200x630, rendered to og-image.png from `docs/` with:
+// Social preview card for this site, 1200x630.
+//
+// This is one way to produce a card, not a house style or a template to copy.
+// It is committed so that this site's own card can be regenerated from source
+// rather than being an orphaned binary; anything that emits a 1200x630 PNG
+// would do just as well.
+//
+// Rendered to og-image.png from `docs/` with:
 //
 //   typst compile --root . --format png --ppi 72 \
 //     assets/social/og-image.typ assets/social/og-image.png
