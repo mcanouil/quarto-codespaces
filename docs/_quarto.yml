@@ -33,20 +33,20 @@ metadata-files:
 
 brand: _brand.yml
 
+# The `atelier` project type sets `format: atelier-html`. Declaring `html`
+# here would replace that format rather than configure it, silently dropping
+# the accessibility scripts, `lang: en-GB`, the colour-scheme handling, and
+# the extension stylesheet. The theme lists below extend the format's own,
+# which is why the project layer wins the cascade. They are written out twice
+# rather than shared through a YAML anchor, which the schema check rejects.
 format:
-  html:
-    # A project `theme` replaces the one contributed by the `atelier` project
-    # type rather than extending it, so the extension stylesheet is listed
-    # explicitly before the project layer. The two lists are written out
-    # rather than shared through a YAML anchor, which the schema check rejects.
+  atelier-html:
     theme:
       light:
         - brand
-        - _extensions/mcanouil/atelier/html/theme.scss
         - assets/stylesheets/theme.scss
       dark:
         - brand
-        - _extensions/mcanouil/atelier/html/theme.scss
         - assets/stylesheets/theme.scss
 
 filters:
