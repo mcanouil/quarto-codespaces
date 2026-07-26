@@ -1,22 +1,30 @@
---[[
-Generate the configuration reference from the repository itself.
+--- @module devcontainer-configurations
+--- @license MIT
+--- @copyright 2026 Mickaël Canouil
+--- @author Mickaël Canouil
+---
+--- Generate the configuration reference from the repository itself.
+---
+--- The `.devcontainer/` directory gains a new `quarto-<version>`
+--- configuration every time Quarto releases a minor version, and every place
+--- that lists those versions by hand drifts the moment one is added. This
+--- filter reads the directory at render time and fills in:
+---
+---   - `::: {#devcontainer-configurations}`, replaced by the configuration
+---     table;
+---   - `[]{.version-range}`, replaced by "`<first>` … `<last>`";
+---   - `[]{.version-latest}`, replaced by the highest version.
+---
+--- Both spans accept a `suffix` attribute, appended inside the code spans, so
+--- `[]{.version-range suffix="-noble"}` renders "`1.0-noble` … `1.10-noble`".
 
-The `.devcontainer/` directory gains a new `quarto-<version>` configuration
-every time Quarto releases a minor version, and every place that lists those
-versions by hand drifts the moment one is added. This filter reads the
-directory at render time and fills in:
-
-  - `::: {#devcontainer-configurations}`, replaced by the configuration table;
-  - `[]{.version-range}`, replaced by "`<first>` … `<last>`";
-  - `[]{.version-latest}`, replaced by the highest version.
-
-Both spans accept a `suffix` attribute, appended inside the code spans, so
-`[]{.version-range suffix="-noble"}` renders "`1.0-noble` … `1.10-noble`".
-]]
-
+--- @type string The image referenced by every shipped configuration
 local IMAGE = "`quarto-codespaces:latest`"
 
 --- Compare two dotted version strings numerically, so 1.10 sorts after 1.9.
+--- @param a string The left version, as `<major>.<minor>`
+--- @param b string The right version, as `<major>.<minor>`
+--- @return boolean
 local function version_less_than(a, b)
   local a_major, a_minor = a:match("^(%d+)%.(%d+)$")
   local b_major, b_minor = b:match("^(%d+)%.(%d+)$")

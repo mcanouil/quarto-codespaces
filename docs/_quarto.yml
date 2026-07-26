@@ -6,12 +6,29 @@ project:
     - reference/
     - contributing.qmd
     - 404.qmd
+  # Quarto copies nothing to the output directory by convention: only these
+  # globs, plus files it finds behind an `href` or `src` in the rendered HTML.
+  # The manifest names its icons in JSON, which is not scanned, so they are
+  # listed here.
+  resources:
+    - favicon.ico
+    - site.webmanifest
+    - assets/icons/*.png
+    - assets/social/og-image.png
 
 website:
   title: "Quarto Codespaces"
   description: "GitHub Codespaces and Dev Containers with Quarto, R, Python, and Julia, ready to render."
-  site-url: "https://m.canouil.dev/quarto-codespaces"
+  site-url: &site-url "https://m.canouil.dev/quarto-codespaces"
   repo-url: https://github.com/mcanouil/quarto-codespaces
+  favicon: favicon.ico
+  # The leading slash marks a project-relative path, which Quarto turns into
+  # `<site-url>/assets/social/og-image.png` and measures to fill the image
+  # width and height tags. The card inherits into both Open Graph and the
+  # Twitter card, which atelier switches on; no `creator` or `site` handles,
+  # since there is no X account to name.
+  image: /assets/social/og-image.png
+  image-alt: "The Quarto Codespaces mark, a document outline with an amber chevron, beside the title Quarto Codespaces on a dark navy background."
   page-footer:
     right: |
       Licence: [MIT](https://github.com/mcanouil/quarto-codespaces?tab=MIT-1-ov-file#readme).
@@ -55,6 +72,18 @@ filters:
     path: gitlink
 
 extensions:
+  atelier:
+    # Quarto keeps the `website` block out of the metadata it hands to Lua
+    # filters, so atelier's social-metadata filter cannot read
+    # `website.site-url` to build the canonical URL. The anchor above
+    # republishes the same scalar here, without a second copy of the string.
+    site-url: *site-url
+    icon: assets/icons/icon.svg
+    apple-touch-icon: assets/icons/apple-touch-icon.png
+    manifest: site.webmanifest
+    theme-color:
+      light: "#F5F7FA"
+      dark: "#0B1220"
   gitlink:
     # Widget only: the platform and repository come from `website.repo-url`,
     # and in-text reference rewriting stays off.

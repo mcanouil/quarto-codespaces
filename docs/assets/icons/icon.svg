@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-labelledby="quarto-codespaces-icon-title">
+  <title id="quarto-codespaces-icon-title">Quarto Codespaces</title>
+  <style>
+    /* Colours come from _brand.yml: ink and amber-deep in the light scheme,
+       mist and amber in the dark one, matching the brand primary mapping. The
+       page outline is hollow so the chevron reads against the page background
+       rather than against a fill. */
+    .page { stroke: #16202E; }
+    .caret { stroke: #A25E0C; }
+
+    @media (prefers-color-scheme: dark) {
+      .page { stroke: #DCE3EC; }
+      .caret { stroke: #E8A33D; }
+    }
+  </style>
+  <path class="page" d="M5.5 3.5h14l7 7v18h-21Z" fill="none" stroke-width="3" stroke-linejoin="round"/>
+  <path class="caret" d="m13 10 6 6-6 6" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

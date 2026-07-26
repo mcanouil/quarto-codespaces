@@ -1,0 +1,15 @@
+/* Force the dark-scheme colours when rasterising icon.svg.
+
+   librsvg does not evaluate `prefers-color-scheme`, so it would render the
+   light variant, an ink outline that disappears once flattened onto the
+   midnight background the PNG and ICO files use. `rsvg-convert --stylesheet`
+   applies this as a user stylesheet, hence `!important` to beat the author
+   rules inside the SVG. */
+
+.page {
+  stroke: #DCE3EC !important;
+}
+
+.caret {
+  stroke: #E8A33D !important;
+}
