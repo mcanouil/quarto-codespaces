@@ -148,33 +148,6 @@ jobs:
           path: /tmp/quarto-check-outputs/${{ matrix.QUARTO_VERSION }}.txt
           retention-days: 1
 
-  # Keeps the "Build - Quarto release" and "Build - Quarto prerelease" status
-  # checks required by the repository ruleset, now that the build job names
-  # carry an architecture suffix. It reports on the whole build matrix, so a
-  # failure in either architecture of either version fails both checks.
-  build-status:
-    runs-on: ubuntu-latest
-    name: Build - Quarto ${{ matrix.QUARTO_VERSION }}
-
-    needs:
-      - "build"
-
-    if: always()
-
-    strategy:
-      matrix:
-        QUARTO_VERSION:
-          - release
-          - prerelease
-
-    steps:
-      - name: Report architecture build results
-        env:
-          BUILD_RESULT: ${{ needs.build.result }}
-        run: |
-          echo "Architecture builds: ${BUILD_RESULT}"
-          [ "${BUILD_RESULT}" = "success" ]
-
   merge:
     runs-on: ubuntu-latest
     name: Merge - Quarto ${{ matrix.QUARTO_VERSION }} manifests
