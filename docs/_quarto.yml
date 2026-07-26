@@ -6,12 +6,33 @@ project:
     - reference/
     - contributing.qmd
     - 404.qmd
+  # Quarto copies nothing to the output directory by convention: only these
+  # globs, plus files it finds behind an `href` or `src` in the rendered HTML.
+  # The manifest names its icons in JSON, which is not scanned, so they are
+  # listed here.
+  resources:
+    - favicon.ico
+    - site.webmanifest
+    - assets/icons/*.png
+    - assets/social/og-image.png
 
 website:
   title: "Quarto Codespaces"
   description: "GitHub Codespaces and Dev Containers with Quarto, R, Python, and Julia, ready to render."
-  site-url: "https://m.canouil.dev/quarto-codespaces"
+  site-url: &site-url "https://m.canouil.dev/quarto-codespaces"
   repo-url: https://github.com/mcanouil/quarto-codespaces
+  favicon: favicon.ico
+  # The leading slash marks a project-relative path, which Quarto turns into
+  # `<site-url>/assets/social/og-image.png` and measures to fill the image
+  # width and height tags. Setting `twitter-card` at all is what switches the
+  # Twitter provider on; it then inherits title, description, image, and image
+  # alt from each page. No `creator` or `site`: there is no X account to name.
+  image: /assets/social/og-image.png
+  image-alt: "The Quarto Codespaces mark, a document outline with an amber chevron, beside the title Quarto Codespaces on a dark navy background."
+  open-graph:
+    locale: en_GB
+  twitter-card:
+    card-style: summary_large_image
   page-footer:
     right: |
       Licence: [MIT](https://github.com/mcanouil/quarto-codespaces?tab=MIT-1-ov-file#readme).
@@ -30,6 +51,13 @@ website:
 metadata-files:
   - _sidebar-getting-started.yml
   - _sidebar-reference.yml
+
+# Quarto keeps the `website` block out of the metadata it hands to Lua filters,
+# so `assets/filters/social-metadata.lua` cannot read `website.site-url` to
+# build the canonical URL. The anchor above republishes the same scalar as
+# plain document metadata, which does reach the filter, without a second copy
+# of the string.
+site-url: *site-url
 
 brand: _brand.yml
 
@@ -51,6 +79,7 @@ format:
 
 filters:
   - assets/filters/devcontainer-configurations.lua
+  - assets/filters/social-metadata.lua
   - at: post-quarto
     path: gitlink
 

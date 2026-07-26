@@ -1,0 +1,22 @@
+{
+  "name": "Quarto Codespaces",
+  "short_name": "Codespaces",
+  "description": "GitHub Codespaces and Dev Containers with Quarto, R, Python, and Julia, ready to render.",
+  "lang": "en-GB",
+  "icons": [
+    {
+      "src": "/quarto-codespaces/assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/quarto-codespaces/assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#0B1220",
+  "background_color": "#0B1220",
+  "display": "standalone",
+  "start_url": "/quarto-codespaces/"
+}
