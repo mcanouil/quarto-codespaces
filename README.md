@@ -162,9 +162,8 @@ Quarto 1.10.18
       Version: 2026
 
 [✓] Checking Chrome Headless....................OK
-      Using: Chrome found on system
-      Path: /usr/bin/google-chrome
-      Source: PATH
+      Using: Chrome from QUARTO_CHROMIUM
+      Path: /usr/local/bin/chromium
 
 (|) Checking basic markdown render....[✓] Checking basic markdown render....OK
 
@@ -180,7 +179,7 @@ Quarto 1.10.18
 (|) Checking Knitr engine render......[✓] Checking Knitr engine render......OK
 
 (|) Checking Python 3 installation....[✓] Checking Python 3 installation....OK
-      Version: 3.13.9
+      Version: 3.14.6
       Path: /usr/local/python/current/bin/python3
       Jupyter: 5.9.1
       Kernels: julia-1.12, python3
@@ -193,7 +192,7 @@ Quarto 1.10.18
 <!-- QUARTO_CHECK_RELEASE_END -->
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/30194596997)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/30205279001)
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
 </details>
@@ -227,9 +226,8 @@ Quarto 1.11.0
       Version: 2026
 
 [✓] Checking Chrome Headless....................OK
-      Using: Chrome found on system
-      Path: /usr/bin/google-chrome
-      Source: PATH
+      Using: Chrome from QUARTO_CHROMIUM
+      Path: /usr/local/bin/chromium
 
 (|) Checking basic markdown render....[✓] Checking basic markdown render....OK
 
@@ -245,7 +243,7 @@ Quarto 1.11.0
 (|) Checking Knitr engine render......[✓] Checking Knitr engine render......OK
 
 (|) Checking Python 3 installation....[✓] Checking Python 3 installation....OK
-      Version: 3.13.9
+      Version: 3.14.6
       Path: /usr/local/python/current/bin/python3
       Jupyter: 5.9.1
       Kernels: julia-1.12, python3
@@ -258,7 +256,7 @@ Quarto 1.11.0
 <!-- QUARTO_CHECK_PRERELEASE_END -->
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/30194596997)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/30205279001)
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
 </details>
