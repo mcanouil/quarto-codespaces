@@ -79,7 +79,7 @@ Quarto 1.10.18
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
 
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/30213389883)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/30739678313)
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
@@ -88,7 +88,7 @@ Quarto 1.10.18
 <!-- QUARTO_CHECK_PRERELEASE_START -->
 
 ```txt
-Quarto 1.11.0
+Quarto 1.11.1
 [✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
 [✓] Checking versions of quarto binary dependencies...
@@ -98,7 +98,7 @@ Quarto 1.11.0
       Typst version 0.15.1: OK
 [✓] Checking versions of quarto dependencies......OK
 [✓] Checking Quarto installation......OK
-      Version: 1.11.0
+      Version: 1.11.1
       Path: /opt/quarto/bin
 
 (|) Checking tools....................[✓] Checking tools....................OK
@@ -145,7 +145,7 @@ Quarto 1.11.0
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
 
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/30213389883)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/30739678313)
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
