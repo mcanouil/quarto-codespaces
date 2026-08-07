@@ -34,12 +34,12 @@ website:
       Licence: [MIT](https://github.com/mcanouil/quarto-codespaces?tab=MIT-1-ov-file#readme).
   navbar:
     left:
-      - text: "{{< iconify octicon:rocket-16 aria-hidden=true >}} Getting started"
+      - text: "{{< iconify octicon:rocket-16 aria-hidden='true' >}} Getting started"
         href: getting-started/index.qmd
-      - text: "{{< iconify octicon:book-16 aria-hidden=true >}} Reference"
+      - text: "{{< iconify octicon:book-16 aria-hidden='true' >}} Reference"
         href: reference/index.qmd
     right:
-      - text: "{{< iconify octicon:git-pull-request-16 aria-hidden=true >}} Contributing"
+      - text: "{{< iconify octicon:git-pull-request-16 aria-hidden='true' >}} Contributing"
         href: contributing.qmd
       - href: "#gitlink-widget"
         aria-label: "GitHub"
