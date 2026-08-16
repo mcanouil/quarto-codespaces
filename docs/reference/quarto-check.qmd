@@ -35,7 +35,7 @@ Quarto 1.10.18
       Version: 1.10.18
       Path: /opt/quarto/bin
 
-[✓] Checking tools....................OK
+(|) Checking tools....................[✓] Checking tools....................OK
       TinyTeX: (external install)
       Chrome Headless Shell: (not installed)
       VeraPDF: (not installed)
@@ -62,7 +62,7 @@ Quarto 1.10.18
 
 (|) Checking Knitr engine render......[✓] Checking Knitr engine render......OK
 
-[✓] Checking Python 3 installation....OK
+(|) Checking Python 3 installation....[✓] Checking Python 3 installation....OK
       Version: 3.14.7
       Path: /usr/local/python/current/bin/python3
       Jupyter: 5.9.1
@@ -79,7 +79,7 @@ Quarto 1.10.18
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
 
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/31299971137)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/31930722466)
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
@@ -145,7 +145,7 @@ Quarto 1.11.1
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
 
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/31299971137)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/31930722466)
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
