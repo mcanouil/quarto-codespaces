@@ -21,6 +21,7 @@ website:
   description: "GitHub Codespaces and Dev Containers with Quarto, R, Python, and Julia, ready to render."
   site-url: &site-url "https://m.canouil.dev/quarto-codespaces"
   repo-url: https://github.com/mcanouil/quarto-codespaces
+  repo-subdir: docs
   favicon: favicon.ico
   # The leading slash marks a project-relative path, which Quarto turns into
   # `<site-url>/assets/social/og-image.png` and measures to fill the image
