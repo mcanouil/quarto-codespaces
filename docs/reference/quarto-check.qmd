@@ -57,7 +57,7 @@ Quarto 1.10.18
       LibPaths:
         - /home/vscode/R/x86_64-pc-linux-gnu-library/4.6
         - /opt/R/4.6.1/lib/R/library
-      knitr: 1.51
+      knitr: 1.52
       rmarkdown: 2.32
 
 (|) Checking Knitr engine render......[✓] Checking Knitr engine render......OK
@@ -66,7 +66,7 @@ Quarto 1.10.18
       Version: 3.14.7
       Path: /usr/local/python/current/bin/python3
       Jupyter: 5.9.1
-      Kernels: julia-1.12, python3
+      Kernels: julia-1.13, python3
 
 (|) Checking Jupyter engine render....[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
 [✓] Checking Jupyter engine render....OK
@@ -79,7 +79,7 @@ Quarto 1.10.18
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
 
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/34016153830)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/34742594841)
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
@@ -88,7 +88,7 @@ Quarto 1.10.18
 <!-- QUARTO_CHECK_PRERELEASE_START -->
 
 ```txt
-Quarto 1.11.3
+Quarto 1.11.4
 [✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
 [✓] Checking versions of quarto binary dependencies...
@@ -98,7 +98,7 @@ Quarto 1.11.3
       Typst version 0.15.1: OK
 [✓] Checking versions of quarto dependencies......OK
 [✓] Checking Quarto installation......OK
-      Version: 1.11.3
+      Version: 1.11.4
       Path: /opt/quarto/bin
 
 (|) Checking tools....................[✓] Checking tools....................OK
@@ -123,7 +123,7 @@ Quarto 1.11.3
       LibPaths:
         - /home/vscode/R/x86_64-pc-linux-gnu-library/4.6
         - /opt/R/4.6.1/lib/R/library
-      knitr: 1.51
+      knitr: 1.52
       rmarkdown: 2.32
 
 (|) Checking Knitr engine render......[✓] Checking Knitr engine render......OK
@@ -132,7 +132,7 @@ Quarto 1.11.3
       Version: 3.14.7
       Path: /usr/local/python/current/bin/python3
       Jupyter: 5.9.1
-      Kernels: julia-1.12, python3
+      Kernels: julia-1.13, python3
 
 (|) Checking Jupyter engine render....[IPKernelApp] WARNING | Kernel is running over TCP without encryption. All communication (including code and outputs) is sent in plain text and is susceptible to eavesdropping. Use IPC transport or launch with kernel manager-provisioned CurveZMQ keys to enable transport encryption.
 [✓] Checking Jupyter engine render....OK
@@ -145,7 +145,7 @@ Quarto 1.11.3
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
 
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/34016153830)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/34742594841)
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
