@@ -43,10 +43,9 @@ jobs:
         uses: actions/checkout@v7
         with:
           token: ${{ steps.setup-git-user.outputs.token }}
-          # Every tag, since the same-day suffix is resolved from the tags
-          # already cut.
+          # The whole history and every tag, since the same-day suffix is
+          # resolved from the tags already cut.
           fetch-depth: 0
-          fetch-tags: true
 
       # The first release of a day is the bare date; every further one carries
       # the count of releases cut that day, such as `2026.10.16-2`. An empty
@@ -111,7 +110,6 @@ jobs:
         uses: mcanouil/release-actions/notes@v1
         with:
           notes-file: ${{ steps.bump.outputs.notes-file }}
-          version: ${{ steps.bump.outputs.version }}
           tag: ${{ steps.bump.outputs.version }}
           target: ${{ steps.push.outputs.sha }}
           generate-notes: true
