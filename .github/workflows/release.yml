@@ -3,93 +3,153 @@ name: "Release: Create Release"
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+# Two runs at once would resolve the same version from the tags. Queue rather
+# than cancel: a cancelled run can leave the bump pushed while the release is
+# not.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
 jobs:
   release:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-      id-token: write
-      pull-requests: write
-
-    env:
-      BRANCH: ci/bump-version
+    timeout-minutes: 15
 
     steps:
+      - name: Refuse to release from anything but the default branch
+        if: ${{ github.ref_name != github.event.repository.default_branch }}
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          REF_NAME: ${{ github.ref_name }}
+        shell: bash
+        run: |
+          echo "::error::Releases are cut from ${DEFAULT_BRANCH}, not ${REF_NAME}."
+          exit 1
+
+      # The App only, with no fallback token: the default token cannot pass the
+      # pull request rule of the default branch, and a release it creates
+      # triggers neither the image build nor the documentation deploy.
+      - name: Setup Git User
+        uses: mcanouil/quarto-workflows/.github/actions/setup-git-user@v2
+        id: setup-git-user
+        with:
+          gh-app-id: ${{ vars.APP_ID }}
+          app-key: ${{ secrets.APP_KEY }}
+
       - name: Checkout repository
         uses: actions/checkout@v7
         with:
-          persist-credentials: true
-          fetch-tags: true
+          token: ${{ steps.setup-git-user.outputs.token }}
+          # The whole history and every tag, since the same-day suffix is
+          # resolved from the tags already cut.
           fetch-depth: 0
 
-      - name: Create GitHub App token
-        uses: actions/create-github-app-token@v3
-        id: app-token
+      # The first release of a day is the bare date; every further one carries
+      # the count of releases cut that day, such as `2026.10.16-2`. An empty
+      # Unreleased section in CHANGELOG.md stops the release here.
+      - name: Bump the version
+        id: bump
+        uses: mcanouil/release-actions/bump@v1
         with:
-          client-id: ${{ vars.APP_ID }}
-          private-key: ${{ secrets.APP_KEY }}
+          bump: calver
+          version-source: tag
+          targets: |
+            - file: CITATION.cff
+              pattern: '^version: {version}$'
+            - file: CITATION.cff
+              pattern: '^date-released: "{date}"$'
 
-      - name: Get GitHub App User ID
-        id: get-user-id
-        run: echo "user-id=$(gh api "/users/${{ steps.app-token.outputs.app-slug }}[bot]" --jq .id)" >> "$GITHUB_OUTPUT"
+      # The release step refuses an existing tag or release too, but only after
+      # the push, which would leave the bump on the default branch.
+      - name: Refuse an existing tag or release
         env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-
-      - name: Git Config
+          GH_TOKEN: ${{ steps.setup-git-user.outputs.token }}
+          VERSION: ${{ steps.bump.outputs.version }}
+        shell: bash
         run: |
-          git config --global user.name '${{ steps.app-token.outputs.app-slug }}[bot]'
-          git config --global user.email '${{ steps.get-user-id.outputs.user-id }}+${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com'
-
-      - name: Bump Version
-        id: bump-version
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-          COMMIT: "ci: bump version for release :rocket:"
-        run: |
-          if git show-ref --quiet refs/heads/${BRANCH}; then
-            echo "Branch ${BRANCH} already exists."
-            git branch -D "${BRANCH}"
-            git push origin --delete "${BRANCH}"
+          set -euo pipefail
+          STATUS=0
+          git ls-remote --exit-code --tags origin "refs/tags/${VERSION}" > /dev/null || STATUS=$?
+          case "${STATUS}" in
+            0) echo "::error::Tag ${VERSION} already exists. Delete it, or create its release by hand, then dispatch this workflow again."; exit 1 ;;
+            2) ;;
+            *) echo "::error::Could not list the tags of origin (git exit ${STATUS})."; exit 1 ;;
+          esac
+          if OUTPUT=$(gh release view "${VERSION}" 2>&1); then
+            echo "::error::A release ${VERSION} already exists, perhaps as a draft. Delete it, then dispatch this workflow again."
+            exit 1
+          fi
+          if ! grep -qi 'release not found' <<< "${OUTPUT}"; then
+            echo "::error::Could not check for release ${VERSION}: ${OUTPUT}"
+            exit 1
           fi
 
-          echo "$(git tag -l --sort=-v:refname | head -n 5)"
-
-          git checkout -b "${BRANCH}"
-
-          DATE=$(date +%Y-%m-%d)
-          BASE_VERSION=$(date +%Y.%m.%d)
-
-          SUFFIX=1
-          VERSION="${BASE_VERSION}"
-          while [ -n "$(git tag -l "${VERSION}")" ]; do
-            echo "Tag ${VERSION} already exists, incrementing suffix..."
-            SUFFIX=$((SUFFIX + 1))
-            VERSION="${BASE_VERSION}-${SUFFIX}"
-          done
-          echo "New version will be: ${VERSION}"
-          sed -i "s/^version:.*/version: ${VERSION}/" CITATION.cff
-          sed -i "s/^date-released:.*/date-released: \"${DATE}\"/" CITATION.cff
-
-          git add CITATION.cff || echo "No changes to add"
-          git commit -m "${COMMIT}" || echo "No changes to commit"
-          git push --force origin ${BRANCH} || echo "No changes to push"
-
-          sleep 5
-          gh pr create --fill-first --base "main" --head "${BRANCH}" --label "Type: CI/CD :robot:"
-          sleep 2
-          gh pr merge --auto --squash --delete-branch
-
-      - name: Update branch
-        run: |
-          git fetch --all
-          git checkout main
-          git pull origin main
-
-      - name: Release extension on GitHub
+      # The App is exempt from the pull request rule of the default branch, and
+      # [skip ci] keeps CI from running again on a tree it has checked.
+      - name: Push the version
+        id: push
         env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          VERSION: ${{ steps.bump.outputs.version }}
+          FILES: ${{ steps.bump.outputs.files }}
+        shell: bash
         run: |
-          DATE=$(grep "^date-released:" CITATION.cff | sed 's/date-released: //;s/"//g')
-          VERSION=$(grep "^version:" CITATION.cff | sed 's/version: //;s/"//g')
-          gh release create ${VERSION} --title ${DATE} --generate-notes
+          set -euo pipefail
+          printf '%s\n' "${FILES}" | git add --pathspec-from-file=-
+          git commit -m "ci: release ${VERSION} [skip ci]"
+          if ! git push origin "HEAD:refs/heads/${GITHUB_REF_NAME}"; then
+            echo "::error::The App could not push the bump to ${GITHUB_REF_NAME}. If the push output says the branch moved, dispatch this workflow again; otherwise add the App to the bypass list of the branch ruleset first."
+            exit 1
+          fi
+          echo "sha=$(git rev-parse HEAD)" >> "${GITHUB_OUTPUT}"
+
+      - name: Compose the release body
+        id: notes
+        uses: mcanouil/release-actions/notes@v1
+        with:
+          notes-file: ${{ steps.bump.outputs.notes-file }}
+          tag: ${{ steps.bump.outputs.version }}
+          target: ${{ steps.push.outputs.sha }}
+          generate-notes: true
+          token: ${{ steps.setup-git-user.outputs.token }}
+
+      # A further release of a day is titled with its count, such as
+      # `2026-10-16 (2)`.
+      - name: Resolve the release title
+        id: title
+        env:
+          VERSION: ${{ steps.bump.outputs.version }}
+          DATE: ${{ steps.bump.outputs.date }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          TITLE="${DATE}"
+          if [[ "${VERSION}" == *-* ]]; then
+            TITLE="${DATE} (${VERSION##*-})"
+          fi
+          echo "title=${TITLE}" >> "${GITHUB_OUTPUT}"
+
+      # Created as the App, so that the published release starts the image
+      # build and the documentation deploy.
+      - name: Release on GitHub
+        uses: mcanouil/release-actions/release@v1
+        with:
+          version: ${{ steps.bump.outputs.version }}
+          body-file: ${{ steps.notes.outputs.body-file }}
+          title: ${{ steps.title.outputs.title }}
+          target: ${{ steps.push.outputs.sha }}
+          latest: true
+          token: ${{ steps.setup-git-user.outputs.token }}
+
+      # A new dispatch would stop on the emptied Unreleased section, so the
+      # pushed bump has to go first.
+      - name: Explain the recovery
+        if: ${{ failure() && steps.push.outputs.sha != '' }}
+        env:
+          VERSION: ${{ steps.bump.outputs.version }}
+          SHA: ${{ steps.push.outputs.sha }}
+        shell: bash
+        run: |
+          echo "::error::${GITHUB_REF_NAME} holds the bump ${SHA} for ${VERSION}, but the release failed. Create release ${VERSION} on ${SHA} by hand, or revert that commit with a pull request and dispatch this workflow again."
