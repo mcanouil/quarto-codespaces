@@ -33,20 +33,9 @@ jobs:
     name: Build - Documentation website
 
     steps:
-      - name: Setup Git user
-        uses: mcanouil/quarto-workflows/.github/actions/setup-git-user@main
-        id: setup-git-user
-        with:
-          # Pull requests from forks cannot read the app key, so fall back to
-          # the workflow token there; nothing is pushed from this workflow.
-          gh-app-id: ${{ github.event_name != 'pull_request' && vars.APP_ID || '' }}
-          app-key: ${{ secrets.APP_KEY }}
-          gh-token: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Checkout repository
         uses: actions/checkout@v7
         with:
-          token: ${{ steps.setup-git-user.outputs.token }}
           # Publish the default branch whatever the trigger: a release runs
           # against its tag, which predates the quarto check transcripts that
           # land on the default branch afterwards. Pull requests keep the
