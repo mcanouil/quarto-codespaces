@@ -82,9 +82,9 @@ jobs:
         id: image_version
         run: |
           if [[ "${GITHUB_REF_TYPE}" == "tag" ]]; then
-            echo "VERSION=${GITHUB_REF_NAME}" >> ${GITHUB_OUTPUT}
+            echo "VERSION=${GITHUB_REF_NAME}" >> "${GITHUB_OUTPUT}"
           else
-            echo "VERSION=$(git rev-parse --short HEAD)" >> ${GITHUB_OUTPUT}
+            echo "VERSION=$(git rev-parse --short HEAD)" >> "${GITHUB_OUTPUT}"
           fi
 
       - name: Build and run Dev Container on release
@@ -135,7 +135,7 @@ jobs:
             echo '```'
             echo ""
             echo "</details>"
-          ) >>${GITHUB_STEP_SUMMARY}
+          ) >> "${GITHUB_STEP_SUMMARY}"
 
       - name: Save quarto check output
         env:
@@ -235,35 +235,21 @@ jobs:
       TARGET_FILE: docs/reference/quarto-check.qmd
 
     steps:
+      - name: Get the App token
+        id: token
+        uses: mcanouil/release-actions/token@v1
+        with:
+          app-id: ${{ vars.APP_ID }}
+          app-key: ${{ secrets.APP_KEY }}
+          require-app: true
+
+      # A release runs on its tag, so check out the default branch, where the
+      # transcripts land.
       - name: Checkout repository
         uses: actions/checkout@v7
         with:
-          persist-credentials: true
-
-      - name: Update branch
-        run: |
-          git fetch --all
-          git checkout main
-          git pull origin main
-
-      - name: Create GitHub App token
-        uses: actions/create-github-app-token@v3
-        id: app-token
-        with:
-          client-id: ${{ vars.APP_ID }}
-          private-key: ${{ secrets.APP_KEY }}
-
-      - name: Get GitHub App User ID
-        id: get-user-id
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: |
-          echo "user-id=$(gh api "/users/${{ steps.app-token.outputs.app-slug }}[bot]" --jq .id)" >> "$GITHUB_OUTPUT"
-
-      - name: Git Config
-        run: |
-          git config --global user.name '${{ steps.app-token.outputs.app-slug }}[bot]'
-          git config --global user.email '${{ steps.get-user-id.outputs.user-id }}+${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com'
+          ref: ${{ github.event.repository.default_branch }}
+          token: ${{ steps.token.outputs.token }}
 
       - name: Download quarto check outputs
         uses: actions/download-artifact@v8
@@ -353,28 +339,17 @@ jobs:
           update_docs_section "release" "/tmp/quarto-check-outputs/quarto-check-release-amd64/release.txt" "${BUILD_URL}"
           update_docs_section "prerelease" "/tmp/quarto-check-outputs/quarto-check-prerelease-amd64/prerelease.txt" "${BUILD_URL}"
 
-      - name: Commit and push changes
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-          BRANCH: "ci/update-quarto-check-docs"
-          COMMIT: "ci: update quarto check outputs in documentation"
-        run: |
-          if git show-ref --quiet refs/heads/${BRANCH}; then
-            echo "Branch ${BRANCH} already exists."
-            git branch -D "${BRANCH}"
-            git push origin --delete "${BRANCH}"
-          fi
-
-          git checkout -b "${BRANCH}"
-
-          git add "${TARGET_FILE}" || echo "No changes to add"
-          git commit -m "${COMMIT}" || echo "No changes to commit"
-          git push --force origin ${BRANCH} || echo "No changes to push"
-
-          sleep 5
-          gh pr create --fill-first --base "main" --head "${BRANCH}" --label "Type: CI/CD :robot:"
-          sleep 2
-          gh pr merge --auto --squash --delete-branch
+      - name: Land the transcripts
+        uses: mcanouil/release-actions/land@v1
+        with:
+          mode: pull-request
+          files: ${{ env.TARGET_FILE }}
+          base: ${{ github.event.repository.default_branch }}
+          message: "ci: update quarto check outputs in documentation"
+          branch: ci/update-quarto-check-docs
+          wait: false
+          allow-unchanged: true
+          token: ${{ steps.token.outputs.token }}
 
   list-versions:
     runs-on: ubuntu-latest
@@ -462,7 +437,7 @@ jobs:
           ALL_TAGS="${BASE_TAGS},${TAGS_WITH_BUILD}"
           echo "All tags: ${ALL_TAGS}"
           echo "::endgroup::"
-          echo "IMAGE_TAG=${ALL_TAGS}" >> ${GITHUB_OUTPUT}
+          echo "IMAGE_TAG=${ALL_TAGS}" >> "${GITHUB_OUTPUT}"
 
       - name: Build and run Dev Container on release
         uses: devcontainers/ci@v0.3
