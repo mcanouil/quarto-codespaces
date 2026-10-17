@@ -241,6 +241,7 @@ jobs:
         with:
           app-id: ${{ vars.APP_ID }}
           app-key: ${{ secrets.APP_KEY }}
+          require-app: true
 
       # A release runs on its tag, so check out the default branch, where the
       # transcripts land.
