@@ -49,11 +49,7 @@ jobs:
           bump: calver
           version-source: tag
           token: ${{ steps.token.outputs.token }}
-          targets: |
-            - file: CITATION.cff
-              pattern: '^version: {version}$'
-            - file: CITATION.cff
-              pattern: '^date-released: "{date}"$'
+          ecosystems: citation
 
       # The App is exempt from the pull request rule of the default branch, and
       # [skip ci] keeps CI from running again on a tree it has checked.
