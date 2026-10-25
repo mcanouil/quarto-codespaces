@@ -63,7 +63,7 @@ Quarto 1.10.19
 (|) Checking Knitr engine render......[✓] Checking Knitr engine render......OK
 
 (|) Checking Python 3 installation....[✓] Checking Python 3 installation....OK
-      Version: 3.15.0
+      Version: 3.15.1
       Path: /usr/local/python/current/bin/python3
       Jupyter: 5.9.1
       Kernels: julia-1.13, python3
@@ -79,7 +79,7 @@ Quarto 1.10.19
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
 
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/39119458304)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/40168645996)
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
@@ -130,7 +130,7 @@ Quarto 1.11.6
 (|) Checking Knitr engine render......[✓] Checking Knitr engine render......OK
 
 (|) Checking Python 3 installation....[✓] Checking Python 3 installation....OK
-      Version: 3.15.0
+      Version: 3.15.1
       Path: /usr/local/python/current/bin/python3
       Jupyter: 5.9.1
       Kernels: julia-1.13, python3
@@ -146,7 +146,7 @@ Quarto 1.11.6
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
 
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/39119458304)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/40168645996)
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
