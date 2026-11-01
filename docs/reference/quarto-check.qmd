@@ -22,7 +22,7 @@ Edit the surrounding prose freely, but leave the `QUARTO_CHECK_*` comment marker
 <!-- QUARTO_CHECK_RELEASE_START -->
 
 ```txt
-Quarto 1.10.19
+Quarto 1.10.20
 [✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
 [✓] Checking versions of quarto binary dependencies...
@@ -32,7 +32,7 @@ Quarto 1.10.19
       Typst version 0.15.1: OK
 [✓] Checking versions of quarto dependencies......OK
 [✓] Checking Quarto installation......OK
-      Version: 1.10.19
+      Version: 1.10.20
       Path: /opt/quarto/bin
 
 (|) Checking tools....................[✓] Checking tools....................OK
@@ -52,18 +52,18 @@ Quarto 1.10.19
 (|) Checking basic markdown render....[✓] Checking basic markdown render....OK
 
 (|) Checking R installation...........[✓] Checking R installation...........OK
-      Version: 4.6.1
-      Path: /opt/R/4.6.1/lib/R
+      Version: 4.6.2
+      Path: /opt/R/4.6.2/lib/R
       LibPaths:
         - /home/vscode/R/x86_64-pc-linux-gnu-library/4.6
-        - /opt/R/4.6.1/lib/R/library
+        - /opt/R/4.6.2/lib/R/library
       knitr: 1.52
       rmarkdown: 2.32
 
 (|) Checking Knitr engine render......[✓] Checking Knitr engine render......OK
 
 (|) Checking Python 3 installation....[✓] Checking Python 3 installation....OK
-      Version: 3.15.1
+      Version: 3.15.2
       Path: /usr/local/python/current/bin/python3
       Jupyter: 5.9.1
       Kernels: julia-1.13, python3
@@ -79,7 +79,7 @@ Quarto 1.10.19
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
 
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/40168645996)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/41279834086)
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
@@ -88,18 +88,18 @@ Quarto 1.10.19
 <!-- QUARTO_CHECK_PRERELEASE_START -->
 
 ```txt
-Quarto 1.11.6
+Quarto 1.11.9
 [✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
       Project: none found (single-file mode)
 [✓] Checking versions of quarto binary dependencies...
       Pandoc version 3.10.0: OK
       Dart Sass version 1.101.0: OK
-      Deno version 2.7.14: OK
+      Deno version 2.9.8: OK
       Typst version 0.15.1: OK
 [✓] Checking versions of quarto dependencies......OK
 [✓] Checking Quarto installation......OK
-      Version: 1.11.6
+      Version: 1.11.9
       Path: /opt/quarto/bin
 
 (|) Checking tools....................[✓] Checking tools....................OK
@@ -119,18 +119,18 @@ Quarto 1.11.6
 (|) Checking basic markdown render....[✓] Checking basic markdown render....OK
 
 (|) Checking R installation...........[✓] Checking R installation...........OK
-      Version: 4.6.1
-      Path: /opt/R/4.6.1/lib/R
+      Version: 4.6.2
+      Path: /opt/R/4.6.2/lib/R
       LibPaths:
         - /home/vscode/R/x86_64-pc-linux-gnu-library/4.6
-        - /opt/R/4.6.1/lib/R/library
+        - /opt/R/4.6.2/lib/R/library
       knitr: 1.52
       rmarkdown: 2.32
 
 (|) Checking Knitr engine render......[✓] Checking Knitr engine render......OK
 
 (|) Checking Python 3 installation....[✓] Checking Python 3 installation....OK
-      Version: 3.15.1
+      Version: 3.15.2
       Path: /usr/local/python/current/bin/python3
       Jupyter: 5.9.1
       Kernels: julia-1.13, python3
@@ -146,7 +146,7 @@ Quarto 1.11.6
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
 
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/40168645996)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/41279834086)
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
