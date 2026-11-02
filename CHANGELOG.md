@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2026.11.02 (2026-11-02)
+
 - build: Quarto CLI 1.11.9 stable release.
 
 ## 2026.10.16 (2026-10-16)
