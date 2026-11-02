@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- build: Quarto CLI 1.11.9 stable release.
+
 ## 2026.10.16 (2026-10-16)
 
 - feat: Release notes now come from this changelog. (#182)
