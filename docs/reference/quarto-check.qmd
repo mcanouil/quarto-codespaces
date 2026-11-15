@@ -80,7 +80,7 @@ Quarto 1.11.9
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_START -->
 
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/42453723279)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/43684340876)
 
 <!-- QUARTO_CHECK_RELEASE_BUILD_URL_END -->
 
@@ -89,18 +89,18 @@ Quarto 1.11.9
 <!-- QUARTO_CHECK_PRERELEASE_START -->
 
 ```txt
-Quarto 1.12.1
+Quarto 1.12.2
 [✓] Checking environment information...
       Quarto cache location: /home/vscode/.cache/quarto
       Project: none found (single-file mode)
 [✓] Checking versions of quarto binary dependencies...
-      Pandoc version 3.10.0: OK
+      Pandoc version 3.13.0: OK
       Dart Sass version 1.107.1: OK
       Deno version 2.9.8: OK
       Typst version 0.15.1: OK
 [✓] Checking versions of quarto dependencies......OK
 [✓] Checking Quarto installation......OK
-      Version: 1.12.1
+      Version: 1.12.2
       Path: /opt/quarto/bin
 
 (|) Checking tools....................[✓] Checking tools....................OK
@@ -147,7 +147,7 @@ Quarto 1.12.1
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_START -->
 
-[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/42453723279)
+[View build log](https://github.com/mcanouil/quarto-codespaces/actions/runs/43684340876)
 
 <!-- QUARTO_CHECK_PRERELEASE_BUILD_URL_END -->
 
